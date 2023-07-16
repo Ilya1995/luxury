@@ -1,0 +1,48 @@
+.subscription {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: var(--grey-100);
+  margin: 6.875rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+
+  &__header {
+    color: var(--grey-800);
+    font-size: 2.5rem;
+    line-height: 3.25rem;
+  }
+
+  &__content {
+    margin: 0 5.125rem;
+  }
+
+  &__text {
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 500;
+    color: var(--grey-600);
+    line-height: 1.625rem;
+    white-space: pre-line;
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    margin: 2rem 0 1rem;
+
+    &-email {
+      margin-right: 1.5rem;
+    }
+  }
+
+  &__confidentiality {
+    color: var(--grey-600);
+    font-size: 0.75rem;
+
+    &-link {
+      color: var(--orange);
+    }
+  }
+}

@@ -29,6 +29,67 @@ body {
   width: 100%;
 }
 
+.button {
+  text-align: center;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1.125rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  color: var(--white);
+  background-color: var(--orange);
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+}
+
+.line {
+  height: 1px;
+  background-color: var(--grey-200);
+}
+
+.input {
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  border: 1px solid var(--grey-300);
+  font-weight: 500;
+  line-height: 1.375rem;
+  background-image: url('../../public/message.svg');
+  background-position: 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+  padding-left: 2.75rem;
+  transition: all 0.4s ease-in-out;
+  caret-color: var(--grey-600);
+  color: var(--grey-800);
+}
+
+::placeholder {
+  color: var(--grey-300);
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: var(--grey-300);
+}
+
+::-ms-input-placeholder {
+  color: var(--grey-300);
+}
+
+input:active,
+input:hover,
+input:focus,
+input {
+  text-decoration: none;
+  outline: none;
+}
+
+a:active,
+a:hover,
+a {
+  text-decoration: none;
+}
+
 .pointer {
   cursor: pointer;
 }

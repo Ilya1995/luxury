@@ -1,0 +1,53 @@
+.footer {
+  padding: 3rem 6.875rem;
+
+  &__logo {
+    height: 2.625rem;
+  }
+
+  &__first {
+    margin-bottom: 4rem;
+  }
+
+  &__second {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__contacts {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+
+    &-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      font-weight: 500;
+      line-height: 1.625rem;
+      color: var(--grey-600);
+    }
+
+    &-social {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+
+  &__information {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+    font-weight: 500;
+    color: var(--grey-400);
+
+    &-items {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+}
