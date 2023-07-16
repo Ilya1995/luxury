@@ -1,0 +1,31 @@
+.brands-carousel {
+  .carousel-item {
+    // width: 380px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 380px;
+    min-width: 380px;
+  }
+
+  .carousel-container {
+  }
+
+  .carousel-slider {
+    // gap: 1rem;
+  }
+}
+
+.brands-carousel-item {
+  &__img {
+    // height: 430px;
+    // width: 380px;
+    border-radius: 0.75rem;
+  }
+
+  &__name {
+    text-align: center;
+    margin-top: 1rem;
+  }
+}

@@ -1,0 +1,61 @@
+.home-page {
+  background-color: var(--white);
+
+  &__header {
+    padding: 2rem 2.5rem;
+  }
+
+  &__tagline {
+    color: var(--white);
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  &__business-inf {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    margin: 4.5rem auto;
+  }
+
+  .bg {
+    background-image: url('../../../public/bg-home.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 1.5rem;
+    height: 650px;
+  }
+
+  .test {
+    margin-top: 100px;
+  }
+}
+
+.business-inf {
+  padding: 0.5rem;
+
+  &__text {
+    color: var(--grey-600);
+    margin-top: 1.625rem;
+    margin-bottom: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    text-align: center;
+    white-space: pre-line;
+  }
+
+  &__more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--orange);
+
+    &-icon {
+      height: 0.75rem;
+      margin-left: 0.5rem;
+    }
+  }
+}
