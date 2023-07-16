@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { Header } from '../../components/Header';
 import { BrandsCarousel } from '../../components/BrandsCarousel';
@@ -11,11 +11,28 @@ const text =
   'Интерьерный салон Luxury Living работает с 2010 года и является официальным представителем на юге России\nвсемирно известных брендов: Hermes, Baccarat, Lalique, Christofle, Daum, Fendi Casa, Dolce&Gabbana Casa, Versace Home и др.\nОпытные декораторы осуществляют под ключ полный спектр услуг от подбора материалов до оформления интерьера мебелью, предметами столовой сервировки, текстилем и аксессуарами';
 
 export const Home: FC<PropsType> = () => {
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const callback = () => {
+      setInnerWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', callback);
+    return () => {
+      window.removeEventListener('resize', callback);
+    };
+  }, []);
+
   return (
     <div className="page home-page">
-      <div className="bg">
+      <div className="bg" style={{ height: `${innerWidth / 2 - 30}px` }}>
         <Header className="home-page__header" />
-        <div className="home-page__tagline">Лучшее для вашего интерьера</div>
+        <div
+          className="home-page__tagline"
+          style={{ marginTop: `${(innerWidth / 2 - 30) / 3.7}px` }}
+        >
+          Лучшее для вашего интерьера
+        </div>
       </div>
       <div className="home-page__business-inf business-inf">
         <img alt="Лого" src="./logo-visit.svg" />
