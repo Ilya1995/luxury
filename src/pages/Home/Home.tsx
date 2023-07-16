@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import { Header } from '../../components/Header';
 import { BrandsCarousel } from '../../components/BrandsCarousel';
 import { Subscription } from '../../components/Subscription';
+import { FAQ } from '../../components/FAQ';
 import { Footer } from '../../components/Footer';
 
 import './styles.scss';
@@ -50,6 +51,7 @@ export const Home: FC<PropsType> = () => {
       </div>
       <BrandsCarousel />
       <Subscription />
+      <FAQ />
       <Footer />
     </div>
   );
