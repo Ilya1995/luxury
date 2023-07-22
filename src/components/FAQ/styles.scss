@@ -3,21 +3,41 @@
   display: flex;
   justify-content: space-between;
 
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+    flex-direction: column;
+  }
+
   &__title {
     font-size: 2.5rem;
     line-height: 3.25rem;
     font-weight: 700;
     color: var(--grey-900);
+
+    @media (max-width: 768px) {
+      font-size: 1.75rem;
+      line-height: 2rem;
+    }
   }
 
   &__subtitle {
     line-height: 1.625rem;
     color: var(--grey-600);
     margin-top: 1.25rem;
+
+    @media (max-width: 768px) {
+      font-size: 0.875rem;
+      line-height: 1.375rem;
+      margin-top: 0.5rem;
+    }
   }
 
   &__line {
     margin-top: 2rem;
+
+    @media (max-width: 768px) {
+      margin-top: 1rem;
+    }
   }
 }
 
@@ -28,25 +48,49 @@
   margin-left: 4rem;
   width: 60%;
 
+  @media (max-width: 768px) {
+    margin-left: 0;
+    margin-top: 1.5rem;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
   &__item {
     cursor: pointer;
 
+    @media (max-width: 768px) {
+      margin-top: 1rem;
+    }
+
     &-content {
       margin-right: 3rem;
+
+      @media (max-width: 768px) {
+        margin-right: 1rem;
+      }
     }
 
     &-title {
-      // font-weight: 600;
       font-size: 1.25rem;
       line-height: 2rem;
       color: var(--grey-800);
       white-space: pre-line;
+
+      @media (max-width: 768px) {
+        font-size: 1rem;
+        line-height: 1.5rem;
+      }
     }
 
     &-description {
       line-height: 1.625rem;
       color: var(--grey-600);
       margin-top: 0.5rem;
+
+      @media (max-width: 768px) {
+        font-size: 0.875rem;
+        line-height: 1.375rem;
+      }
     }
   }
 }
