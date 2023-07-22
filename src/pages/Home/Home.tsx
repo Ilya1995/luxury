@@ -51,8 +51,8 @@ export const Home: FC<PropsType> = () => {
           </Animate>
         </div>
       </div>
-      {/* <div className="home-page__business-inf business-inf">
-        <img alt="Лого" src="./logo-visit.svg" />
+      <div className="home-page__business-inf business-inf">
+        <img className="business-inf__logo" alt="Лого" src="./logo-visit.svg" />
         <div className="business-inf__text">{text}</div>
         <div className="business-inf__more">
           <div>Подробнее</div>
@@ -64,8 +64,8 @@ export const Home: FC<PropsType> = () => {
         </div>
       </div>
       <BrandsCarousel />
-      <Subscription />
-      <FAQ />
+      <Subscription isMobile={isMobile} />
+      {/* <FAQ />
       <Footer /> */}
     </div>
   );

@@ -8,14 +8,41 @@
   border-radius: 0.75rem;
   overflow: hidden;
 
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    margin: 2.375rem 1rem;
+  }
+
+  &__bg {
+    background-image: url('../../../public/bg-sub.jpg');
+    width: 26rem;
+    height: 31.25rem;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      background-image: url('../../../public/bg-sub-mobile.jpg');
+      height: 8.75rem;
+    }
+  }
+
   &__header {
     color: var(--grey-800);
     font-size: 2.5rem;
     line-height: 3.25rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.75rem;
+      line-height: 2rem;
+    }
   }
 
   &__content {
     margin: 0 5.125rem;
+
+    @media (max-width: 768px) {
+      margin: 1.5rem 0 1rem;
+      padding: 0 1rem;
+    }
   }
 
   &__text {
@@ -25,6 +52,13 @@
     color: var(--grey-600);
     line-height: 1.625rem;
     white-space: pre-line;
+
+    @media (max-width: 768px) {
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+      line-height: 1.325rem;
+    }
   }
 
   &__controls {
@@ -32,8 +66,18 @@
     align-items: center;
     margin: 2rem 0 1rem;
 
+    @media (max-width: 768px) {
+      flex-direction: column;
+      margin: 0 0 1rem;
+    }
+
     &-email {
       margin-right: 1.5rem;
+
+      @media (max-width: 768px) {
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
     }
   }
 

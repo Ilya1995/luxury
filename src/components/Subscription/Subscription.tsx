@@ -1,13 +1,16 @@
 import { FC } from 'react';
 
+import { textForMobile, textForDesc } from './constants';
+
 import './styles.scss';
 
-type PropsType = {};
+type PropsType = {
+  isMobile: boolean;
+};
 
-const text =
-  'Узнавайте первыми обо всех новинках и распродажах \nв нашей рассылке. Обещаем писать нечасто и только по делу';
+export const Subscription: FC<PropsType> = ({ isMobile }) => {
+  const text = isMobile ? textForMobile : textForDesc;
 
-export const Subscription: FC<PropsType> = () => {
   return (
     <div className="subscription">
       <div className="subscription__content">
@@ -32,7 +35,7 @@ export const Subscription: FC<PropsType> = () => {
           </a>
         </div>
       </div>
-      <img alt="фон" src="./bg-sub.jpg" />
+      <div className="subscription__bg" />
     </div>
   );
 };
