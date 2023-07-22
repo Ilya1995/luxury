@@ -5,13 +5,13 @@ body {
   font-size: 16px;
   // overflow: hidden;
 
-  @media (max-width: 1279px), (max-height: 780px) and (min-width: 1280px) {
-    font-size: 14px;
-  }
+  // @media (max-width: 1279px), (max-height: 780px) and (min-width: 1280px) {
+  //   font-size: 14px;
+  // }
 
-  @media (max-width: 879px), (max-height: 380px) and (min-width: 880px) {
-    font-size: 12px;
-  }
+  // @media (max-width: 879px), (max-height: 380px) and (min-width: 880px) {
+  //   font-size: 12px;
+  // }
 }
 
 // .page {

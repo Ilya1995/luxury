@@ -1,24 +1,31 @@
 import { FC } from 'react';
 import classNames from 'classnames';
 
+import { Menu } from '../Menu';
+
 import './styles.scss';
 
 type PropsType = {
+  isMobile: boolean;
   className?: string;
 };
 
-export const Header: FC<PropsType> = ({ className }) => {
+export const Header: FC<PropsType> = ({ isMobile, className }) => {
   return (
     <div className={classNames('header', className)}>
+      {isMobile && <Menu handleChangePage={() => {}} anchorMapToPage={{}} />}
       <img alt="Лого" src="./logo.svg" />
-      <div className="header__nav-menu">
-        <div className="nav-link">Каталог</div>
-        <div className="nav-link">Бренды</div>
-        <div className="nav-link">Проекты</div>
-        <div className="nav-link">Новости</div>
-        <div className="nav-link">Контакты</div>
-        <img className="nav-link" alt="Поиск" src="./search.svg" />
-      </div>
+      {isMobile && <img alt="Поиск" src="./search.svg" />}
+      {!isMobile && (
+        <div className="header__nav-menu">
+          <div className="nav-link">Каталог</div>
+          <div className="nav-link">Бренды</div>
+          <div className="nav-link">Проекты</div>
+          <div className="nav-link">Новости</div>
+          <div className="nav-link">Контакты</div>
+          <img className="nav-link" alt="Поиск" src="./search.svg" />
+        </div>
+      )}
     </div>
   );
 };

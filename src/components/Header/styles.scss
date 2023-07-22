@@ -4,6 +4,12 @@
   align-items: center;
   color: var(--white);
 
+  @media (max-width: 768px) {
+    img {
+      height: 2rem;
+    }
+  }
+
   &__nav-menu {
     display: flex;
     justify-content: space-between;

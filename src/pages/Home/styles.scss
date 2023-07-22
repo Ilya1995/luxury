@@ -3,12 +3,22 @@
 
   &__header {
     padding: 2rem 2.5rem;
+
+    @media (max-width: 768px) {
+      padding: 1.5rem 1rem;
+    }
   }
 
   &__tagline {
     color: var(--white);
     font-size: 3rem;
     text-align: center;
+    white-space: pre-line;
+
+    @media (max-width: 768px) {
+      font-size: 1.25rem;
+      margin-top: 5.5rem;
+    }
   }
 
   &__business-inf {
@@ -26,6 +36,13 @@
     background-size: cover;
     margin: 1.5rem;
     border-radius: 1rem;
+
+    @media (max-width: 768px) {
+      margin: 1rem;
+      height: 390px;
+      background-position: center;
+      background-image: url('../../../public/bg-home-mobile.jpg');
+    }
   }
 
   .test {

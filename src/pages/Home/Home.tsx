@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { Animate } from 'react-simple-animate';
 
+import { useMedia } from '../../hooks';
 import { Header } from '../../components/Header';
 import { BrandsCarousel } from '../../components/BrandsCarousel';
 import { Subscription } from '../../components/Subscription';
@@ -15,7 +16,9 @@ const text =
   'Интерьерный салон Luxury Living работает с 2010 года и является официальным представителем на юге России\nвсемирно известных брендов: Hermes, Baccarat, Lalique, Christofle, Daum, Fendi Casa, Dolce&Gabbana Casa, Versace Home и др.\nОпытные декораторы осуществляют под ключ полный спектр услуг от подбора материалов до оформления интерьера мебелью, предметами столовой сервировки, текстилем и аксессуарами';
 
 export const Home: FC<PropsType> = () => {
+  const isMobile = useMedia('(max-width: 768px)');
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+
   useEffect(() => {
     const callback = () => {
       setInnerWidth(window.innerWidth);
@@ -27,14 +30,16 @@ export const Home: FC<PropsType> = () => {
     };
   }, []);
 
+  const heightBG = innerWidth / 2 - 30;
+  const styleBG = !isMobile ? { height: `${heightBG}px` } : {};
+  const styleTagline = !isMobile ? { marginTop: `${heightBG / 3.7}px` } : {};
+  const tagline = `Лучшее${isMobile ? '\n' : ' '}для вашего интерьера`;
+
   return (
     <div className="page home-page">
-      <div className="bg" style={{ height: `${innerWidth / 2 - 30}px` }}>
-        <Header className="home-page__header" />
-        <div
-          className="home-page__tagline"
-          style={{ marginTop: `${(innerWidth / 2 - 30) / 3.7}px` }}
-        >
+      <div className="bg" style={styleBG}>
+        <Header className="home-page__header" isMobile={isMobile} />
+        <div className="home-page__tagline" style={styleTagline}>
           <Animate
             play
             start={{ opacity: 0 }}
@@ -42,11 +47,11 @@ export const Home: FC<PropsType> = () => {
             easeType="ease-in"
             duration={1.5}
           >
-            Лучшее для вашего интерьера
+            {tagline}
           </Animate>
         </div>
       </div>
-      <div className="home-page__business-inf business-inf">
+      {/* <div className="home-page__business-inf business-inf">
         <img alt="Лого" src="./logo-visit.svg" />
         <div className="business-inf__text">{text}</div>
         <div className="business-inf__more">
@@ -61,7 +66,7 @@ export const Home: FC<PropsType> = () => {
       <BrandsCarousel />
       <Subscription />
       <FAQ />
-      <Footer />
+      <Footer /> */}
     </div>
   );
 };
