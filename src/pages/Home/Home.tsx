@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from 'react';
+import { Animate } from 'react-simple-animate';
 
 import { Header } from '../../components/Header';
 import { BrandsCarousel } from '../../components/BrandsCarousel';
@@ -34,7 +35,15 @@ export const Home: FC<PropsType> = () => {
           className="home-page__tagline"
           style={{ marginTop: `${(innerWidth / 2 - 30) / 3.7}px` }}
         >
-          Лучшее для вашего интерьера
+          <Animate
+            play
+            start={{ opacity: 0 }}
+            end={{ opacity: 1 }}
+            easeType="ease-in"
+            duration={1.5}
+          >
+            Лучшее для вашего интерьера
+          </Animate>
         </div>
       </div>
       <div className="home-page__business-inf business-inf">

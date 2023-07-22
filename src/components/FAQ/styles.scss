@@ -15,18 +15,47 @@
     color: var(--grey-600);
     margin-top: 1.25rem;
   }
+
+  &__line {
+    margin-top: 2rem;
+  }
 }
 
 .faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   margin-left: 4rem;
   width: 60%;
 
   &__item {
+    cursor: pointer;
+
+    &-content {
+      margin-right: 3rem;
+    }
+
     &-title {
       // font-weight: 600;
       font-size: 1.25rem;
       line-height: 2rem;
       color: var(--grey-800);
+      white-space: pre-line;
     }
+
+    &-description {
+      line-height: 1.625rem;
+      color: var(--grey-600);
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+.faq-icon {
+  position: relative;
+  min-width: 2rem;
+
+  > div {
+    position: absolute;
   }
 }
