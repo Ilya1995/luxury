@@ -4,7 +4,7 @@ import { Animate } from 'react-simple-animate';
 import { useMedia } from '../../hooks';
 import { Header } from '../../components/Header';
 import { BrandsCarousel } from '../../components/BrandsCarousel';
-import { Catalog } from '../../components/Catalog';
+import { Catalogg } from '../../components/Catalog';
 import { Subscription } from '../../components/Subscription';
 import { FAQ } from '../../components/FAQ';
 import { Footer } from '../../components/Footer';
@@ -65,7 +65,7 @@ export const Home: FC<PropsType> = () => {
         </div>
       </div>
       <BrandsCarousel />
-      <Catalog />
+      <Catalogg />
       <Subscription isMobile={isMobile} />
       <FAQ />
       <Footer isMobile={isMobile} />

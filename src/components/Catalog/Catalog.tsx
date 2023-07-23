@@ -4,7 +4,7 @@ import './styles.scss';
 
 type PropsType = {};
 
-export const Catalog: FC<PropsType> = () => {
+export const Catalogg: FC<PropsType> = () => {
   return (
     <div className="catalog">
       <div className="catalog__header">Каталог</div>

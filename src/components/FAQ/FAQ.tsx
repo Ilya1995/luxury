@@ -34,8 +34,8 @@ export const FAQ: FC<PropsType> = () => {
                 {open[id] && (
                   <Animate
                     play={open[id]}
-                    start={{ opacity: 0 }}
-                    end={{ opacity: 1 }}
+                    start={{ transform: 'translateY(-10px)', opacity: 0 }}
+                    end={{ transform: 'translateY(0)', opacity: 1 }}
                     easeType="ease-in"
                   >
                     <div className="faq-list__item-description">

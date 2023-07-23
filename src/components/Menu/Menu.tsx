@@ -1,4 +1,4 @@
-import { FC, useState, useRef } from 'react';
+import { FC, useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 
 import { useOnClickOutside } from '../../hooks';
@@ -25,6 +25,18 @@ export const Menu: FC<PropsType> = ({ handleChangePage, anchorMapToPage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const node = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const listener = () => {
+      isOpen && setIsOpen(false);
+    };
+
+    document.addEventListener('touchmove', listener);
+
+    return () => {
+      document.removeEventListener('touchmove', listener);
+    };
+  }, [isOpen]);
+
   useOnClickOutside(node, () => {
     if (isOpen) {
       onChangeIsMenuOpen();
@@ -36,7 +48,7 @@ export const Menu: FC<PropsType> = ({ handleChangePage, anchorMapToPage }) => {
   };
 
   const onChangeHash = (href: AnchorPageEnum) => {
-    window.location.href = '#' + href;
+    // window.location.href = '#' + href;
     handleChangePage(anchorMapToPage[href]);
   };
 
@@ -61,19 +73,25 @@ export const Menu: FC<PropsType> = ({ handleChangePage, anchorMapToPage }) => {
           className="menu__side-link"
           onClick={() => onChangeHash(AnchorPageEnum.ACQUAINTANCE)}
         >
-          О нас
+          Каталог
         </div>
         <div
           className="menu__side-link"
           onClick={() => onChangeHash(AnchorPageEnum.APPLICATION)}
         >
-          Применение
+          Бренды
         </div>
         <div
           className="menu__side-link"
           onClick={() => onChangeHash(AnchorPageEnum.TECHNOLOGY)}
         >
-          Технология
+          Проекты
+        </div>
+        <div
+          className="menu__side-link"
+          onClick={() => onChangeHash(AnchorPageEnum.CONTACTS)}
+        >
+          Новости
         </div>
         <div
           className="menu__side-link"
