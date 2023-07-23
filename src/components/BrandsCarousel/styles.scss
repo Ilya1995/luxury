@@ -1,31 +1,64 @@
-.brands-carousel {
-  .carousel-item {
-    // width: 380px !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 380px;
-    min-width: 380px;
-  }
-
-  .carousel-container {
-  }
-
-  .carousel-slider {
-    // gap: 1rem;
-  }
-}
-
 .brands-carousel-item {
+  opacity: 0.5;
+  transition: opacity 500ms ease-in-out;
+
   &__img {
-    // height: 430px;
-    // width: 380px;
     border-radius: 0.75rem;
   }
 
   &__name {
     text-align: center;
     margin-top: 1rem;
+  }
+
+  &_visited {
+    opacity: 1;
+  }
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.brands-carousel-swiper {
+  position: relative;
+  margin-bottom: 7.5rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 4.375rem;
+  }
+
+  &:hover .swiper-nav-buttons {
+    opacity: 1;
+  }
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper-nav-buttons {
+  // TODO: разделить кнопки(свайп не работает)
+  display: flex;
+  justify-content: space-between;
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: 100%;
+  transition: opacity 300ms ease-in-out;
+  opacity: 0;
+
+  &__prev {
+    cursor: pointer;
+  }
+
+  &__next {
+    cursor: pointer;
   }
 }

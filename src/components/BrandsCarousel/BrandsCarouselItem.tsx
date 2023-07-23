@@ -1,4 +1,8 @@
 import { FC } from 'react';
+import { useSwiperSlide } from 'swiper/react';
+import classNames from 'classnames';
+
+import { useMedia } from '../../hooks';
 
 import './styles.scss';
 
@@ -8,8 +12,19 @@ type PropsType = {
 };
 
 export const BrandsCarouselItem: FC<PropsType> = ({ src, name }) => {
+  const swiperSlide = useSwiperSlide();
+  const isMobile = useMedia('(max-width: 550px)');
+
+  const isVisible = isMobile
+    ? swiperSlide.isActive
+    : Object.values(swiperSlide).some(Boolean);
+
   return (
-    <div className="brands-carousel-item">
+    <div
+      className={classNames('brands-carousel-item', {
+        'brands-carousel-item_visited': isVisible,
+      })}
+    >
       <img className="brands-carousel-item__img" alt="Бренд" src={src} />
       <div className="brands-carousel-item__name">{name}</div>
     </div>
