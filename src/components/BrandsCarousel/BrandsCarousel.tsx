@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Mousewheel, Navigation, A11y } from 'swiper/modules';
+import { Mousewheel, Navigation, Autoplay } from 'swiper/modules';
 
 import { BrandsCarouselItem } from './BrandsCarouselItem';
-import { SwiperNavButtons } from './SwiperNavButtons';
-import { data } from './constants';
+import { SwiperNavButtonNext } from './SwiperNavButtonNext';
+import { SwiperNavButtonPrev } from './SwiperNavButtonPrev';
+import { data, breakpoints } from './constants';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -20,27 +21,15 @@ export const BrandsCarousel: FC<PropsType> = () => {
       slidesPerView={4}
       spaceBetween={24}
       centeredSlides
+      speed={800}
       loop
       mousewheel
-      breakpoints={{
-        0: {
-          slidesPerView: 1.8,
-          spaceBetween: 10,
-        },
-        550: {
-          slidesPerView: 3.5,
-          spaceBetween: 24,
-        },
-        1024: {
-          slidesPerView: 4,
-          spaceBetween: 24,
-        },
-        1700: {
-          slidesPerView: 4.5,
-          spaceBetween: 30,
-        },
+      autoplay={{
+        delay: 4000,
+        disableOnInteraction: false,
       }}
-      modules={[Mousewheel, Navigation, A11y]}
+      breakpoints={breakpoints}
+      modules={[Mousewheel, Navigation, Autoplay]}
       className="brands-carousel-swiper"
     >
       {slides.map((item, index) => (
@@ -48,7 +37,8 @@ export const BrandsCarousel: FC<PropsType> = () => {
           <BrandsCarouselItem {...item} />
         </SwiperSlide>
       ))}
-      <SwiperNavButtons />
+      <SwiperNavButtonPrev />
+      <SwiperNavButtonNext />
     </Swiper>
   );
 };
