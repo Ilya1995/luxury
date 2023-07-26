@@ -5,6 +5,7 @@ import { useMedia } from '../../hooks';
 import { Header } from '../../components/Header';
 import { BrandsCarousel } from '../../components/BrandsCarousel';
 import { Catalogg } from '../../components/Catalog';
+import { News } from '../../components/News';
 import { Subscription } from '../../components/Subscription';
 import { FAQ } from '../../components/FAQ';
 import { Footer } from '../../components/Footer';
@@ -66,6 +67,7 @@ export const Home: FC<PropsType> = () => {
       </div>
       <BrandsCarousel />
       <Catalogg />
+      <News />
       <Subscription isMobile={isMobile} />
       <FAQ />
       <Footer isMobile={isMobile} />

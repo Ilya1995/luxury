@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Mousewheel, Navigation, Autoplay } from 'swiper/modules';
 
+import { SwiperNavButtonPrev } from '../SwiperNavButtonPrev';
+import { SwiperNavButtonNext } from '../SwiperNavButtonNext';
 import { BrandsCarouselItem } from './BrandsCarouselItem';
-import { SwiperNavButtonNext } from './SwiperNavButtonNext';
-import { SwiperNavButtonPrev } from './SwiperNavButtonPrev';
 import { data, breakpoints } from './constants';
 
 import 'swiper/css';
@@ -14,7 +14,7 @@ import './styles.scss';
 type PropsType = {};
 
 export const BrandsCarousel: FC<PropsType> = () => {
-  const slides = [...data, ...data, ...data, ...data];
+  const slides = [...data, ...data];
 
   return (
     <Swiper

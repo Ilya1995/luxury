@@ -118,3 +118,21 @@ a {
     padding: 1.5rem;
   }
 }
+.swiper-nav-button {
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  transition: opacity 300ms ease-in-out;
+  opacity: 0;
+  cursor: pointer;
+
+  &_next {
+    right: 0;
+  }
+
+  &_prev {
+    left: 0;
+  }
+}

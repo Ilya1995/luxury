@@ -1,0 +1,41 @@
+.news {
+  padding: 7rem 6.875rem 0.125rem;
+
+  &__header {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 3.25rem;
+    color: var(--orange);
+  }
+
+  &__content {
+    margin-top: 1.5rem;
+  }
+}
+
+.news-swiper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &:hover .swiper-nav-button {
+    opacity: 1;
+  }
+}
+
+.card {
+  opacity: 0.5;
+  transition: opacity 500ms ease-in-out;
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.75rem;
+  }
+
+  &_visited {
+    opacity: 1;
+  }
+}
