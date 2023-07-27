@@ -9,6 +9,7 @@ import { News } from '../../components/News';
 import { Subscription } from '../../components/Subscription';
 import { FAQ } from '../../components/FAQ';
 import { Footer } from '../../components/Footer';
+import { ButtonMore } from '../../components/ButtonMore';
 
 import './styles.scss';
 
@@ -56,14 +57,7 @@ export const Home: FC<PropsType> = () => {
       <div className="home-page__business-inf business-inf">
         <img className="business-inf__logo" alt="Лого" src="./logo-visit.svg" />
         <div className="business-inf__text">{text}</div>
-        <div className="business-inf__more">
-          <div>Подробнее</div>
-          <img
-            className="business-inf__more-icon"
-            alt="Направо"
-            src="./arrow-right.svg"
-          />
-        </div>
+        <ButtonMore />
       </div>
       <BrandsCarousel />
       <Catalogg />

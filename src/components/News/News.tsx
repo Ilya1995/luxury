@@ -19,9 +19,11 @@ export const News: FC<PropsType> = () => {
       <div className="news__header">Новости</div>
       <div className="news__content">
         <Swiper
-          slidesPerView={4.5}
+          slidesPerView={5}
           spaceBetween={24}
           speed={800}
+          slidesOffsetBefore={110}
+          slidesOffsetAfter={110}
           mousewheel
           breakpoints={breakpoints}
           modules={[Mousewheel, Navigation]}

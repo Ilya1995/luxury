@@ -1,33 +1,36 @@
+import dayjs from 'dayjs';
+
 export const data = [
   {
     id: 1,
     src: './news0.svg',
-    title: 'Luxury Living Soiree с Татьяной Поляковой',
-    date: String(new Date()),
+    description: 'Luxury Living Soiree с Татьяной Поляковой',
+    date: dayjs().toISOString(),
   },
   {
     id: 2,
     src: './news1.svg',
-    title: 'Разнообразие коллекций HERMES в нашем салоне',
-    date: String(new Date()),
+    description: 'Разнообразие коллекций HERMES в нашем салоне',
+    date: dayjs().toISOString(),
   },
   {
     id: 3,
     src: './news2.svg',
-    title: 'Новогодние скидки на Fendi Casa и Ritz Paris',
-    date: String(new Date()),
+    description: 'Новогодние скидки на Fendi Casa и Ritz Paris',
+    date: dayjs().toISOString(),
   },
   {
     id: 4,
     src: './news3.svg',
-    title: 'Christmas Selection with Baccarat',
-    date: String(new Date()),
+    description: 'Christmas Selection with',
+    // description: 'Christmas Selection with Baccarat',
+    date: dayjs().toISOString(),
   },
   {
     id: 5,
     src: './news4.svg',
-    title: 'Новая коллекция Versace Home',
-    date: String(new Date()),
+    description: 'Новая коллекция Versace Home',
+    date: dayjs().toISOString(),
   },
 ];
 
@@ -37,7 +40,7 @@ export const breakpoints = {
     spaceBetween: 8,
   },
   768: {
-    slidesPerView: 4.5,
+    slidesPerView: 5,
     spaceBetween: 24,
   },
 };

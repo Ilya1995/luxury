@@ -1,0 +1,12 @@
+.button-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--orange);
+
+  &__icon {
+    height: 0.75rem;
+    margin-left: 0.5rem;
+  }
+}

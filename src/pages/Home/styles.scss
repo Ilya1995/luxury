@@ -72,19 +72,6 @@
     }
   }
 
-  &__more {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--orange);
-
-    &-icon {
-      height: 0.75rem;
-      margin-left: 0.5rem;
-    }
-  }
-
   &__logo {
     @media (max-width: 768px) {
       height: 2.25rem;
