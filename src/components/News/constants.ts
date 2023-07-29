@@ -22,8 +22,7 @@ export const data = [
   {
     id: 4,
     src: './news3.svg',
-    description: 'Christmas Selection with',
-    // description: 'Christmas Selection with Baccarat',
+    description: 'Christmas Selection with Baccarat',
     date: dayjs().toISOString(),
   },
   {
@@ -36,7 +35,7 @@ export const data = [
 
 export const breakpoints = {
   0: {
-    slidesPerView: 2,
+    slidesPerView: 2.1,
     spaceBetween: 8,
   },
   768: {

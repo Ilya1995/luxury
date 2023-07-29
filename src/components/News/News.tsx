@@ -5,15 +5,20 @@ import { Mousewheel, Navigation } from 'swiper/modules';
 import { SwiperNavButtonPrev } from '../SwiperNavButtonPrev';
 import { SwiperNavButtonNext } from '../SwiperNavButtonNext';
 import { Card } from './Card';
+import { LastSlide } from './LastSlide';
 import { data, breakpoints } from './constants';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import './styles.scss';
 
-type PropsType = {};
+type PropsType = {
+  isMobile: boolean;
+};
 
-export const News: FC<PropsType> = () => {
+export const News: FC<PropsType> = ({ isMobile }) => {
+  const offset = isMobile ? 8 : 110;
+
   return (
     <div className="news">
       <div className="news__header">Новости</div>
@@ -22,8 +27,8 @@ export const News: FC<PropsType> = () => {
           slidesPerView={5}
           spaceBetween={24}
           speed={800}
-          slidesOffsetBefore={110}
-          slidesOffsetAfter={110}
+          slidesOffsetBefore={offset}
+          slidesOffsetAfter={offset}
           mousewheel
           breakpoints={breakpoints}
           modules={[Mousewheel, Navigation]}
@@ -34,6 +39,10 @@ export const News: FC<PropsType> = () => {
               <Card {...item} />
             </SwiperSlide>
           ))}
+          <SwiperSlide>
+            <LastSlide isMobile={isMobile} />
+          </SwiperSlide>
+
           <SwiperNavButtonPrev />
           <SwiperNavButtonNext />
         </Swiper>

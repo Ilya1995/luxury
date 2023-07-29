@@ -1,10 +1,7 @@
 import { FC } from 'react';
-import { useSwiperSlide } from 'swiper/react';
-import classNames from 'classnames';
 import dayjs from 'dayjs';
 
 import { ButtonMore } from '../../components/ButtonMore';
-import { useMedia } from '../../hooks';
 
 import './styles.scss';
 
@@ -16,19 +13,8 @@ type PropsType = {
 };
 
 export const Card: FC<PropsType> = ({ src, description, date }) => {
-  const swiperSlide = useSwiperSlide();
-  const isMobile = useMedia('(max-width: 550px)');
-
-  const isVisible = isMobile
-    ? swiperSlide.isActive
-    : Object.values(swiperSlide).some(Boolean);
-
   return (
-    <div
-      className={classNames('card', {
-        card_visited: isVisible,
-      })}
-    >
+    <div className="card">
       <img className="card__img" alt="news" src={src} />
       <div className="card__content">
         <div>
