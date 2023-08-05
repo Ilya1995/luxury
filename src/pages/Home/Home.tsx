@@ -61,7 +61,7 @@ export const Home: FC<PropsType> = () => {
       </div>
       <BrandsCarousel />
       <Catalogg />
-      <News />
+      <News isMobile={isMobile} />
       <Subscription isMobile={isMobile} />
       <FAQ />
       <Footer isMobile={isMobile} />
