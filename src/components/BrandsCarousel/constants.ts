@@ -1,10 +1,10 @@
 export const data = [
-  { src: './brand0.svg', name: 'DOLCE & GABBANA CASA' },
-  { src: './brand1.svg', name: 'BACCARAT' },
-  { src: './brand2.svg', name: 'HERMES' },
-  { src: './brand3.svg', name: 'LALIQUE' },
-  { src: './brand4.svg', name: 'CHRISTOFLE' },
-  { src: './brand5.svg', name: 'BERNARDAUD' },
+  { id: 0, pictureUrl: './brand0.svg', title: 'DOLCE & GABBANA CASA' },
+  { id: 1, pictureUrl: './brand1.svg', title: 'BACCARAT' },
+  { id: 2, pictureUrl: './brand2.svg', title: 'HERMES' },
+  { id: 3, pictureUrl: './brand3.svg', title: 'LALIQUE' },
+  { id: 4, pictureUrl: './brand4.svg', title: 'CHRISTOFLE' },
+  { id: 5, pictureUrl: './brand5.svg', title: 'BERNARDAUD' },
 ];
 
 export const breakpoints = {

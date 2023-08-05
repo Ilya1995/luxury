@@ -7,11 +7,11 @@ import { useMedia } from '../../hooks';
 import './styles.scss';
 
 type PropsType = {
-  src: string;
-  name: string;
+  pictureUrl: string;
+  title: string;
 };
 
-export const BrandsCarouselItem: FC<PropsType> = ({ src, name }) => {
+export const BrandsCarouselItem: FC<PropsType> = ({ pictureUrl, title }) => {
   const swiperSlide = useSwiperSlide();
   const isMobile = useMedia('(max-width: 550px)');
 
@@ -25,8 +25,8 @@ export const BrandsCarouselItem: FC<PropsType> = ({ src, name }) => {
         'brands-carousel-item_visited': isVisible,
       })}
     >
-      <img className="brands-carousel-item__img" alt="Бренд" src={src} />
-      <div className="brands-carousel-item__name">{name}</div>
+      <img className="brands-carousel-item__img" alt="Бренд" src={pictureUrl} />
+      <div className="brands-carousel-item__name">{title}</div>
     </div>
   );
 };
