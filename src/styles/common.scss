@@ -50,6 +50,16 @@ body {
   }
 }
 
+.shadow {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.15),
+      0 6px 20px 0 rgba(0, 0, 0, 0.1);
+  }
+}
+
 .line {
   height: 1px;
   background-color: var(--grey-200);

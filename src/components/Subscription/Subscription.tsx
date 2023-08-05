@@ -21,7 +21,7 @@ export const Subscription: FC<PropsType> = ({ isMobile }) => {
             className="input subscription__controls-email"
             placeholder="E-mail"
           />
-          <button className="button">Подписаться</button>
+          <button className="button shadow">Подписаться</button>
         </div>
         <div className="subscription__confidentiality">
           Нажимая на кнопку, вы соглашаетесь с&nbsp;
