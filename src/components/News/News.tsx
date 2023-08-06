@@ -1,12 +1,15 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Mousewheel, Navigation } from 'swiper/modules';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { getNews } from '../../store/actionCreator';
+import type { RootState } from '../../store';
 import { SwiperNavButtonPrev } from '../SwiperNavButtonPrev';
 import { SwiperNavButtonNext } from '../SwiperNavButtonNext';
 import { Card } from './Card';
 import { LastSlide } from './LastSlide';
-import { data, breakpoints } from './constants';
+import { breakpoints } from './constants';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -17,6 +20,19 @@ type PropsType = {
 };
 
 export const News: FC<PropsType> = ({ isMobile }) => {
+  const {
+    data: news,
+    isLoading,
+    isError,
+  } = useSelector((state: RootState) => state.general.news);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!news.length) {
+      getNews(dispatch);
+    }
+  }, [dispatch, news.length]);
+
   const offset = isMobile ? 8 : 110;
 
   return (
@@ -34,7 +50,7 @@ export const News: FC<PropsType> = ({ isMobile }) => {
           modules={[Mousewheel, Navigation]}
           className="news-swiper"
         >
-          {data.map((item) => (
+          {news.map((item) => (
             <SwiperSlide key={item.id}>
               <Card {...item} />
             </SwiperSlide>

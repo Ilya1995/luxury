@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { GeneralState } from './types';
+import { GeneralState, StateKey } from './types';
 
 const initialState: GeneralState = {
   brands: {
@@ -10,15 +10,21 @@ const initialState: GeneralState = {
     isLoading: false,
     isSuccess: false,
   },
+  news: {
+    data: [],
+    isError: false,
+    isLoading: false,
+    isSuccess: false,
+  },
 };
 
 export const counterSlice = createSlice({
-  name: 'counter',
+  name: 'general',
   initialState,
   reducers: {
     setSuccessData: (
       state,
-      action: PayloadAction<{ key: string; data: any }>
+      action: PayloadAction<{ key: StateKey; data: any }>
     ) => {
       state[action.payload.key] = {
         data: action.payload.data,
@@ -27,7 +33,7 @@ export const counterSlice = createSlice({
         isSuccess: true,
       };
     },
-    setErrorData: (state, action: PayloadAction<{ key: string }>) => {
+    setErrorData: (state: any, action: PayloadAction<{ key: StateKey }>) => {
       state[action.payload.key] = {
         ...state[action.payload.key],
         isError: true,
@@ -35,7 +41,7 @@ export const counterSlice = createSlice({
         isSuccess: false,
       };
     },
-    setLoadingData: (state, action: PayloadAction<{ key: string }>) => {
+    setLoadingData: (state: any, action: PayloadAction<{ key: StateKey }>) => {
       state[action.payload.key] = {
         ...state[action.payload.key],
         isError: false,

@@ -1,4 +1,6 @@
-export const data = [
+import { Brand } from '../../store/types';
+
+export const data: Brand[] = [
   { id: 0, pictureUrl: './brand0.svg', title: 'DOLCE & GABBANA CASA' },
   { id: 1, pictureUrl: './brand1.svg', title: 'BACCARAT' },
   { id: 2, pictureUrl: './brand2.svg', title: 'HERMES' },

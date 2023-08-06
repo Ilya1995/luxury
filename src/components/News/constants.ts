@@ -1,33 +1,34 @@
 import dayjs from 'dayjs';
+import { News } from '../../store/types';
 
-export const data = [
+export const data: News[] = [
   {
     id: 1,
-    src: './news0.svg',
+    pictureUrl: './news0.svg',
     description: 'Luxury Living Soiree с Татьяной Поляковой',
     date: dayjs().toISOString(),
   },
   {
     id: 2,
-    src: './news1.svg',
+    pictureUrl: './news1.svg',
     description: 'Разнообразие коллекций HERMES в нашем салоне',
     date: dayjs().toISOString(),
   },
   {
     id: 3,
-    src: './news2.svg',
+    pictureUrl: './news2.svg',
     description: 'Новогодние скидки на Fendi Casa и Ritz Paris',
     date: dayjs().toISOString(),
   },
   {
     id: 4,
-    src: './news3.svg',
+    pictureUrl: './news3.svg',
     description: 'Christmas Selection with Baccarat',
     date: dayjs().toISOString(),
   },
   {
     id: 5,
-    src: './news4.svg',
+    pictureUrl: './news4.svg',
     description: 'Новая коллекция Versace Home',
     date: dayjs().toISOString(),
   },
