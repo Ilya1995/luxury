@@ -43,3 +43,18 @@ export const getNews = async (dispatch: Dispatch<AnyAction>) => {
     console.error(error);
   }
 };
+
+export const sendEmail = (email: string) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .post('/email-subscription', { email })
+      .then((response) => {
+        if (response.status !== 200 || typeof response.data === 'string') {
+          reject();
+        } else {
+          resolve('ok');
+        }
+      })
+      .catch(reject);
+  });
+};

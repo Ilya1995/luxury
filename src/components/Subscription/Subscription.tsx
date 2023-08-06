@@ -1,6 +1,8 @@
 import { FC, useState, ChangeEvent } from 'react';
 import classNames from 'classnames';
+import { toast } from 'react-toastify';
 
+import { sendEmail } from '../../store/actionCreator';
 import { textForMobile, textForDesc } from './constants';
 
 import './styles.scss';
@@ -19,7 +21,19 @@ export const Subscription: FC<PropsType> = ({ isMobile }) => {
     setIsValid(true);
   };
 
-  const handleSendEmail = () => {
+  const handleSendEmail = async () => {
+    try {
+      const response = await toast.promise(sendEmail(email), {
+        // pending: 'Promise is pending',
+        success: '',
+        error: 'Вы успешно подписаны',
+        // error: 'Попробуйте позже',
+      });
+      console.log('response', response);
+    } catch (error) {
+      console.log(error);
+    }
+
     const EMAIL_REGEXP =
       /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
     const isValid = EMAIL_REGEXP.test(email);
