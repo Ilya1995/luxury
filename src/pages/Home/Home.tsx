@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { Animate } from 'react-simple-animate';
+import { useTranslation } from 'react-i18next';
 
 import { useMedia } from '../../hooks';
 import { Header } from '../../components/Header';
@@ -15,10 +16,8 @@ import './styles.scss';
 
 type PropsType = {};
 
-const text =
-  'Интерьерный салон Luxury Living работает с 2010 года и является официальным представителем на юге России\nвсемирно известных брендов: Hermes, Baccarat, Lalique, Christofle, Daum, Fendi Casa, Dolce&Gabbana Casa, Versace Home и др.\nОпытные декораторы осуществляют под ключ полный спектр услуг от подбора материалов до оформления интерьера мебелью, предметами столовой сервировки, текстилем и аксессуарами';
-
 export const Home: FC<PropsType> = () => {
+  const { t } = useTranslation();
   const isMobile = useMedia('(max-width: 768px)');
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
 
@@ -36,7 +35,6 @@ export const Home: FC<PropsType> = () => {
   const heightBG = innerWidth / 2 - 30;
   const styleBG = !isMobile ? { height: `${heightBG}px` } : {};
   const styleTagline = !isMobile ? { marginTop: `${heightBG / 3.7}px` } : {};
-  const tagline = `Лучшее${isMobile ? '\n' : ' '}для вашего интерьера`;
 
   return (
     <div className="page home-page">
@@ -50,13 +48,13 @@ export const Home: FC<PropsType> = () => {
             easeType="ease-in"
             duration={1.5}
           >
-            {tagline}
+            {t(isMobile ? 'tagline-mobile' : 'tagline')}
           </Animate>
         </div>
       </div>
       <div className="home-page__business-inf business-inf">
         <img className="business-inf__logo" alt="Лого" src="./logo-visit.svg" />
-        <div className="business-inf__text">{text}</div>
+        <div className="business-inf__text">{t('business-inf')}</div>
         <ButtonMore />
       </div>
       <BrandsCarousel />

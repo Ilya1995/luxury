@@ -7,7 +7,7 @@ export type StateItems<T> = {
   isSuccess: boolean;
 };
 
-export type Lang = 'RUS';
+export type Lang = 'RUS' | 'ENG';
 
 export type GeneralState = {
   news: StateItems<News>;

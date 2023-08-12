@@ -4,6 +4,10 @@
   align-items: center;
   color: var(--white);
 
+  &__search {
+    width: 1.625rem;
+  }
+
   @media (max-width: 768px) {
     img {
       height: 2rem;
