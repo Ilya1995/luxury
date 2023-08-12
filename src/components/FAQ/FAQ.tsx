@@ -1,8 +1,11 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Parser } from 'html-to-react';
 import { Animate } from 'react-simple-animate';
+import { useSelector, useDispatch } from 'react-redux';
+import Spinner from 'react-spinner-material';
 
-import { faq } from './constants';
+import { getFaqs } from '../../store/actionCreator';
+import type { RootState } from '../../store';
 
 import './styles.scss';
 
@@ -10,10 +13,37 @@ type PropsType = {};
 
 export const FAQ: FC<PropsType> = () => {
   const [open, setOpen] = useState<{ [key in string]: boolean }>({});
+  const {
+    data: faqs,
+    isLoading,
+    isError,
+  } = useSelector((state: RootState) => state.general.faqs);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!faqs.length) {
+      getFaqs(dispatch);
+    }
+  }, [dispatch, faqs.length]);
 
   const handleOpen = (id: number) => {
     setOpen({ ...open, [id]: !open[id] });
   };
+
+  if (isError) {
+    return;
+  }
+
+  if (isLoading) {
+    return (
+      <Spinner
+        radius={50}
+        stroke={2}
+        color="var(--orange)"
+        className="faq__spinner"
+      />
+    );
+  }
 
   return (
     <div className="faq">
@@ -22,7 +52,7 @@ export const FAQ: FC<PropsType> = () => {
         <div className="faq__subtitle">Все, что нужно знать о нас</div>
       </div>
       <div className="faq-list">
-        {faq.map(({ id, title, description }) => (
+        {faqs.map(({ id, title, description }) => (
           <div
             key={id}
             className="faq-list__item"

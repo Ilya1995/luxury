@@ -14,6 +14,7 @@ type PropsType = {
 export const Subscription: FC<PropsType> = ({ isMobile }) => {
   const [email, setEmail] = useState('');
   const [isValid, setIsValid] = useState(true);
+  const [isLock, setIsLock] = useState(false);
   const text = isMobile ? textForMobile : textForDesc;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -22,23 +23,27 @@ export const Subscription: FC<PropsType> = ({ isMobile }) => {
   };
 
   const handleSendEmail = async () => {
-    try {
-      const response = await toast.promise(sendEmail(email), {
-        // pending: 'Promise is pending',
-        success: '',
-        error: 'Вы успешно подписаны',
-        // error: 'Попробуйте позже',
-      });
-      console.log('response', response);
-    } catch (error) {
-      console.log(error);
-    }
-
     const EMAIL_REGEXP =
       /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
     const isValid = EMAIL_REGEXP.test(email);
     setIsValid(isValid);
+    if (!isValid) return;
     console.log(isValid);
+
+    setIsLock(true);
+
+    try {
+      await toast.promise(sendEmail(email), {
+        pending: 'Подождите...',
+        success: 'Вы успешно подписаны',
+        error: 'Попробуйте позже',
+      });
+      setEmail('');
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLock(false);
+    }
   };
 
   return (
@@ -59,7 +64,12 @@ export const Subscription: FC<PropsType> = ({ isMobile }) => {
             <div className="email-error">Введите корректный email</div>
           </div>
 
-          <button className="button shadow" onClick={handleSendEmail}>
+          <button
+            className={classNames('button shadow', {
+              button_disabled: isLock || !isValid,
+            })}
+            onClick={handleSendEmail}
+          >
             Подписаться
           </button>
         </div>

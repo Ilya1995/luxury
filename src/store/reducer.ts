@@ -16,6 +16,12 @@ const initialState: GeneralState = {
     isLoading: false,
     isSuccess: false,
   },
+  faqs: {
+    data: [],
+    isError: false,
+    isLoading: false,
+    isSuccess: false,
+  },
 };
 
 export const counterSlice = createSlice({

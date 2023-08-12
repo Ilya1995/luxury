@@ -1,4 +1,4 @@
-export const faq = [
+export const data = [
   {
     id: 1,
     title: 'Возможна ли доставка в другие регионы?',

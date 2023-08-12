@@ -20,6 +20,10 @@
     }
   }
 
+  &__spinner {
+    margin: 5rem auto;
+  }
+
   &__subtitle {
     line-height: 1.625rem;
     color: var(--grey-600);

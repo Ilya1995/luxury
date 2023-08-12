@@ -48,6 +48,15 @@ body {
   @media (max-width: 768px) {
     width: 100%;
   }
+
+  &_disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    &.shadow:hover {
+      box-shadow: none;
+    }
+  }
 }
 
 .shadow {
@@ -74,7 +83,7 @@ body {
   background-image: url('../../public/message.svg');
   background-position: 0.35rem 0.35rem;
   background-repeat: no-repeat;
-  padding-left: 2.75rem;
+  padding-left: 2.5rem;
   transition: all 0.4s ease-in-out;
   caret-color: var(--grey-600);
   color: var(--grey-800);

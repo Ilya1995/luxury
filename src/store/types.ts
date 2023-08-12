@@ -1,4 +1,4 @@
-export type StateKey = 'news' | 'brands';
+export type StateKey = 'news' | 'brands' | 'faqs';
 
 export type StateItems<T> = {
   data: T[];
@@ -7,9 +7,12 @@ export type StateItems<T> = {
   isSuccess: boolean;
 };
 
+export type Lang = 'RUS';
+
 export type GeneralState = {
   news: StateItems<News>;
   brands: StateItems<Brand>;
+  faqs: StateItems<Faq>;
 };
 
 export type Brand = {
@@ -32,7 +35,19 @@ export type News = {
   pictureUrl: string;
 };
 
+export type Faq = {
+  id: number;
+  created?: string;
+  updated?: string;
+  title: string;
+  description: string;
+  lang: Lang;
+  active: boolean;
+};
+
 export type Response<T> = {
-  data: T;
+  data: {
+    content: T;
+  };
   status: number;
 };
