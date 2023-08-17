@@ -1,5 +1,6 @@
 import { FC, useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { useOnClickOutside } from '../../hooks';
 // import { AnchorMapToPageType } from '../../types';
@@ -24,6 +25,7 @@ export enum AnchorPageEnum {
 export const Menu: FC<PropsType> = ({ handleChangePage, anchorMapToPage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const node = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const listener = () => {
@@ -73,31 +75,31 @@ export const Menu: FC<PropsType> = ({ handleChangePage, anchorMapToPage }) => {
           className="menu__side-link"
           onClick={() => onChangeHash(AnchorPageEnum.ACQUAINTANCE)}
         >
-          Каталог
+          {t('catalog')}
         </div>
         <div
           className="menu__side-link"
           onClick={() => onChangeHash(AnchorPageEnum.APPLICATION)}
         >
-          Бренды
+          {t('brands')}
         </div>
         <div
           className="menu__side-link"
           onClick={() => onChangeHash(AnchorPageEnum.TECHNOLOGY)}
         >
-          Проекты
+          {t('projects')}
         </div>
         <div
           className="menu__side-link"
           onClick={() => onChangeHash(AnchorPageEnum.CONTACTS)}
         >
-          Новости
+          {t('news')}
         </div>
         <div
           className="menu__side-link"
           onClick={() => onChangeHash(AnchorPageEnum.CONTACTS)}
         >
-          Контакты
+          {t('contacts')}
         </div>
       </div>
     </div>

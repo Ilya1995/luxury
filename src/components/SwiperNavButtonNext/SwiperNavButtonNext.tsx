@@ -8,7 +8,7 @@ export const SwiperNavButtonNext: FC = () => {
     <img
       className="swiper-nav-button swiper-nav-button_next"
       onClick={() => swiper.slideNext()}
-      alt="вперед"
+      alt="next"
       src="./nav-next.svg"
     />
   );

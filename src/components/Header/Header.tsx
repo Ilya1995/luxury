@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { Menu } from '../Menu';
 import { LangMenu } from '../LangMenu';
@@ -12,22 +13,24 @@ type PropsType = {
 };
 
 export const Header: FC<PropsType> = ({ isMobile, className }) => {
+  const { t } = useTranslation();
+
   return (
     <div className={classNames('header', className)}>
       {isMobile && <Menu handleChangePage={() => {}} anchorMapToPage={{}} />}
-      <img alt="Лого" src="./logo.svg" />
-      {isMobile && <img alt="Поиск" src="./search.svg" />}
+      <img alt="logo" src="./logo.svg" />
+      {isMobile && <img alt="search" src="./search.svg" />}
       {!isMobile && (
         <div className="header__nav-menu">
           <LangMenu />
-          <div className="nav-link">Каталог</div>
-          <div className="nav-link">Бренды</div>
-          <div className="nav-link">Проекты</div>
-          <div className="nav-link">Новости</div>
-          <div className="nav-link">Контакты</div>
+          <div className="nav-link">{t('catalog')}</div>
+          <div className="nav-link">{t('brands')}</div>
+          <div className="nav-link">{t('projects')}</div>
+          <div className="nav-link">{t('news')}</div>
+          <div className="nav-link">{t('contacts')}</div>
           <img
             className="nav-link header__search"
-            alt="Поиск"
+            alt="search"
             src="./search.svg"
           />
         </div>

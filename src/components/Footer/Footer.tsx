@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import './styles.scss';
 
@@ -7,6 +8,8 @@ type PropsType = {
 };
 
 export const Footer: FC<PropsType> = ({ isMobile }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="footer">
       <div className="footer__first">
@@ -14,14 +17,14 @@ export const Footer: FC<PropsType> = ({ isMobile }) => {
         <div className="footer__contacts">
           <div className="footer-links-group">
             <div className="footer__contacts-links">
-              <div className="pointer">О компании</div>
-              <div className="pointer">Каталог</div>
-              <div className="pointer">Проекты</div>
+              <div className="pointer">{t('about-company')}</div>
+              <div className="pointer">{t('catalog')}</div>
+              <div className="pointer">{t('projects')}</div>
             </div>
             <div className="footer__contacts-links">
-              <div className="pointer">Новости</div>
+              <div className="pointer">{t('news')}</div>
               <div className="pointer">Help</div>
-              <div className="pointer">Контакты</div>
+              <div className="pointer">{t('contacts')}</div>
             </div>
           </div>
           {!isMobile && (
@@ -44,8 +47,8 @@ export const Footer: FC<PropsType> = ({ isMobile }) => {
         <div className="footer__information">
           <div>©Luxury Living</div>
           <div className="footer__information-items">
-            <div className="pointer">Политика возврата</div>
-            <div className="pointer">Обработка персональных данных</div>
+            <div className="pointer">{t('return-policy')}</div>
+            <div className="pointer">{t('personal-data')}</div>
             <div className="pointer">Cookies</div>
           </div>
         </div>

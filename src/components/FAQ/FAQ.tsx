@@ -3,6 +3,7 @@ import { Parser } from 'html-to-react';
 import { Animate } from 'react-simple-animate';
 import { useSelector, useDispatch } from 'react-redux';
 import Spinner from 'react-spinner-material';
+import { useTranslation } from 'react-i18next';
 
 import { getFaqs } from '../../store/actionCreator';
 import type { RootState } from '../../store';
@@ -18,6 +19,7 @@ export const FAQ: FC<PropsType> = () => {
     isLoading,
     isError,
   } = useSelector((state: RootState) => state.general.faqs);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,8 +50,8 @@ export const FAQ: FC<PropsType> = () => {
   return (
     <div className="faq">
       <div>
-        <div className="faq__title">Часто задаваемые вопросы</div>
-        <div className="faq__subtitle">Все, что нужно знать о нас</div>
+        <div className="faq__title">{t('faq')}</div>
+        <div className="faq__subtitle">{t('know-about-us')}</div>
       </div>
       <div className="faq-list">
         {faqs.map(({ id, title, description }) => (

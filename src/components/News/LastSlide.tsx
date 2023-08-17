@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { ButtonMore } from '../../components/ButtonMore';
 
@@ -9,6 +10,7 @@ type PropsType = {
 };
 
 export const LastSlide: FC<PropsType> = ({ isMobile }) => {
+  const { t } = useTranslation();
   const [height, setHeight] = useState(300);
   const padding = isMobile ? 16 : 32;
 
@@ -28,7 +30,7 @@ export const LastSlide: FC<PropsType> = ({ isMobile }) => {
     >
       <img className="last-slide__img" alt="Лого" src="./logo-visit.svg" />
       <div className="card__content">
-        <div className="card__content-title">Все новости компании</div>
+        <div className="card__content-title">{t('all-news-company')}</div>
         <ButtonMore />
       </div>
     </div>

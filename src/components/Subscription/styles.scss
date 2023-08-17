@@ -71,10 +71,16 @@
     @media (max-width: 768px) {
       flex-direction: column;
       margin: 0 0 1rem;
+      gap: 1rem;
+
+      & > div {
+        width: 100%;
+      }
     }
 
     &-email {
       margin-right: 1.5rem;
+      width: 17rem;
 
       &_invalid ~ .email-error {
         opacity: 1;
@@ -82,7 +88,6 @@
 
       @media (max-width: 768px) {
         margin-right: 0;
-        margin-bottom: 1rem;
       }
     }
   }

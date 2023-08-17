@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Mousewheel, Navigation } from 'swiper/modules';
 import { useSelector, useDispatch } from 'react-redux';
 import Spinner from 'react-spinner-material';
+import { useTranslation } from 'react-i18next';
 
 import { getNews } from '../../store/actionCreator';
 import type { RootState } from '../../store';
@@ -27,6 +28,7 @@ export const News: FC<PropsType> = ({ isMobile }) => {
     isError,
   } = useSelector((state: RootState) => state.general.news);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!news.length) {
@@ -53,7 +55,7 @@ export const News: FC<PropsType> = ({ isMobile }) => {
 
   return (
     <div className="news">
-      <div className="news__header">Новости</div>
+      <div className="news__header">{t('news')}</div>
       <div className="news__content">
         <Swiper
           slidesPerView={5}

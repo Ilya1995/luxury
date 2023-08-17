@@ -1,9 +1,9 @@
 import { FC, useState, ChangeEvent } from 'react';
 import classNames from 'classnames';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 import { sendEmail } from '../../store/actionCreator';
-import { textForMobile, textForDesc } from './constants';
 
 import './styles.scss';
 
@@ -15,7 +15,8 @@ export const Subscription: FC<PropsType> = ({ isMobile }) => {
   const [email, setEmail] = useState('');
   const [isValid, setIsValid] = useState(true);
   const [isLock, setIsLock] = useState(false);
-  const text = isMobile ? textForMobile : textForDesc;
+  const { t } = useTranslation();
+  const text = isMobile ? t('first-know-mobile') : t('first-know');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value.trim());
@@ -28,15 +29,14 @@ export const Subscription: FC<PropsType> = ({ isMobile }) => {
     const isValid = EMAIL_REGEXP.test(email);
     setIsValid(isValid);
     if (!isValid) return;
-    console.log(isValid);
 
     setIsLock(true);
 
     try {
       await toast.promise(sendEmail(email), {
-        pending: 'Подождите...',
-        success: 'Вы успешно подписаны',
-        error: 'Попробуйте позже',
+        pending: t('wait'),
+        success: t('success-subscribe'),
+        error: t('error-subscribe'),
       });
       setEmail('');
     } catch (error) {
@@ -49,7 +49,7 @@ export const Subscription: FC<PropsType> = ({ isMobile }) => {
   return (
     <div className="subscription">
       <div className="subscription__content">
-        <div className="subscription__header">Хотите быть в курсе трендов?</div>
+        <div className="subscription__header">{t('aware-of-trends')}</div>
         <div className="subscription__text">{text}</div>
         <div className="subscription__controls">
           <div>
@@ -61,7 +61,7 @@ export const Subscription: FC<PropsType> = ({ isMobile }) => {
               onChange={handleChange}
               placeholder="E-mail"
             />
-            <div className="email-error">Введите корректный email</div>
+            <div className="email-error">{t('email-error')}</div>
           </div>
 
           <button
@@ -70,19 +70,19 @@ export const Subscription: FC<PropsType> = ({ isMobile }) => {
             })}
             onClick={handleSendEmail}
           >
-            Подписаться
+            {t('subscribe')}
           </button>
         </div>
 
         <div className="subscription__confidentiality">
-          Нажимая на кнопку, вы соглашаетесь с&nbsp;
+          {t('you-agree')}&nbsp;
           <a
             className="subscription__confidentiality-link"
             href="https://dzen.ru/"
             rel="noreferrer"
             target="_blank"
           >
-            политикой конфиденциальности
+            {t('privacy-policy')}
           </a>
         </div>
       </div>

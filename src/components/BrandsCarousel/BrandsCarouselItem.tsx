@@ -25,7 +25,7 @@ export const BrandsCarouselItem: FC<PropsType> = ({ pictureUrl, title }) => {
         'brands-carousel-item_visited': isVisible,
       })}
     >
-      <img className="brands-carousel-item__img" alt="Бренд" src={pictureUrl} />
+      <img className="brands-carousel-item__img" alt="brand" src={pictureUrl} />
       <div className="brands-carousel-item__name">{title}</div>
     </div>
   );
