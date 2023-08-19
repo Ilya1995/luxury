@@ -28,7 +28,6 @@ export const RUS = {
     'know-about-us': 'Все, что нужно знать о нас',
     'return-policy': 'Политика возврата',
     'personal-data': 'Обработка персональных данных',
-    'about-company': 'О компании',
     wait: 'Подождите...',
     'success-subscribe': 'Вы успешно подписаны',
     'error-subscribe': 'Попробуйте позже',

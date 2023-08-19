@@ -13,6 +13,16 @@
   &__name {
     text-align: center;
     margin-top: 1rem;
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 2rem;
+    color: var(--grey-800);
+
+    @media (max-width: 768px) {
+      font-size: 0.875rem;
+      line-height: 1.375rem;
+      margin-top: 0.5rem;
+    }
   }
 
   &_visited {

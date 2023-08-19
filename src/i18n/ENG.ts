@@ -28,7 +28,6 @@ export const ENG = {
     'know-about-us': 'Everything you need to know about us',
     'return-policy': 'Return policy',
     'personal-data': 'Processing of personal data',
-    'about-company': 'About company',
     wait: 'Wait...',
     'success-subscribe': 'You have successfully subscribed',
     'error-subscribe': 'Try later',

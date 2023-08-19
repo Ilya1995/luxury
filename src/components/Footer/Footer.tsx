@@ -17,13 +17,12 @@ export const Footer: FC<PropsType> = ({ isMobile }) => {
         <div className="footer__contacts">
           <div className="footer-links-group">
             <div className="footer__contacts-links">
-              <div className="pointer">{t('about-company')}</div>
               <div className="pointer">{t('catalog')}</div>
+              <div className="pointer">{t('brands')}</div>
               <div className="pointer">{t('projects')}</div>
             </div>
             <div className="footer__contacts-links">
               <div className="pointer">{t('news')}</div>
-              <div className="pointer">Help</div>
               <div className="pointer">{t('contacts')}</div>
             </div>
           </div>
@@ -31,9 +30,6 @@ export const Footer: FC<PropsType> = ({ isMobile }) => {
             <div className="footer__contacts-social">
               <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
                 <img alt="instagram" src="./instagram.svg" />
-              </a>
-              <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
-                <img alt="vk" src="./vk.svg" />
               </a>
               <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
                 <img alt="whatsap" src="./whatsap.svg" />
