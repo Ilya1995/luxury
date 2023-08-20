@@ -56,12 +56,7 @@ export const Menu: FC<PropsType> = ({ handleChangePage, anchorMapToPage }) => {
 
   return (
     <div className="menu" ref={node}>
-      <button
-        className={classNames('menu__button', {
-          menu__button_active: isOpen,
-        })}
-        onClick={onChangeIsMenuOpen}
-      >
+      <button className="menu__button" onClick={onChangeIsMenuOpen}>
         <span className="menu__button-item" />
         <span className="menu__button-item" />
         <span className="menu__button-item" />
@@ -71,35 +66,48 @@ export const Menu: FC<PropsType> = ({ handleChangePage, anchorMapToPage }) => {
           menu__side_open: isOpen,
         })}
       >
-        <div
-          className="menu__side-link"
-          onClick={() => onChangeHash(AnchorPageEnum.ACQUAINTANCE)}
-        >
-          {t('catalog')}
+        <div>
+          <img
+            alt="close"
+            className="menu__side-close"
+            src="./close.svg"
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="menu__side-links">
+            <div
+              className="menu__side-link"
+              onClick={() => onChangeHash(AnchorPageEnum.ACQUAINTANCE)}
+            >
+              {t('catalog')}
+            </div>
+            <div
+              className="menu__side-link"
+              onClick={() => onChangeHash(AnchorPageEnum.APPLICATION)}
+            >
+              {t('brands')}
+            </div>
+            <div
+              className="menu__side-link"
+              onClick={() => onChangeHash(AnchorPageEnum.TECHNOLOGY)}
+            >
+              {t('projects')}
+            </div>
+            <div
+              className="menu__side-link"
+              onClick={() => onChangeHash(AnchorPageEnum.CONTACTS)}
+            >
+              {t('contacts')}
+            </div>
+          </div>
         </div>
-        <div
-          className="menu__side-link"
-          onClick={() => onChangeHash(AnchorPageEnum.APPLICATION)}
-        >
-          {t('brands')}
-        </div>
-        <div
-          className="menu__side-link"
-          onClick={() => onChangeHash(AnchorPageEnum.TECHNOLOGY)}
-        >
-          {t('projects')}
-        </div>
-        <div
-          className="menu__side-link"
-          onClick={() => onChangeHash(AnchorPageEnum.CONTACTS)}
-        >
-          {t('news')}
-        </div>
-        <div
-          className="menu__side-link"
-          onClick={() => onChangeHash(AnchorPageEnum.CONTACTS)}
-        >
-          {t('contacts')}
+
+        <div className="menu__side-social">
+          <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
+            <img alt="instagram" src="./instagram.svg" />
+          </a>
+          <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
+            <img alt="whatsap" src="./whatsap.svg" />
+          </a>
         </div>
       </div>
     </div>

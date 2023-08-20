@@ -1,5 +1,5 @@
-import { FC, useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { FC, useEffect, useState } from 'react';
+import { Swiper, SwiperSlide, SwiperClass } from 'swiper/react';
 import { Mousewheel, Navigation } from 'swiper/modules';
 import { useSelector, useDispatch } from 'react-redux';
 import Spinner from 'react-spinner-material';
@@ -29,12 +29,20 @@ export const News: FC<PropsType> = ({ isMobile }) => {
   } = useSelector((state: RootState) => state.general.news);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [showNavButton, setShowNavButton] = useState({
+    showPrev: false,
+    showNext: true,
+  });
 
   useEffect(() => {
     if (!news.length) {
       getNews(dispatch);
     }
   }, [dispatch, news.length]);
+
+  const handleChangeShowNawButtons = ({ isBeginning, isEnd }: SwiperClass) => {
+    setShowNavButton({ showPrev: !isBeginning, showNext: !isEnd });
+  };
 
   const offset = isMobile ? 8 : 110;
 
@@ -61,6 +69,7 @@ export const News: FC<PropsType> = ({ isMobile }) => {
           slidesPerView={5}
           spaceBetween={24}
           speed={800}
+          onActiveIndexChange={handleChangeShowNawButtons}
           slidesOffsetBefore={offset}
           slidesOffsetAfter={offset}
           mousewheel
@@ -77,8 +86,8 @@ export const News: FC<PropsType> = ({ isMobile }) => {
             <LastSlide isMobile={isMobile} />
           </SwiperSlide>
 
-          <SwiperNavButtonPrev />
-          <SwiperNavButtonNext />
+          {showNavButton.showPrev && <SwiperNavButtonPrev />}
+          {showNavButton.showNext && <SwiperNavButtonNext />}
         </Swiper>
       </div>
     </div>
