@@ -30,9 +30,10 @@ export type News = {
   created?: string;
   updated?: string;
   date: string;
-  title?: string;
-  description: string;
+  title: string;
+  description?: string;
   pictureUrl: string;
+  imageId: number;
 };
 
 export type Faq = {

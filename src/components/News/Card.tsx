@@ -1,5 +1,6 @@
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
 import dayjs from 'dayjs';
+import axios from 'axios';
 
 import { ButtonMore } from '../../components/ButtonMore';
 
@@ -7,21 +8,45 @@ import './styles.scss';
 
 type PropsType = {
   id: number;
-  pictureUrl: string;
-  description: string;
+  imageId: number;
+  title: string;
   date: string;
 };
 
-export const Card: FC<PropsType> = ({ pictureUrl, description, date }) => {
+export const Card: FC<PropsType> = ({ imageId, title, date }) => {
+  const [imgSrc, setImgSrc] = useState();
+
+  useEffect(() => {
+    load();
+  }, [imageId]);
+
+  const load = async () => {
+    if (!imageId) return;
+
+    const config: any = {
+      url: 'images/' + imageId,
+      method: 'get',
+      responseType: 'blob',
+    };
+    const response = await axios.request(config);
+    setImgSrc(response.data);
+  };
+
   return (
     <div className="card">
-      <img className="card__img" alt="news" src={pictureUrl} />
+      {imgSrc && (
+        <img
+          className="card__img"
+          alt="news"
+          src={URL.createObjectURL(imgSrc)}
+        />
+      )}
       <div className="card__content">
         <div>
           <div className="card__content-date">
             {dayjs(date).format('D MMMM YYYY')}
           </div>
-          <div className="card__content-title">{description}</div>
+          <div className="card__content-title">{title}</div>
         </div>
         <ButtonMore />
       </div>
