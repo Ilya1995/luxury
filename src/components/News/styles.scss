@@ -50,9 +50,33 @@
   &__img {
     display: block;
     width: 100%;
-    height: 100%;
+    height: 360px;
     object-fit: cover;
     border-radius: 0.75rem;
+
+    @media (max-width: 2048px) {
+      height: 358px;
+    }
+
+    @media (max-width: 1792px) {
+      height: 307px;
+    }
+
+    @media (max-width: 1536px) {
+      height: 256px;
+    }
+
+    @media (max-width: 1344px) {
+      height: 217px;
+    }
+
+    @media (max-width: 1152px) {
+      height: 179px;
+    }
+
+    @media (max-width: 900px) {
+      height: 165px;
+    }
   }
 
   &__content {

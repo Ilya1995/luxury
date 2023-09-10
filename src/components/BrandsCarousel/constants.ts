@@ -1,12 +1,12 @@
 import { Brand } from '../../store/types';
 
 export const data: Brand[] = [
-  { id: 0, pictureUrl: './brand0.svg', title: 'DOLCE & GABBANA CASA' },
-  { id: 1, pictureUrl: './brand1.svg', title: 'BACCARAT' },
-  { id: 2, pictureUrl: './brand2.svg', title: 'HERMES' },
-  { id: 3, pictureUrl: './brand3.svg', title: 'LALIQUE' },
-  { id: 4, pictureUrl: './brand4.svg', title: 'CHRISTOFLE' },
-  { id: 5, pictureUrl: './brand5.svg', title: 'BERNARDAUD' },
+  { id: 0, imageId: 1, title: 'DOLCE & GABBANA CASA' },
+  { id: 1, imageId: 2, title: 'BACCARAT' },
+  { id: 2, imageId: 3, title: 'HERMES' },
+  { id: 3, imageId: 4, title: 'LALIQUE' },
+  { id: 4, imageId: 5, title: 'CHRISTOFLE' },
+  { id: 5, imageId: 6, title: 'BERNARDAUD' },
 ];
 
 export const breakpoints = {

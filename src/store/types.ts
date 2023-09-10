@@ -21,8 +21,8 @@ export type Brand = {
   updated?: string;
   title: string;
   description?: string;
-  pictureUrl: string;
   active?: boolean;
+  imageId: number;
 };
 
 export type News = {
@@ -30,9 +30,9 @@ export type News = {
   created?: string;
   updated?: string;
   date: string;
+  newsDate: string;
   title: string;
   description?: string;
-  pictureUrl: string;
   imageId: number;
 };
 
