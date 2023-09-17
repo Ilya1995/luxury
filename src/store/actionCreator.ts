@@ -20,7 +20,7 @@ export const getBrands = async (dispatch: Dispatch<AnyAction>) => {
       throw new Error('bad response');
     }
     const data = response.data.content.length
-      ? response.data.content
+      ? response.data.content.filter(({ active }) => active)
       : mockBrands;
 
     dispatch(setSuccessData({ key: 'brands', data }));
