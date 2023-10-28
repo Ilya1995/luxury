@@ -1,10 +1,12 @@
 export const ENG = {
   translation: {
-    tagline: 'The best for your interior',
-    'tagline-mobile': 'The best\nfor your interior',
-    'business-inf':
-      'The interior salon Luxury Living has been operating since 2010 and is the official representative of world-famous brands in the south of Russia:Hermes, Baccarat, Lalique, Christofle, Daum, Fendi Casa, Dolce & Gabbana Casa, Versace Home, etc.The salon also offers wallpapers, fabrics, bedding, carpets of the best world factories. Experienced decorators provide a full range of turnkey services, from the selection of materials to interior design with furniture, tableware, textiles and accessories',
+    tagline: 'The best\nfor your interior',
+    'business-inf-1':
+      'The interior salon Luxury Living has been operating since 2010 and is the official representative of\nworld-famous brands in the south of Russia:Hermes, Baccarat, Lalique, Christofle, Daum, Fendi Casa, Dolce & Gabbana Casa, Versace Home, etc.',
+    'business-inf-2':
+      'The salon also offers wallpapers, fabrics, bedding, carpets of the best world factories. Experienced decorators provide a full range of turnkey services,\nfrom the selection of materials to interior design with furniture, tableware, textiles and accessories',
     more: 'More',
+    more2: 'More about us',
     catalog: 'Catalog',
     brands: 'Brands',
     projects: 'Projects',
@@ -21,8 +23,8 @@ export const ENG = {
     'first-know-mobile':
       'Be the first to know about all new products and sales in our newsletter.\nWe promise to write infrequently and only on business',
     subscribe: 'Subscribe',
-    'you-agree': 'By clicking on the button, you agree to',
-    'privacy-policy': 'privacy policy',
+    'you-agree': 'By clicking on the button, you agree\nto',
+    'privacy-policy': 'Privacy policy',
     'email-error': 'Please enter a valid email',
     faq: 'FAQ',
     'know-about-us': 'Everything you need to know about us',

@@ -69,13 +69,15 @@
 }
 
 .catalog-img {
+  font-family: var(--merriweather);
   display: flex;
   align-items: flex-end;
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 0.75rem;
+  font-weight: 300;
   font-size: 1.5rem;
-  line-height: 1.875rem;
+  line-height: 1.25;
   color: var(--white);
   padding: 2rem;
 

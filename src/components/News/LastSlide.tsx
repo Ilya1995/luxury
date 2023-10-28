@@ -12,7 +12,7 @@ type PropsType = {
 export const LastSlide: FC<PropsType> = ({ isMobile }) => {
   const { t } = useTranslation();
   const [height, setHeight] = useState(300);
-  const padding = isMobile ? 16 : 32;
+  const padding = isMobile ? 24 : 32;
 
   useEffect(() => {
     setTimeout(() => {

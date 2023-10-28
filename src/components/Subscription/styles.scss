@@ -4,13 +4,13 @@
   align-items: center;
 
   background-color: var(--grey-100);
-  margin: 6.875rem;
+  margin: 7.5rem 6.875rem;
   border-radius: 0.75rem;
   overflow: hidden;
 
   @media (max-width: 768px) {
     flex-direction: column-reverse;
-    margin: 2.375rem 1rem 3rem;
+    margin: 3.5rem 1rem;
   }
 
   &__bg {
@@ -49,10 +49,13 @@
   }
 
   &__text {
+    font-family: var(--merriweather);
     margin-top: 1.5rem;
     margin-bottom: 2rem;
+    font-weight: 300;
+    font-size: 1rem;
     color: var(--grey-600);
-    line-height: 1.625rem;
+    line-height: 1.625;
     white-space: pre-line;
 
     @media (max-width: 768px) {
@@ -95,6 +98,10 @@
   &__confidentiality {
     color: var(--grey-600);
     font-size: 0.75rem;
+
+    @media (max-width: 768px) {
+      white-space: pre-line;
+    }
 
     &-link {
       color: var(--orange);

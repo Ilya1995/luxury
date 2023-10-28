@@ -29,10 +29,24 @@ export const News: FC<PropsType> = ({ isMobile }) => {
   } = useSelector((state: RootState) => state.general.news);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   const [showNavButton, setShowNavButton] = useState({
     showPrev: false,
     showNext: true,
   });
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const callback = () => {
+      setInnerWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', callback);
+    return () => {
+      window.removeEventListener('resize', callback);
+    };
+  }, []);
 
   useEffect(() => {
     if (!news.length) {
@@ -40,11 +54,18 @@ export const News: FC<PropsType> = ({ isMobile }) => {
     }
   }, [dispatch, news.length]);
 
-  const handleChangeShowNawButtons = ({ isBeginning, isEnd }: SwiperClass) => {
+  const handleChangeShowNawButtons = ({
+    isBeginning,
+    isEnd,
+    activeIndex,
+  }: SwiperClass) => {
+    setActiveIndex(activeIndex);
+
     setShowNavButton({ showPrev: !isBeginning, showNext: !isEnd });
   };
 
-  const offset = isMobile ? 8 : 110;
+  const offset = isMobile ? 16 : 110;
+  const widthLine = (innerWidth - 32) / news.length;
 
   if (isError) {
     return;
@@ -90,6 +111,17 @@ export const News: FC<PropsType> = ({ isMobile }) => {
           {showNavButton.showNext && <SwiperNavButtonNext />}
         </Swiper>
       </div>
+      {isMobile && (
+        <div className="news__scroll">
+          <div
+            className="news__scroll-item"
+            style={{
+              width: `${widthLine}px`,
+              transform: `translateX(${activeIndex * widthLine}px)`,
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
