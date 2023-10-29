@@ -7,9 +7,10 @@ import './styles.scss';
 
 type PropsType = {
   className?: string;
+  isWhite?: boolean;
 };
 
-export const LangMenu: FC<PropsType> = ({ className }) => {
+export const LangMenu: FC<PropsType> = ({ className, isWhite = false }) => {
   const [lang, setLang] = useState(localStorage.getItem('lang') || 'RUS');
 
   const changeLang = () => {
@@ -21,7 +22,14 @@ export const LangMenu: FC<PropsType> = ({ className }) => {
   };
 
   return (
-    <div onClick={changeLang} className={classNames('lang-menu', className)}>
+    <div
+      onClick={changeLang}
+      className={classNames(
+        'lang-menu',
+        { 'lang-menu_white': isWhite },
+        className
+      )}
+    >
       <div>{langs[lang]}</div>
     </div>
   );

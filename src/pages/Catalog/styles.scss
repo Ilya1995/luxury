@@ -1,0 +1,11 @@
+.catalog-page {
+  background-color: var(--white);
+
+  &__header {
+    padding: 2rem 2.5rem;
+
+    @media (max-width: 768px) {
+      padding: 1.5rem 1rem;
+    }
+  }
+}

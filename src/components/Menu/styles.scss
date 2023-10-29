@@ -1,4 +1,9 @@
 .menu {
+  &_white {
+    .menu__button-item {
+      background-color: var(--white);
+    }
+  }
   &__button {
     display: block;
     cursor: pointer;
@@ -15,7 +20,7 @@
       height: 0.125rem;
       margin-bottom: 0.25rem;
       border-radius: 0.125rem;
-      background-color: var(--white);
+      background-color: var(--grey-800);
 
       &:last-child {
         margin-bottom: 0;
@@ -65,7 +70,10 @@
     &-social {
       display: flex;
       gap: 1rem;
-      filter: brightness(100);
+
+      a {
+        display: flex;
+      }
     }
   }
 

@@ -1,6 +1,10 @@
 .lang-menu {
   font-family: var(--merriweather);
   font-size: 0.875rem;
-  color: var(--white);
+  color: var(--grey-800);
   cursor: pointer;
+
+  &_white {
+    color: var(--white);
+  }
 }

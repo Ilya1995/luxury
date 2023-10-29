@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { LangMenu } from '../LangMenu';
+import { Icon } from '../Icon';
 import { useOnClickOutside } from '../../hooks';
 // import { AnchorMapToPageType } from '../../types';
 
@@ -12,6 +13,7 @@ import './styles.scss';
 type PropsType = {
   handleChangePage: (index: number) => void;
   anchorMapToPage: any;
+  isWhite?: boolean;
   //   anchorMapToPage: AnchorMapToPageType;
 };
 
@@ -23,7 +25,11 @@ export enum AnchorPageEnum {
   CONTACTS = 'contacts',
 }
 
-export const Menu: FC<PropsType> = ({ handleChangePage, anchorMapToPage }) => {
+export const Menu: FC<PropsType> = ({
+  handleChangePage,
+  anchorMapToPage,
+  isWhite = false,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const node = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
@@ -56,7 +62,7 @@ export const Menu: FC<PropsType> = ({ handleChangePage, anchorMapToPage }) => {
   };
 
   return (
-    <div className="menu" ref={node}>
+    <div ref={node} className={classNames('menu', { menu_white: isWhite })}>
       <button className="menu__button" onClick={onChangeIsMenuOpen}>
         <span className="menu__button-item" />
         <span className="menu__button-item" />
@@ -103,13 +109,13 @@ export const Menu: FC<PropsType> = ({ handleChangePage, anchorMapToPage }) => {
         </div>
 
         <div className="menu__footer">
-          <LangMenu />
+          <LangMenu isWhite />
           <div className="menu__side-social">
             <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
-              <img alt="instagram" src="./instagram.svg" />
+              <Icon name="instagram" size={1.5} />
             </a>
             <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
-              <img alt="whatsap" src="./whatsap.svg" />
+              <Icon name="whatsap" size={1.5} />
             </a>
           </div>
         </div>

@@ -22,7 +22,7 @@ export const Home: FC<PropsType> = () => {
   return (
     <div className="page home-page">
       <div className="bg">
-        <Header className="home-page__header" isMobile={isMobile} />
+        <Header className="home-page__header" isMobile={isMobile} isWhite />
         <div className="home-page__tagline">
           <Animate
             play
