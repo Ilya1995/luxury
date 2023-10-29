@@ -8,9 +8,13 @@
     width: 1.625rem;
   }
 
+  &__lang-menu {
+    margin-left: 1rem;
+  }
+
   @media (max-width: 768px) {
     img {
-      height: 2rem;
+      height: 1.5rem;
     }
   }
 

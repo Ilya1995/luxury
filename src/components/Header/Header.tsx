@@ -22,7 +22,6 @@ export const Header: FC<PropsType> = ({ isMobile, className }) => {
       {isMobile && <img alt="search" src="./search.svg" />}
       {!isMobile && (
         <div className="header__nav-menu">
-          <LangMenu />
           <div className="nav-link">{t('catalog')}</div>
           <div className="nav-link">{t('brands')}</div>
           <div className="nav-link">{t('projects')}</div>
@@ -33,6 +32,7 @@ export const Header: FC<PropsType> = ({ isMobile, className }) => {
             alt="search"
             src="./search.svg"
           />
+          <LangMenu className="header__lang-menu" />
         </div>
       )}
     </div>

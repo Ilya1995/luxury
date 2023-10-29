@@ -2,6 +2,7 @@ import { FC, useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
+import { LangMenu } from '../LangMenu';
 import { useOnClickOutside } from '../../hooks';
 // import { AnchorMapToPageType } from '../../types';
 
@@ -101,13 +102,16 @@ export const Menu: FC<PropsType> = ({ handleChangePage, anchorMapToPage }) => {
           </div>
         </div>
 
-        <div className="menu__side-social">
-          <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
-            <img alt="instagram" src="./instagram.svg" />
-          </a>
-          <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
-            <img alt="whatsap" src="./whatsap.svg" />
-          </a>
+        <div className="menu__footer">
+          <LangMenu />
+          <div className="menu__side-social">
+            <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
+              <img alt="instagram" src="./instagram.svg" />
+            </a>
+            <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
+              <img alt="whatsap" src="./whatsap.svg" />
+            </a>
+          </div>
         </div>
       </div>
     </div>

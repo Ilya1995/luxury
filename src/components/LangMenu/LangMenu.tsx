@@ -1,21 +1,28 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import classNames from 'classnames';
 
-import { Lang } from '../../store/types';
+import { langs } from './constants';
 
-type PropsType = {};
+import './styles.scss';
 
-export const LangMenu: FC<PropsType> = () => {
-  const changeLang = (lang: Lang) => {
-    if (localStorage.getItem('lang') === lang) return;
+type PropsType = {
+  className?: string;
+};
 
-    localStorage.setItem('lang', lang);
+export const LangMenu: FC<PropsType> = ({ className }) => {
+  const [lang, setLang] = useState(localStorage.getItem('lang') || 'RUS');
+
+  const changeLang = () => {
+    const newLang = lang === 'RUS' ? 'ENG' : 'RUS';
+
+    localStorage.setItem('lang', newLang);
+    setLang(newLang);
     window.location.reload();
   };
 
   return (
-    <div className="lang-menu">
-      <div onClick={() => changeLang('RUS')}>RUS</div>
-      <div onClick={() => changeLang('ENG')}>ENG</div>
+    <div onClick={changeLang} className={classNames('lang-menu', className)}>
+      <div>{langs[lang]}</div>
     </div>
   );
 };
