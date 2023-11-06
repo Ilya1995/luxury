@@ -68,29 +68,22 @@
 
   &__controls {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin: 2rem 0 1rem;
 
     @media (max-width: 768px) {
       flex-direction: column;
       margin: 0 0 1rem;
       gap: 1rem;
-
-      & > div {
-        width: 100%;
-      }
     }
 
     &-email {
       margin-right: 1.5rem;
       width: 17rem;
 
-      &_invalid ~ .email-error {
-        opacity: 1;
-      }
-
       @media (max-width: 768px) {
         margin-right: 0;
+        width: 100%;
       }
     }
   }
@@ -107,12 +100,4 @@
       color: var(--orange);
     }
   }
-}
-
-.email-error {
-  transition: opacity 0.4s ease-in-out;
-  position: absolute;
-  font-size: 0.7rem;
-  color: var(--red);
-  opacity: 0;
 }

@@ -1,9 +1,11 @@
-import { FC, useState, ChangeEvent } from 'react';
+import { FC, useState } from 'react';
 import classNames from 'classnames';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 import { sendEmail } from '../../store/actionCreator';
+import { useValidate } from '../../hooks';
+import { Input } from '../Input';
 
 import './styles.scss';
 
@@ -13,22 +15,23 @@ type PropsType = {
 
 export const Subscription: FC<PropsType> = ({ isMobile }) => {
   const [email, setEmail] = useState('');
-  const [isValid, setIsValid] = useState(true);
   const [isLock, setIsLock] = useState(false);
+  const [showError, setShowError] = useState(false);
   const { t } = useTranslation();
+  const { messageError } = useValidate(email, ['email']);
+
   const text = isMobile ? t('first-know-mobile') : t('first-know');
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value.trim());
-    setIsValid(true);
+  const handleChange = (value: string) => {
+    setEmail(value);
+    setShowError(false);
   };
 
   const handleSendEmail = async () => {
-    const EMAIL_REGEXP =
-      /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-    const isValid = EMAIL_REGEXP.test(email);
-    setIsValid(isValid);
-    if (!isValid) return;
+    if (messageError) {
+      setShowError(true);
+      return;
+    }
 
     setIsLock(true);
 
@@ -52,21 +55,17 @@ export const Subscription: FC<PropsType> = ({ isMobile }) => {
         <div className="subscription__header">{t('aware-of-trends')}</div>
         <div className="subscription__text">{text}</div>
         <div className="subscription__controls">
-          <div>
-            <input
-              className={classNames('input subscription__controls-email', {
-                'subscription__controls-email_invalid': !isValid,
-              })}
-              value={email}
-              onChange={handleChange}
-              placeholder="E-mail"
-            />
-            <div className="email-error">{t('email-error')}</div>
-          </div>
+          <Input
+            className={classNames('subscription__controls-email')}
+            type="email"
+            value={email}
+            onChange={handleChange}
+            messageError={showError ? messageError : ''}
+          />
 
           <button
             className={classNames('button shadow', {
-              button_disabled: isLock || !isValid,
+              button_disabled: isLock || showError,
             })}
             onClick={handleSendEmail}
           >

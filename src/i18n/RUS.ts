@@ -25,7 +25,7 @@ export const RUS = {
     subscribe: 'Подписаться',
     'you-agree': 'Нажимая на кнопку, вы соглашаетесь\nс',
     'privacy-policy': 'Политикой конфиденциальности',
-    'email-error': 'Введите корректный email',
+    'email-error': 'Пожалуйста, проверьте, правильно ли указан адрес',
     faq: 'Часто задаваемые вопросы',
     'know-about-us': 'Все, что нужно знать о нас',
     'return-policy': 'Политика возврата',
@@ -33,5 +33,7 @@ export const RUS = {
     wait: 'Подождите...',
     'success-subscribe': 'Вы успешно подписаны',
     'error-subscribe': 'Попробуйте позже',
+    search: 'Поиск',
+    email: 'E-mail',
   },
 };

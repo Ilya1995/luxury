@@ -25,7 +25,7 @@ export const ENG = {
     subscribe: 'Subscribe',
     'you-agree': 'By clicking on the button, you agree\nto',
     'privacy-policy': 'Privacy policy',
-    'email-error': 'Please enter a valid email',
+    'email-error': 'Please check if the address is correct',
     faq: 'FAQ',
     'know-about-us': 'Everything you need to know about us',
     'return-policy': 'Return policy',
@@ -33,5 +33,7 @@ export const ENG = {
     wait: 'Wait...',
     'success-subscribe': 'You have successfully subscribed',
     'error-subscribe': 'Try later',
+    search: 'Search',
+    email: 'E-mail',
   },
 };
