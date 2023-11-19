@@ -1,15 +1,17 @@
 .filter {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 
-  &__product {
-    &-list {
-      max-height: 304px;
-    }
+  &__product-list {
+    max-height: 304px;
+  }
 
-    &-brands {
-      max-height: 468px;
-    }
+  &__brand-list {
+    max-height: 468px;
+  }
+
+  &__color-list {
+    max-height: 406px;
   }
 }

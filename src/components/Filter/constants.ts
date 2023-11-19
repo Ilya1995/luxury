@@ -66,3 +66,18 @@ export const brandsOptions = [
   { title: 'Gdaasing', options: options6 },
   { title: 'Pinomyh', options: options7 },
 ];
+
+export const availabilityOptions = ['В наличии', 'Под заказ'];
+
+export const colorOptions = [
+  'Желтый',
+  'Коричневый',
+  'Красный',
+  'Оранжевый',
+  'Зеленый',
+  'Синий',
+  'Фиолетовый',
+  'Серый',
+  'Белый',
+  'Черный',
+];

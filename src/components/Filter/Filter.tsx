@@ -2,7 +2,12 @@ import { FC, useState } from 'react';
 import classNames from 'classnames';
 
 import { Dropdown } from '../Dropdown';
-import { brandsOptions, typeProductOptions } from './constans';
+import {
+  brandsOptions,
+  typeProductOptions,
+  availabilityOptions,
+  colorOptions,
+} from './constants';
 
 import './styles.scss';
 
@@ -13,6 +18,8 @@ type PropsType = {
 export const Filter: FC<PropsType> = ({ className }) => {
   const [typeProduct, setTypeProduct] = useState([]);
   const [brands, setBrands] = useState([]);
+  const [availability, setAvailability] = useState([]);
+  const [colors, setColors] = useState([]);
 
   const handleChangeTypeProduct = (value: any) => {
     setTypeProduct(value);
@@ -36,8 +43,23 @@ export const Filter: FC<PropsType> = ({ className }) => {
         title="Бренд"
         withSearch
         selected={brands}
-        classNameList="filter__product-brands"
+        classNameList="filter__brand-list"
         onChange={handleChangeBrands}
+      />
+      <Dropdown
+        options={availabilityOptions}
+        title="Наличие"
+        multiple
+        selected={availability}
+        onChange={setAvailability}
+      />
+      <Dropdown
+        options={colorOptions}
+        title="Цвет"
+        multiple
+        selected={colors}
+        classNameList="filter__color-list"
+        onChange={setColors}
       />
     </div>
   );

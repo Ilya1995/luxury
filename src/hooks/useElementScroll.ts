@@ -2,7 +2,10 @@ import { useState, useEffect, RefObject } from 'react';
 
 const pixelsToEnd = 21;
 
-export function useElementScroll(elementRef: RefObject<HTMLDivElement>) {
+export function useElementScroll(
+  elementRef: RefObject<HTMLDivElement>,
+  trigger?: boolean
+) {
   const [scrollPosition, setScrollPosition] = useState({
     scrollX: 0,
     scrollY: 0,
@@ -11,6 +14,12 @@ export function useElementScroll(elementRef: RefObject<HTMLDivElement>) {
     hasScrollbar: false,
     isEndVisible: false,
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      elementRef.current?.dispatchEvent(new CustomEvent('scroll'));
+    }, 550);
+  }, [trigger, elementRef]);
 
   useEffect(() => {
     const targetElement = elementRef.current;

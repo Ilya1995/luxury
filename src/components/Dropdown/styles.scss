@@ -3,7 +3,7 @@
 
   &_open {
     .dropdown-header {
-      border-bottom: 1px solid var(--blue-grey-300);
+      border-bottom: 1px solid rgba(var(--blue-grey-300));
 
       &-title {
         text-decoration-color: var(--black);
@@ -50,15 +50,26 @@
     transition: all 1s;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 
     &_hidden {
       opacity: 0;
       transition: all 0.5s cubic-bezier(0, 1, 0, 1);
       max-height: 0px !important;
       margin-top: 0px;
+
+      .dropdown-list-item {
+        overflow: hidden;
+      }
+
+      .dropdown-list__search {
+        height: 0px;
+      }
     }
 
     &_multiple {
+      display: flex;
+      flex-direction: column;
       gap: 0.5rem;
     }
 
@@ -89,7 +100,7 @@
     }
 
     &__search {
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
     }
   }
 }

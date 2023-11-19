@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Icon } from '../Icon';
 import { Input } from '../Input';
 import { DropdownCheckbox } from '../DropdownCheckbox';
+import { Checkbox } from '../Checkbox';
 import { useElementScroll } from '../../hooks';
 
 import './styles.scss';
@@ -17,6 +18,7 @@ type PropsType = {
   title: string;
   options: string[] | { title: string; options: string[] }[];
   withSearch?: boolean;
+  multiple?: boolean;
   selected: string | string[];
   onChange: (value: any) => void;
 };
@@ -27,15 +29,16 @@ export const Dropdown: FC<PropsType> = ({
   options,
   title,
   withSearch = false,
+  multiple = false,
   selected,
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchText, setSearchText] = useState('');
   const refScroll = useRef<any>();
-  const { isEndVisible } = useElementScroll(refScroll);
+  const { isEndVisible } = useElementScroll(refScroll, isOpen);
 
-  const isMultiple = typeof options[0] === 'object';
+  const isDifficult = typeof options[0] === 'object';
 
   const handleChangeOpen = (event: any) => {
     event.stopPropagation();
@@ -51,6 +54,20 @@ export const Dropdown: FC<PropsType> = ({
     }
 
     onChange(value);
+  };
+
+  const handleSelectMultiple = (item: string, value: boolean) => {
+    let newSelected = [];
+
+    if (value) {
+      newSelected = [...(selected as string[]), item];
+    } else {
+      newSelected = (selected as string[]).filter(
+        (selectedItem) => selectedItem !== item
+      );
+    }
+
+    onChange(newSelected);
   };
 
   return (
@@ -74,7 +91,6 @@ export const Dropdown: FC<PropsType> = ({
           'dropdown-list',
           {
             'dropdown-list_hidden': !isOpen,
-            'dropdown-list_multiple': isMultiple,
           },
           classNameList
         )}
@@ -90,11 +106,12 @@ export const Dropdown: FC<PropsType> = ({
         <div
           className={classNames('dropdown-list__scroll', {
             'dropdown-list__scroll_mask': !isEndVisible,
+            'dropdown-list_multiple': multiple || isDifficult,
           })}
           ref={refScroll}
         >
-          {isMultiple &&
-            (options as DifficultOptions).map((item, index) => (
+          {isDifficult &&
+            (options as DifficultOptions).map((item) => (
               <DropdownCheckbox
                 key={item.title}
                 onChange={onChange}
@@ -103,8 +120,9 @@ export const Dropdown: FC<PropsType> = ({
                 options={item.options}
               />
             ))}
-          {!isMultiple &&
-            (options as SimpleOptions).map((item, index) => (
+          {!isDifficult &&
+            !multiple &&
+            (options as SimpleOptions).map((item) => (
               <div
                 key={item}
                 onClick={(event) => handleSelect(event, item)}
@@ -114,6 +132,17 @@ export const Dropdown: FC<PropsType> = ({
               >
                 {item}
               </div>
+            ))}
+          {!isDifficult &&
+            multiple &&
+            (options as SimpleOptions).map((item) => (
+              <Checkbox
+                key={item}
+                className="dropdown-list-item"
+                label={item}
+                value={selected.includes(item)}
+                onChange={(value) => handleSelectMultiple(item, value)}
+              />
             ))}
         </div>
       </div>
