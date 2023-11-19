@@ -56,7 +56,7 @@ export const Subscription: FC<PropsType> = ({ isMobile }) => {
         <div className="subscription__text">{text}</div>
         <div className="subscription__controls">
           <Input
-            className={classNames('subscription__controls-email')}
+            className="subscription__controls-email"
             type="email"
             value={email}
             onChange={handleChange}

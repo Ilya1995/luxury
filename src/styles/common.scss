@@ -5,6 +5,16 @@ body {
   font-size: 16px;
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--grey-400);
+  border-radius: 2px;
+}
+
 .flex-center {
   display: flex;
   justify-content: center;

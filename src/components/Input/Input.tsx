@@ -39,7 +39,7 @@ export const Input: FC<PropsType> = ({
   }
 
   const iconName = useMemo(() => {
-    if (!messageError) return 'warning';
+    if (!!messageError) return 'warning';
     if (type === 'search') return 'search2';
     if (type === 'email') return 'message2';
 
