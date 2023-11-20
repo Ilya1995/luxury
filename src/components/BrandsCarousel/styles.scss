@@ -42,7 +42,7 @@
     font-weight: 300;
     font-size: 1.25rem;
     line-height: 1.6;
-    color: var(--grey-800);
+    color: rgba(var(--grey-800));
 
     @media (max-width: 768px) {
       font-size: 0.875rem;

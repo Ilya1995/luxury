@@ -42,6 +42,34 @@
     --bg-color: var(--blue-200);
   }
 
+  &-violet {
+    --main-color: var(--violet);
+    --border-color: var(--violet);
+    --bg-color: var(--violet);
+  }
+
+  &-grey {
+    --main-color: var(--grey-500);
+    --border-color: var(--grey-500);
+    --bg-color: var(--grey-500);
+  }
+
+  &-white {
+    --main-color: var(--white);
+    --bg-color: var(--white);
+
+    .checkbox__field:checked + .checkbox__label:before {
+      border-color: rgba(var(--blue-grey-300));
+      background-image: url('../../../public/check-black.svg');
+    }
+  }
+
+  &-black {
+    --main-color: var(--black);
+    --border-color: var(--black);
+    --bg-color: var(--black);
+  }
+
   &__field {
     position: absolute;
     z-index: -1;

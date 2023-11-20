@@ -3,14 +3,14 @@
   border-radius: 0.25rem;
   padding: 0.5rem 0.75rem;
   font-family: var(--raleway);
-  color: var(--grey-800);
+  color: rgba(var(--grey-800));
   font-size: 1rem;
   line-height: 1.6;
   transition: all 0.3s;
   cursor: pointer;
 
   &_active {
-    background-color: var(--grey-800);
-    color: var(--white);
+    background-color: rgba(var(--grey-800));
+    color: rgba(var(--white));
   }
 }

@@ -81,7 +81,7 @@ export const Dropdown: FC<PropsType> = ({
             'dropdown-header-icon_open': isOpen,
           })}
           name="arrow-down"
-          color="var(--grey-600)"
+          color="rgba(var(--grey-600))"
           pointer
           size={1.5}
         />

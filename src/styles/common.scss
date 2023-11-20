@@ -11,7 +11,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--grey-400);
+  background: rgba(var(--grey-400));
   border-radius: 2px;
 }
 
@@ -51,8 +51,8 @@ body {
   font-weight: 500;
   font-size: 1rem;
   line-height: 1.625;
-  color: var(--white);
-  background-color: var(--orange);
+  color: rgba(var(--white));
+  background-color: rgba(var(--orange));
   text-decoration: none;
   display: inline-block;
   border: none;
@@ -93,7 +93,7 @@ body {
   background-color: rgba(var(--grey-100));
 
   @media (max-width: 768px) {
-    background-color: var(--grey-200);
+    background-color: rgba(var(--grey-200));
   }
 }
 
@@ -112,7 +112,7 @@ a {
 .information-page,
 .technology-page,
 .contacts-page {
-  background-color: var(--white);
+  background-color: rgba(var(--white));
   padding: 2.5rem;
 
   @media (max-width: 768px) {

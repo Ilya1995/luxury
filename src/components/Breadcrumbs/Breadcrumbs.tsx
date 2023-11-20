@@ -44,7 +44,7 @@ export const Breadcrumbs: FC<PropsType> = ({ className }) => {
               <Icon
                 className="breadcrumbs-icon"
                 name="arrow-right2"
-                color="var(--grey-400)"
+                color="rgba(var(--grey-400))"
                 height={0.625}
                 width={0.3125}
               />

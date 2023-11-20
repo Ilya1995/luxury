@@ -16,7 +16,7 @@
       font-size: 0.875rem;
       line-height: 1.57;
       font-weight: 500;
-      color: var(--grey-800);
+      color: rgba(var(--grey-800));
       transition: all 0.3s ease-in-out;
       width: 100%;
     }
@@ -50,7 +50,7 @@
     &-item {
       font-size: 0.875rem;
       line-height: 1.57;
-      color: var(--grey-800);
+      color: rgba(var(--grey-800));
       transition: all 0.5s cubic-bezier(0, 1, 0, 1);
       padding: 0.5rem;
       margin-top: 0.5rem;

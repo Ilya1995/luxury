@@ -20,14 +20,14 @@
 
   &_white {
     .nav-link {
-      color: var(--white);
+      color: rgba(var(--white));
     }
   }
 }
 
 .nav-link {
   font-family: var(--merriweather);
-  color: var(--grey-800);
+  color: rgba(var(--grey-800));
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 400;

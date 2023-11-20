@@ -9,7 +9,7 @@
     font-size: 2.5rem;
     font-weight: 700;
     line-height: 3.25rem;
-    color: var(--orange);
+    color: rgba(var(--orange));
 
     @media (max-width: 768px) {
       font-size: 1.75rem;
@@ -78,7 +78,7 @@
   font-weight: 300;
   font-size: 1.5rem;
   line-height: 1.25;
-  color: var(--white);
+  color: rgba(var(--white));
   padding: 2rem;
 
   @media (max-width: 768px) {

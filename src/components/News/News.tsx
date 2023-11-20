@@ -76,7 +76,7 @@ export const News: FC<PropsType> = ({ isMobile }) => {
       <Spinner
         radius={50}
         stroke={2}
-        color="var(--orange)"
+        color="rgba(var(--orange))"
         className="news__spinner"
       />
     );

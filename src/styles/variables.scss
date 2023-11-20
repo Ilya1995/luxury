@@ -3,26 +3,28 @@
 }
 
 :root {
-  --black: #000000;
-  --white: #ffffff;
-  --orange: #ef7300;
+  --black: #{toRGB(#000000)};
+  --white: #{toRGB(#ffffff)};
+  --orange: #{toRGB(#ef7300)};
   --orange-200: #{toRGB(#f8a934)};
-  --red: #ef0000;
-  --red-200: #eb183e;
+  --red: #{toRGB(#ef0000)};
+  --red-200: #{toRGB(#eb183e)};
   --red-300: #{toRGB(#ee3838)};
   --yellow: #{toRGB(#f0d948)};
   --brown: #{toRGB(#bf8c5d)};
   --blue: #{toRGB(#4094f7)};
   --blue-200: #{toRGB(#3885f3)};
   --green: #{toRGB(#5cb16a)};
+  --violet: #{toRGB(#a96df4)};
 
   --grey-100: #{toRGB(#f7f8fb)};
-  --grey-200: #e4e7ec;
-  --grey-300: #dddfe4;
-  --grey-400: #bec0c6;
-  --grey-600: #667085;
-  --grey-800: #23252c;
-  --grey-900: #101828;
+  --grey-200: #{toRGB(#e4e7ec)};
+  --grey-300: #{toRGB(#dddfe4)};
+  --grey-400: #{toRGB(#bec0c6)};
+  --grey-500: #{toRGB(#bbbbbb)};
+  --grey-600: #{toRGB(#667085)};
+  --grey-800: #{toRGB(#23252c)};
+  --grey-900: #{toRGB(#101828)};
 
   --blue-grey-300: #{toRGB(#e8e9ed)};
 

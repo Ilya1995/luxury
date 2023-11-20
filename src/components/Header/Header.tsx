@@ -37,7 +37,7 @@ export const Header: FC<PropsType> = ({
         name="logo"
         width={isMobile ? 8.55 : 11.6875}
         height={isMobile ? 2 : 2.5625}
-        color={isWhite ? 'var(--white)' : 'var(--grey-800)'}
+        color={isWhite ? 'rgba(var(--white))' : 'rgba(var(--grey-800))'}
         pointer
         handleClick={() => navigate('/')}
       />
@@ -46,7 +46,7 @@ export const Header: FC<PropsType> = ({
         <Icon
           name="search"
           className="header__search"
-          color={isWhite ? 'var(--white)' : 'var(--grey-800)'}
+          color={isWhite ? 'rgba(var(--white))' : 'rgba(var(--grey-800))'}
         />
       )}
       {!isMobile && (
@@ -61,7 +61,7 @@ export const Header: FC<PropsType> = ({
           <Icon
             name="search"
             className="header__search"
-            color={isWhite ? 'var(--white)' : 'var(--grey-800)'}
+            color={isWhite ? 'rgba(var(--white))' : 'rgba(var(--grey-800))'}
           />
           <LangMenu className="header__lang-menu" isWhite={isWhite} />
         </div>

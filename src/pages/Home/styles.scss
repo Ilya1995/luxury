@@ -1,5 +1,5 @@
 .home-page {
-  background-color: var(--white);
+  background-color: rgba(var(--white));
 
   &__header {
     padding: 1.5rem 2.5rem;
@@ -11,7 +11,7 @@
 
   &__tagline {
     font-family: var(--merriweather);
-    color: var(--white);
+    color: rgba(var(--white));
     font-size: 3.5rem;
     font-weight: 400;
     line-height: 1;
@@ -84,7 +84,7 @@
 
     &-text {
       font-family: var(--merriweather);
-      color: var(--grey-600);
+      color: rgba(var(--grey-600));
       font-weight: 300;
       font-size: 1rem;
       line-height: 1.625;

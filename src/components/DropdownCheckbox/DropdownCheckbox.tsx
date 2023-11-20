@@ -78,7 +78,7 @@ export const DropdownCheckbox: FC<PropsType> = ({
             'dropdown-checkbox-header-icon_open': isOpen,
           })}
           name="arrow-down"
-          color="var(--grey-600)"
+          color="rgba(var(--grey-600))"
           pointer
           size={1.5}
         />

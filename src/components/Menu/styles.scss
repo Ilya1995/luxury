@@ -1,7 +1,7 @@
 .menu {
   &_white {
     .menu__button-item {
-      background-color: var(--white);
+      background-color: rgba(var(--white));
     }
   }
   &__button {
@@ -20,7 +20,7 @@
       height: 0.125rem;
       margin-bottom: 0.25rem;
       border-radius: 0.125rem;
-      background-color: var(--grey-800);
+      background-color: rgba(var(--grey-800));
 
       &:last-child {
         margin-bottom: 0;
@@ -37,7 +37,7 @@
     top: 0;
     bottom: 0;
     left: -100%;
-    background-color: var(--grey-800);
+    background-color: rgba(var(--grey-800));
     transition: all 0.5s;
     width: 73%;
     padding: 2rem;
@@ -55,7 +55,7 @@
     &-link {
       font-family: var(--merriweather);
       cursor: pointer;
-      color: var(--white);
+      color: rgba(var(--white));
       font-size: 1.25rem;
       line-height: 1.6;
       font-weight: 400;

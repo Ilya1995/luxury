@@ -42,7 +42,7 @@ export const BrandsCarousel: FC<PropsType> = () => {
       <Spinner
         radius={50}
         stroke={2}
-        color="var(--orange)"
+        color="rgba(var(--orange))"
         className="brands-carousel-swiper__spinner"
       />
     );

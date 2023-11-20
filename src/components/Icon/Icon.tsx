@@ -16,7 +16,7 @@ type PropsType = {
 
 export const Icon: FC<PropsType> = ({
   name,
-  color = 'var(--white)',
+  color = 'rgba(var(--white))',
   className,
   size,
   height = 1.125,

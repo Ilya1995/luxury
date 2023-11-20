@@ -28,6 +28,10 @@ export const Checkbox: FC<PropsType> = ({
     if (label === 'Оранжевый') return 'checkbox-orange';
     if (label === 'Зеленый') return 'checkbox-green';
     if (label === 'Синий') return 'checkbox-blue';
+    if (label === 'Фиолетовый') return 'checkbox-violet';
+    if (label === 'Серый') return 'checkbox-grey';
+    if (label === 'Белый') return 'checkbox-white';
+    if (label === 'Черный') return 'checkbox-black';
   }, [label]);
 
   return (

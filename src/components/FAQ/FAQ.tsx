@@ -41,7 +41,7 @@ export const FAQ: FC<PropsType> = () => {
       <Spinner
         radius={50}
         stroke={2}
-        color="var(--orange)"
+        color="rgba(var(--orange))"
         className="faq__spinner"
       />
     );
