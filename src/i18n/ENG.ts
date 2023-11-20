@@ -35,5 +35,6 @@ export const ENG = {
     'error-subscribe': 'Try later',
     search: 'Search',
     email: 'E-mail',
+    'reset-filters': 'Reset filters',
   },
 };

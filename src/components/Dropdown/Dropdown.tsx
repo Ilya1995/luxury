@@ -50,7 +50,7 @@ export const Dropdown: FC<PropsType> = ({
     event.stopPropagation();
 
     if (selected === value) {
-      return onChange(undefined);
+      return onChange([]);
     }
 
     onChange(value);

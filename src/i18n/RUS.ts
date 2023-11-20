@@ -35,5 +35,6 @@ export const RUS = {
     'error-subscribe': 'Попробуйте позже',
     search: 'Поиск',
     email: 'E-mail',
+    'reset-filters': 'Сбросить фильтры',
   },
 };

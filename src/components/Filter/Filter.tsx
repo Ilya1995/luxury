@@ -1,5 +1,7 @@
 import { FC, useState } from 'react';
+import { Animate } from 'react-simple-animate';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { Dropdown } from '../Dropdown';
 import {
@@ -16,6 +18,7 @@ type PropsType = {
 };
 
 export const Filter: FC<PropsType> = ({ className }) => {
+  const { t } = useTranslation();
   const [typeProduct, setTypeProduct] = useState([]);
   const [brands, setBrands] = useState([]);
   const [availability, setAvailability] = useState([]);
@@ -28,6 +31,21 @@ export const Filter: FC<PropsType> = ({ className }) => {
   const handleChangeBrands = (value: any) => {
     setBrands(value);
   };
+
+  const handleResetFilters = () => {
+    if (!showResetFilters) return;
+
+    setTypeProduct([]);
+    setBrands([]);
+    setAvailability([]);
+    setColors([]);
+  };
+
+  const showResetFilters =
+    !!typeProduct.length ||
+    !!brands.length ||
+    !!availability.length ||
+    !!colors.length;
 
   return (
     <div className={classNames('filter', className)}>
@@ -61,6 +79,20 @@ export const Filter: FC<PropsType> = ({ className }) => {
         classNameList="filter__color-list"
         onChange={setColors}
       />
+      <Animate
+        play={showResetFilters}
+        start={{ opacity: 0 }}
+        end={{ opacity: 1 }}
+        easeType="ease-in"
+        duration={0.3}
+      >
+        <button
+          className="button shadow filter__button"
+          onClick={handleResetFilters}
+        >
+          {t('reset-filters')}
+        </button>
+      </Animate>
     </div>
   );
 };
