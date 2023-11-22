@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC } from 'react';
 import classNames from 'classnames';
 
 import { CatalogCardPreview, Skeleton } from '../CatalogCardPreview';
@@ -7,17 +7,11 @@ import { data } from './mock';
 import './styles.scss';
 
 type PropsType = {
+  isLoading: boolean;
   className?: string;
 };
 
-export const CatalogList: FC<PropsType> = ({ className }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }, []);
-
+export const CatalogList: FC<PropsType> = ({ className, isLoading }) => {
   return (
     <div className={classNames('catalog-list', className)}>
       {!isLoading &&

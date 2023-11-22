@@ -1,10 +1,10 @@
 export const tabs = [
-  { label: 'Подарки' },
-  { label: 'Сервировка' },
-  { label: 'Аксессуары' },
-  { label: 'Текстиль' },
-  { label: 'Ковры' },
-  { label: 'Обои' },
-  { label: 'Краски' },
-  { label: 'Мебель' },
+  { label: 'Подарки', path: 'present' },
+  { label: 'Сервировка', path: 'serving' },
+  { label: 'Аксессуары', path: 'accessories' },
+  { label: 'Текстиль', path: 'textile' },
+  { label: 'Ковры', path: 'carpets' },
+  { label: 'Обои', path: 'wallpaper' },
+  { label: 'Краски', path: 'paints' },
+  { label: 'Мебель', path: 'furniture' },
 ];

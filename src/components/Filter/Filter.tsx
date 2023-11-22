@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { Dropdown } from '../Dropdown';
+import { useWatch } from '../../hooks';
 import {
   brandsOptions,
   typeProductOptions,
@@ -14,22 +15,30 @@ import {
 import './styles.scss';
 
 type PropsType = {
+  onChangeFilter: (value: any) => void;
   className?: string;
 };
 
-export const Filter: FC<PropsType> = ({ className }) => {
+export const Filter: FC<PropsType> = ({ className, onChangeFilter }) => {
   const { t } = useTranslation();
   const [typeProduct, setTypeProduct] = useState([]);
   const [brands, setBrands] = useState([]);
   const [availability, setAvailability] = useState([]);
   const [colors, setColors] = useState([]);
 
-  const handleChangeTypeProduct = (value: any) => {
-    setTypeProduct(value);
-  };
+  useWatch(() => {
+    handleChangeFilter();
+  }, [typeProduct, brands, availability, colors]);
 
-  const handleChangeBrands = (value: any) => {
-    setBrands(value);
+  const handleChangeFilter = () => {
+    const filters = {
+      typeProduct,
+      brands,
+      availability,
+      colors,
+    };
+
+    onChangeFilter(filters);
   };
 
   const handleResetFilters = () => {
@@ -54,7 +63,7 @@ export const Filter: FC<PropsType> = ({ className }) => {
         title="Тип продукта"
         selected={typeProduct}
         classNameList="filter__product-list"
-        onChange={handleChangeTypeProduct}
+        onChange={setTypeProduct}
       />
       <Dropdown
         options={brandsOptions}
@@ -62,7 +71,7 @@ export const Filter: FC<PropsType> = ({ className }) => {
         withSearch
         selected={brands}
         classNameList="filter__brand-list"
-        onChange={handleChangeBrands}
+        onChange={setBrands}
       />
       <Dropdown
         options={availabilityOptions}
