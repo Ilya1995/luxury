@@ -1,7 +1,11 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { ToastContainer } from 'react-toastify';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from 'react-router-dom';
 
 import { Home } from './pages/Home';
 import { Catalog } from './pages/Catalog';
@@ -16,6 +20,14 @@ const router = createBrowserRouter([
   {
     path: '/catalog',
     element: <Catalog />,
+  },
+  {
+    path: '/catalog/:tab',
+    element: <Catalog />,
+  },
+  {
+    path: '*',
+    element: <Navigate to="/" replace />,
   },
 ]);
 

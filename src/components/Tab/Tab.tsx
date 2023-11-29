@@ -1,19 +1,21 @@
 import { FC } from 'react';
 import classNames from 'classnames';
 
+import { TabType } from '../../types';
+
 import './styles.scss';
 
 type PropsType = {
-  label: string;
+  item: TabType;
   isActive?: boolean;
-  onClick: (value: string) => void;
+  onClick: (value: TabType) => void;
 };
 
-export const Tab: FC<PropsType> = ({ label, isActive = false, onClick }) => (
+export const Tab: FC<PropsType> = ({ item, isActive = false, onClick }) => (
   <div
     className={classNames('tab', { tab_active: isActive })}
-    onClick={() => onClick(label)}
+    onClick={() => onClick(item)}
   >
-    {label}
+    {item.label}
   </div>
 );

@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useMedia } from '../../hooks';
 import { Header } from '../../components/Header';
@@ -9,6 +9,7 @@ import { Tab } from '../../components/Tab';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Filter } from '../../components/Filter';
 import { CatalogList } from '../../components/CatalogList';
+import { TabType } from '../../types';
 import { tabs } from './constants';
 
 import './styles.scss';
@@ -17,15 +18,29 @@ type PropsType = {};
 
 export const Catalog: FC<PropsType> = () => {
   const { t } = useTranslation();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { tab } = useParams();
+
   const isMobile = useMedia('(max-width: 768px)');
-  const [activeTab, setActiveTab] = useState('');
+  const [activeTab, setActiveTab] = useState<TabType>();
   const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState();
 
   useEffect(() => {
     getCatalog();
   }, [activeTab, filters]);
+
+  useEffect(() => {
+    // TODO: сброс фильтров при смене таба
+    if (!tab) {
+      setActiveTab(undefined);
+      return;
+    }
+
+    const newTab = tabs.find(({ path }) => path === tab);
+
+    newTab ? setActiveTab(newTab) : navigate('/');
+  }, [tab, navigate]);
 
   const getCatalog = () => {
     setIsLoading(true);
@@ -35,10 +50,9 @@ export const Catalog: FC<PropsType> = () => {
     }, 2000);
   };
 
-  const handleChangeTab = (tab: string) => {
-    const newTab = activeTab === tab ? '' : tab;
-    // navigate('/catalog/session-timed-out');
-    setActiveTab(newTab);
+  const handleChangeTab = (tab: TabType) => {
+    const newTab = activeTab?.label === tab.label ? undefined : tab;
+    navigate(newTab ? `/catalog/${tab.path}` : '/catalog');
   };
 
   return (
@@ -47,11 +61,11 @@ export const Catalog: FC<PropsType> = () => {
 
       <div className="catalog-page__content">
         <div className="catalog-page-tabs">
-          {tabs.map(({ label }) => (
+          {tabs.map((tab) => (
             <Tab
-              key={label}
-              label={label}
-              isActive={activeTab === label}
+              key={tab.label}
+              item={tab}
+              isActive={activeTab?.label === tab.label}
               onClick={handleChangeTab}
             />
           ))}

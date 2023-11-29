@@ -33,7 +33,7 @@ export const Icon: FC<PropsType> = ({
       className={classNames('icon', className)}
       onClick={handleClick}
       style={{
-        WebkitMaskImage: `url('${name}.svg')`,
+        WebkitMaskImage: `url('/${name}.svg')`,
         color,
         height: iconHeight,
         width: iconWidth,
