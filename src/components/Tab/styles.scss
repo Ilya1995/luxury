@@ -9,6 +9,12 @@
   transition: all 0.3s;
   cursor: pointer;
 
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.57;
+  }
+
   &_active {
     background-color: rgba(var(--grey-800));
     color: rgba(var(--white));

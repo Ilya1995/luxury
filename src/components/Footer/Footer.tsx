@@ -13,7 +13,7 @@ export const Footer: FC<PropsType> = ({ isMobile }) => {
   return (
     <div className="footer">
       <div className="footer__first">
-        <img className="footer__logo" alt="Лого" src="./logo-visit.svg" />
+        <img className="footer__logo" alt="Лого" src="/logo-visit.svg" />
         <div className="footer__contacts">
           <div className="footer-links-group">
             <div className="footer__contacts-links">

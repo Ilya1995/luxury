@@ -1,10 +1,9 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Animate } from 'react-simple-animate';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { Dropdown } from '../Dropdown';
-import { useWatch } from '../../hooks';
 import {
   brandsOptions,
   typeProductOptions,
@@ -15,43 +14,32 @@ import {
 import './styles.scss';
 
 type PropsType = {
-  onChangeFilter: (value: any) => void;
+  onChangeFilter: (type: string, value?: string | string[]) => void;
+  typeProduct: string;
+  brands: string[];
+  availability: string[];
+  colors: string[];
   className?: string;
 };
 
-export const Filter: FC<PropsType> = ({ className, onChangeFilter }) => {
+export const Filter: FC<PropsType> = ({
+  className,
+  onChangeFilter,
+  typeProduct,
+  brands,
+  availability,
+  colors,
+}) => {
   const { t } = useTranslation();
-  const [typeProduct, setTypeProduct] = useState([]);
-  const [brands, setBrands] = useState([]);
-  const [availability, setAvailability] = useState([]);
-  const [colors, setColors] = useState([]);
-
-  useWatch(() => {
-    handleChangeFilter();
-  }, [typeProduct, brands, availability, colors]);
-
-  const handleChangeFilter = () => {
-    const filters = {
-      typeProduct,
-      brands,
-      availability,
-      colors,
-    };
-
-    onChangeFilter(filters);
-  };
 
   const handleResetFilters = () => {
     if (!showResetFilters) return;
 
-    setTypeProduct([]);
-    setBrands([]);
-    setAvailability([]);
-    setColors([]);
+    onChangeFilter('reset');
   };
 
   const showResetFilters =
-    !!typeProduct.length ||
+    !!typeProduct ||
     !!brands.length ||
     !!availability.length ||
     !!colors.length;
@@ -63,7 +51,7 @@ export const Filter: FC<PropsType> = ({ className, onChangeFilter }) => {
         title="Тип продукта"
         selected={typeProduct}
         classNameList="filter__product-list"
-        onChange={setTypeProduct}
+        onChange={(value) => onChangeFilter('product', value)}
       />
       <Dropdown
         options={brandsOptions}
@@ -71,14 +59,14 @@ export const Filter: FC<PropsType> = ({ className, onChangeFilter }) => {
         withSearch
         selected={brands}
         classNameList="filter__brand-list"
-        onChange={setBrands}
+        onChange={(value) => onChangeFilter('brand', value)}
       />
       <Dropdown
         options={availabilityOptions}
         title="Наличие"
         multiple
         selected={availability}
-        onChange={setAvailability}
+        onChange={(value) => onChangeFilter('availability', value)}
       />
       <Dropdown
         options={colorOptions}
@@ -86,7 +74,7 @@ export const Filter: FC<PropsType> = ({ className, onChangeFilter }) => {
         multiple
         selected={colors}
         classNameList="filter__color-list"
-        onChange={setColors}
+        onChange={(value) => onChangeFilter('color', value)}
       />
       <Animate
         play={showResetFilters}

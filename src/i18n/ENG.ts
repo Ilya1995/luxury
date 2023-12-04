@@ -36,5 +36,6 @@ export const ENG = {
     search: 'Search',
     email: 'E-mail',
     'reset-filters': 'Reset filters',
+    filters: 'Filters',
   },
 };

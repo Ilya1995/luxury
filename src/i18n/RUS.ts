@@ -36,5 +36,6 @@ export const RUS = {
     search: 'Поиск',
     email: 'E-mail',
     'reset-filters': 'Сбросить фильтры',
+    filters: 'Фильтры',
   },
 };

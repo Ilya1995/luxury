@@ -13,9 +13,7 @@ import { Footer } from '../../components/Footer';
 
 import './styles.scss';
 
-type PropsType = {};
-
-export const Home: FC<PropsType> = () => {
+export const Home: FC = () => {
   const { t } = useTranslation();
   const isMobile = useMedia('(max-width: 768px)');
 

@@ -6,6 +6,11 @@
   border-radius: 0.5rem;
   background-color: rgba(var(--white));
 
+  @media (max-width: 768px) {
+    width: 9.6875rem;
+    border-radius: 0.25rem;
+  }
+
   &__content {
     display: flex;
     flex-direction: column;
@@ -26,6 +31,12 @@
     border-radius: 0.5rem;
     object-fit: cover;
     display: block;
+
+    @media (max-width: 768px) {
+      min-height: 10.9375rem;
+      height: 10.9375rem;
+      border-radius: 0.25rem;
+    }
   }
 
   &__brand {
@@ -35,6 +46,11 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+
+    @media (max-width: 768px) {
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
   }
 
   &__name {
@@ -42,6 +58,11 @@
     font-size: 1rem;
     line-height: 1.625;
     color: rgba(var(--grey-800));
+
+    @media (max-width: 768px) {
+      font-size: 0.875rem;
+      line-height: 1.57;
+    }
   }
 
   &__material {

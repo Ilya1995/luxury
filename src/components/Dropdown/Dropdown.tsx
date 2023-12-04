@@ -20,7 +20,7 @@ type PropsType = {
   withSearch?: boolean;
   multiple?: boolean;
   selected: string | string[];
-  onChange: (value: any) => void;
+  onChange: (value: string | string[]) => void;
 };
 
 export const Dropdown: FC<PropsType> = ({

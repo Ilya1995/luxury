@@ -8,15 +8,14 @@ import { Footer } from '../../components/Footer';
 import { Tab } from '../../components/Tab';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Filter } from '../../components/Filter';
+import { FilterMobile } from '../../components/FilterMobile';
 import { CatalogList } from '../../components/CatalogList';
 import { TabType } from '../../types';
 import { tabs } from './constants';
 
 import './styles.scss';
 
-type PropsType = {};
-
-export const Catalog: FC<PropsType> = () => {
+export const Catalog: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { tab } = useParams();
@@ -24,14 +23,18 @@ export const Catalog: FC<PropsType> = () => {
   const isMobile = useMedia('(max-width: 768px)');
   const [activeTab, setActiveTab] = useState<TabType>();
   const [isLoading, setIsLoading] = useState(true);
-  const [filters, setFilters] = useState();
+  const [typeProduct, setTypeProduct] = useState('');
+  const [brands, setBrands] = useState<string[]>([]);
+  const [availability, setAvailability] = useState<string[]>([]);
+  const [colors, setColors] = useState<string[]>([]);
 
   useEffect(() => {
     getCatalog();
-  }, [activeTab, filters]);
+  }, [activeTab, typeProduct, brands, availability, colors]);
 
   useEffect(() => {
-    // TODO: сброс фильтров при смене таба
+    handleResetFilters();
+
     if (!tab) {
       setActiveTab(undefined);
       return;
@@ -55,6 +58,35 @@ export const Catalog: FC<PropsType> = () => {
     navigate(newTab ? `/catalog/${tab.path}` : '/catalog');
   };
 
+  const handleChangeFilter = (type: string, value?: string | string[]) => {
+    if (type === 'reset') {
+      return handleResetFilters();
+    }
+
+    if (type === 'product' && typeof value === 'string') {
+      return setTypeProduct(value);
+    }
+
+    if (type === 'brand' && Array.isArray(value)) {
+      return setBrands(value);
+    }
+
+    if (type === 'availability' && Array.isArray(value)) {
+      return setAvailability(value);
+    }
+
+    if (type === 'color' && Array.isArray(value)) {
+      return setColors(value);
+    }
+  };
+
+  const handleResetFilters = () => {
+    setTypeProduct('');
+    setBrands([]);
+    setAvailability([]);
+    setColors([]);
+  };
+
   return (
     <div className="page catalog-page">
       <Header className="catalog-page__header" isMobile={isMobile} />
@@ -70,10 +102,30 @@ export const Catalog: FC<PropsType> = () => {
             />
           ))}
         </div>
-        <Breadcrumbs />
-        <div className="catalog-page__title">{t('catalog')}</div>
+        {!isMobile && <Breadcrumbs />}
+        <div className="catalog-page__title">
+          {activeTab?.label || t('catalog')}
+        </div>
         <div className="catalog-page-blocks">
-          <Filter onChangeFilter={setFilters} />
+          {!isMobile && (
+            <Filter
+              onChangeFilter={handleChangeFilter}
+              typeProduct={typeProduct}
+              brands={brands}
+              availability={availability}
+              colors={colors}
+            />
+          )}
+          {isMobile && (
+            <FilterMobile
+              onChangeFilter={handleChangeFilter}
+              typeProduct={typeProduct}
+              brands={brands}
+              availability={availability}
+              colors={colors}
+            />
+          )}
+          {/* TODO: адаптировать скелетон */}
           <CatalogList isLoading={isLoading} />
         </div>
       </div>

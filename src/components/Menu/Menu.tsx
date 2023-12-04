@@ -1,4 +1,5 @@
 import { FC, useState, useRef, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -81,12 +82,9 @@ export const Menu: FC<PropsType> = ({
             onClick={() => setIsOpen(false)}
           />
           <div className="menu__side-links">
-            <div
-              className="menu__side-link"
-              onClick={() => onChangeHash(AnchorPageEnum.ACQUAINTANCE)}
-            >
+            <NavLink className="menu__side-link" to="/catalog">
               {t('catalog')}
-            </div>
+            </NavLink>
             <div
               className="menu__side-link"
               onClick={() => onChangeHash(AnchorPageEnum.APPLICATION)}
