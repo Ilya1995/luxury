@@ -6,6 +6,7 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import { Menu } from '../Menu';
 import { LangMenu } from '../LangMenu';
 import { Icon } from '../Icon';
+import { Search } from '../Search';
 
 import './styles.scss';
 
@@ -45,7 +46,7 @@ export const Header: FC<PropsType> = ({
       {isMobile && (
         <Icon
           name="search"
-          className="header__search"
+          size={1.5}
           color={isWhite ? 'rgba(var(--white))' : 'rgba(var(--grey-800))'}
         />
       )}
@@ -58,11 +59,7 @@ export const Header: FC<PropsType> = ({
           <div className="nav-link">{t('projects')}</div>
           <div className="nav-link">{t('news')}</div>
           <div className="nav-link">{t('contacts')}</div>
-          <Icon
-            name="search"
-            className="header__search"
-            color={isWhite ? 'rgba(var(--white))' : 'rgba(var(--grey-800))'}
-          />
+          <Search isWhite={isWhite} />
           <LangMenu className="header__lang-menu" isWhite={isWhite} />
         </div>
       )}

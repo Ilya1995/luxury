@@ -1,4 +1,4 @@
-import { FC, useState, useMemo, ChangeEvent } from 'react';
+import { FC, useState, useMemo, useRef, ChangeEvent, useEffect } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -9,22 +9,33 @@ import './styles.scss';
 type PropsType = {
   value: string;
   onChange: (value: string) => void;
+  onFocus?: (value: boolean) => void;
   type?: 'text' | 'email' | 'search';
   placeholder?: string;
   className?: string;
   messageError?: string;
+  isFocused?: boolean;
 };
 
 export const Input: FC<PropsType> = ({
   value,
   onChange,
+  onFocus = () => {},
   className,
   type = 'text',
   placeholder,
   messageError,
+  isFocused,
 }) => {
   const { t } = useTranslation();
+  const inputEl = useRef<any>(null);
   const [isFocus, setIsFocus] = useState(false);
+
+  useEffect(() => {
+    if (isFocused) {
+      inputEl.current?.focus();
+    }
+  }, [isFocused]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value.trim());
@@ -32,10 +43,12 @@ export const Input: FC<PropsType> = ({
 
   function handleFocus() {
     setIsFocus(true);
+    onFocus(true);
   }
 
   function handleBlur() {
     setIsFocus(false);
+    onFocus(false);
   }
 
   const iconName = useMemo(() => {
@@ -70,6 +83,7 @@ export const Input: FC<PropsType> = ({
       {iconName && <Icon name={iconName} size={1.5} className="input__icon" />}
       <input
         className="input__field"
+        ref={inputEl}
         value={value}
         placeholder={customPlaceholder}
         onChange={handleChange}
