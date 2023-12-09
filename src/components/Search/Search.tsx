@@ -1,8 +1,13 @@
 import { FC, useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Icon } from '../Icon';
 import { Input } from '../Input';
+import { setSearchText } from '../../store/reducer';
+import { RootState } from '../../store';
+import { useDebounce, useWatch } from '../../hooks';
 
 import './styles.scss';
 
@@ -12,15 +17,30 @@ type PropsType = {
 };
 
 export const Search: FC<PropsType> = ({ className, isWhite }) => {
-  const [isActive, setIsActive] = useState(false);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  const { searchText } = useSelector((state: RootState) => state.general);
+
+  const [isActive, setIsActive] = useState(!!searchText);
   const [isFocused, setIsFocused] = useState(false);
-  const [searchText, setSearchText] = useState('');
+  const [value, setValue] = useState(searchText);
+  const debouncedValue = useDebounce<string>(value, 500);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isFocused && !searchText) {
+    if (!isFocused && !value) {
       setIsActive(false);
     }
-  }, [isFocused, searchText]);
+  }, [isFocused, value]);
+
+  useWatch(() => {
+    dispatch(setSearchText(debouncedValue));
+
+    if (pathname === '/') {
+      navigate('/catalog');
+    }
+  }, [debouncedValue, dispatch, navigate, pathname]);
 
   return (
     <div className={classNames('search', className)}>
@@ -40,9 +60,9 @@ export const Search: FC<PropsType> = ({ className, isWhite }) => {
         className={classNames('search__input', {
           search__input_active: isActive,
         })}
-        isFocused={isActive}
-        value={searchText}
-        onChange={setSearchText}
+        isFocused={isActive && !value}
+        value={value}
+        onChange={setValue}
         onFocus={setIsFocused}
       />
     </div>

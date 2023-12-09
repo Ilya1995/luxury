@@ -22,6 +22,7 @@ const initialState: GeneralState = {
     isLoading: false,
     isSuccess: false,
   },
+  searchText: '',
 };
 
 export const counterSlice = createSlice({
@@ -55,10 +56,13 @@ export const counterSlice = createSlice({
         isSuccess: false,
       };
     },
+    setSearchText: (state: any, action: PayloadAction<string>) => {
+      state.searchText = action.payload;
+    },
   },
 });
 
-export const { setSuccessData, setErrorData, setLoadingData } =
+export const { setSuccessData, setErrorData, setLoadingData, setSearchText } =
   counterSlice.actions;
 
 export default counterSlice.reducer;

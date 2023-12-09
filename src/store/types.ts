@@ -13,6 +13,7 @@ export type GeneralState = {
   news: StateItems<News>;
   brands: StateItems<Brand>;
   faqs: StateItems<Faq>;
+  searchText: string;
 };
 
 export type Brand = {
