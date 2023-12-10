@@ -154,7 +154,6 @@ export const Catalog: FC = () => {
               colors={colors}
             />
           )}
-          {/* TODO: адаптировать скелетон */}
           <CatalogList isLoading={isLoading} />
         </div>
       </div>

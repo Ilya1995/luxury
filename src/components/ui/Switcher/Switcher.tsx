@@ -1,50 +1,22 @@
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import classNames from 'classnames';
 
 import './styles.scss';
 
 type PropsType = {
   value: boolean;
-  label: string;
   onChange: (value: boolean) => void;
   className?: string;
 };
 
-const CUSTOM_COLOR_MAP: Record<string, string> = {
-  Желтый: 'checkbox-yellow',
-  Коричневый: 'checkbox-brown',
-  Красный: 'checkbox-red',
-  Оранжевый: 'checkbox-orange',
-  Зеленый: 'checkbox-green',
-  Синий: 'checkbox-blue',
-  Фиолетовый: 'checkbox-violet',
-  Серый: 'checkbox-grey',
-  Белый: 'checkbox-white',
-  Черный: 'checkbox-black',
-};
-
-export const Switcher: FC<PropsType> = ({
-  className,
-  value,
-  label,
-  onChange,
-}) => {
-  const customColor = useMemo(() => CUSTOM_COLOR_MAP[label], [label]);
-
+export const Switcher: FC<PropsType> = ({ className, value, onChange }) => {
   return (
-    <div className={classNames('checkbox', className, customColor)}>
-      <input
-        type="checkbox"
-        onChange={() => onChange(!value)}
-        checked={value}
-        id={'checkbox' + label}
-        className={classNames('checkbox__field', {
-          'checkbox__field_custom-color': !!customColor,
-        })}
-      />
-      <label htmlFor={'checkbox' + label} className="checkbox__label">
-        {label}
-      </label>
+    <div
+      className={classNames('switcher', className)}
+      onClick={() => onChange(!value)}
+    >
+      <input type="checkbox" checked={value} readOnly />
+      <span className="switcher__ball" />
     </div>
   );
 };
