@@ -122,17 +122,29 @@ export const Dropdown: FC<PropsType> = ({
             ))}
           {!isDifficult &&
             !multiple &&
-            (options as SimpleOptions).map((item) => (
-              <div
-                key={item}
-                onClick={(event) => handleSelect(event, item)}
-                className={classNames('dropdown-list-item', {
-                  'dropdown-list-item_selected': item === selected,
-                })}
-              >
-                {item}
-              </div>
-            ))}
+            (options as SimpleOptions).map((item) => {
+              const isSelected = item === selected;
+
+              return (
+                <div
+                  key={item}
+                  onClick={(event) => handleSelect(event, item)}
+                  className={classNames('dropdown-list-item', {
+                    'dropdown-list-item_selected': isSelected,
+                  })}
+                >
+                  {item}
+                  {isSelected && (
+                    <Icon
+                      className="dropdown-list-item__check"
+                      name="check"
+                      color="rgba(var(--orange))"
+                      size={0.65125}
+                    />
+                  )}
+                </div>
+              );
+            })}
           {!isDifficult &&
             multiple &&
             (options as SimpleOptions).map((item) => (
