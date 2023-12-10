@@ -5,7 +5,7 @@ import { useNavigate, NavLink } from 'react-router-dom';
 
 import { Menu } from '../Menu';
 import { LangMenu } from '../LangMenu';
-import { Icon } from '../Icon';
+import { Icon } from '../ui/Icon';
 import { Search } from '../Search';
 
 import './styles.scss';

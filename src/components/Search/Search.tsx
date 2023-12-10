@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Icon } from '../Icon';
-import { Input } from '../Input';
+import { Icon } from '../ui/Icon';
+import { Input } from '../ui/Input';
 import { setSearchText } from '../../store/reducer';
 import { RootState } from '../../store';
 import { useDebounce, useWatch } from '../../hooks';
@@ -19,6 +19,7 @@ type PropsType = {
 export const Search: FC<PropsType> = ({ className, isWhite }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { searchText } = useSelector((state: RootState) => state.general);
 
@@ -26,7 +27,13 @@ export const Search: FC<PropsType> = ({ className, isWhite }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [value, setValue] = useState(searchText);
   const debouncedValue = useDebounce<string>(value, 500);
-  const dispatch = useDispatch();
+
+  // сброс строки поиска, если обнулили вне компонента
+  useEffect(() => {
+    if (searchText === '') {
+      setValue('');
+    }
+  }, [searchText]);
 
   useEffect(() => {
     if (!isFocused && !value) {
@@ -37,7 +44,7 @@ export const Search: FC<PropsType> = ({ className, isWhite }) => {
   useWatch(() => {
     dispatch(setSearchText(debouncedValue));
 
-    if (pathname === '/') {
+    if (pathname === '/' && !!debouncedValue) {
       navigate('/catalog');
     }
   }, [debouncedValue, dispatch, navigate, pathname]);

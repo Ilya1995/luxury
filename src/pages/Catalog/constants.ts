@@ -1,4 +1,5 @@
 export const tabs = [
+  { label: 'Все', path: 'all' },
   { label: 'Подарки', path: 'present' },
   { label: 'Сервировка', path: 'serving' },
   { label: 'Аксессуары', path: 'accessories' },

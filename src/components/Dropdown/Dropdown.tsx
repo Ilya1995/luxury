@@ -1,10 +1,10 @@
 import { FC, useState, useRef } from 'react';
 import classNames from 'classnames';
 
-import { Icon } from '../Icon';
-import { Input } from '../Input';
+import { Icon } from '../ui/Icon';
+import { Input } from '../ui/Input';
 import { DropdownCheckbox } from '../DropdownCheckbox';
-import { Checkbox } from '../Checkbox';
+import { Checkbox } from '../ui/Checkbox';
 import { useElementScroll } from '../../hooks';
 
 import './styles.scss';

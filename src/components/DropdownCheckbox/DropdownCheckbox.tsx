@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
 import classNames from 'classnames';
 
-import { Icon } from '../Icon';
-import { Checkbox } from '../Checkbox';
+import { Icon } from '../ui/Icon';
+import { Checkbox } from '../ui/Checkbox';
 
 import './styles.scss';
 

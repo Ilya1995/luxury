@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { sendEmail } from '../../store/actionCreator';
 import { useValidate } from '../../hooks';
-import { Input } from '../Input';
+import { Input } from '../ui/Input';
 
 import './styles.scss';
 

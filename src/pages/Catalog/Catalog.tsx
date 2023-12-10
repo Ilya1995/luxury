@@ -1,7 +1,7 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { useMedia, useWatch } from '../../hooks';
 import { Header } from '../../components/Header';
@@ -13,6 +13,7 @@ import { FilterMobile } from '../../components/FilterMobile';
 import { CatalogList } from '../../components/CatalogList';
 import { TabType } from '../../types';
 import { RootState } from '../../store';
+import { setSearchText } from '../../store/reducer';
 import { tabs } from './constants';
 
 import './styles.scss';
@@ -20,10 +21,11 @@ import './styles.scss';
 export const Catalog: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { tab } = useParams();
 
   const isMobile = useMedia('(max-width: 768px)');
-  const [activeTab, setActiveTab] = useState<TabType>();
+  const [activeTab, setActiveTab] = useState<TabType>(tabs[0]);
   const [isLoading, setIsLoading] = useState(true);
   const [typeProduct, setTypeProduct] = useState('');
   const [brands, setBrands] = useState<string[]>([]);
@@ -39,7 +41,7 @@ export const Catalog: FC = () => {
     handleResetFilters();
 
     if (!tab) {
-      setActiveTab(undefined);
+      setActiveTab(tabs[0]);
       return;
     }
 
@@ -47,6 +49,11 @@ export const Catalog: FC = () => {
 
     newTab ? setActiveTab(newTab) : navigate('/');
   }, [tab, navigate]);
+
+  const title = useMemo(() => {
+    if (activeTab.path === 'all') return t('catalog');
+    return activeTab?.label || t('catalog');
+  }, [t, activeTab]);
 
   const getCatalog = () => {
     setIsLoading(true);
@@ -57,8 +64,11 @@ export const Catalog: FC = () => {
   };
 
   const handleChangeTab = (tab: TabType) => {
-    const newTab = activeTab?.label === tab.label ? undefined : tab;
-    navigate(newTab ? `/catalog/${tab.path}` : '/catalog');
+    if (tab.path === 'all' || activeTab.label === tab.label) {
+      return navigate('/catalog');
+    }
+
+    navigate(`/catalog/${tab.path}`);
   };
 
   const handleChangeFilter = (type: string, value?: string | string[]) => {
@@ -88,6 +98,7 @@ export const Catalog: FC = () => {
     setBrands([]);
     setAvailability([]);
     setColors([]);
+    dispatch(setSearchText(''));
   };
 
   return (
@@ -100,17 +111,13 @@ export const Catalog: FC = () => {
             <Tab
               key={tab.label}
               item={tab}
-              isActive={activeTab?.label === tab.label}
+              isActive={activeTab.label === tab.label}
               onClick={handleChangeTab}
             />
           ))}
         </div>
         {!isMobile && <Breadcrumbs />}
-        {!searchText && (
-          <div className="catalog-page__title">
-            {activeTab?.label || t('catalog')}
-          </div>
-        )}
+        {!searchText && <div className="catalog-page__title">{title}</div>}
         {!isMobile && searchText && (
           <div className="catalog-page-find">
             <div className="catalog-page-find__result">

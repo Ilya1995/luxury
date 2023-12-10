@@ -60,7 +60,7 @@
 
     .checkbox__field:checked + .checkbox__label:before {
       border-color: rgba(var(--blue-grey-300));
-      background-image: url('../../../public/check-black.svg');
+      background-image: url('../../../../public/check-black.svg');
     }
   }
 
@@ -78,7 +78,7 @@
     &:checked + .checkbox__label:before {
       border-color: rgba(var(--main-color));
       background-color: rgba(var(--main-color));
-      background-image: url('../../../public/check.svg');
+      background-image: url('../../../../public/check.svg');
       background-size: 11px 9px;
     }
 

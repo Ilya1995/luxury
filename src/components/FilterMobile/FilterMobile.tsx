@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { Dropdown } from '../Dropdown';
-import { Icon } from '../Icon';
+import { Icon } from '../ui/Icon';
 import { useWatch } from '../../hooks';
 import {
   brandsOptions,

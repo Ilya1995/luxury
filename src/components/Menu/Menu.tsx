@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { LangMenu } from '../LangMenu';
-import { Icon } from '../Icon';
+import { Icon } from '../ui/Icon';
 import { useOnClickOutside } from '../../hooks';
 // import { AnchorMapToPageType } from '../../types';
 

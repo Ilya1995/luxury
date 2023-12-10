@@ -2,7 +2,7 @@ import { FC, useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import axios from 'axios';
 
-import { ButtonMore } from '../../components/ButtonMore';
+import { ButtonMore } from '../ui/ButtonMore';
 
 import './styles.scss';
 

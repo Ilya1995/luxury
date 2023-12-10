@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react';
 import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Icon } from '../Icon';
+import { Icon } from '../ui/Icon';
 
 import './styles.scss';
 
