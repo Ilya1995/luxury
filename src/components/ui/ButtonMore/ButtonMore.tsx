@@ -9,11 +9,7 @@ export const ButtonMore: FC = () => {
   return (
     <div className="button-more">
       <div>{t('more')}</div>
-      <img
-        className="button-more__icon"
-        alt="Направо"
-        src="./arrow-right.svg"
-      />
+      <img className="button-more__icon" alt="Направо" src="/arrow-right.svg" />
     </div>
   );
 };

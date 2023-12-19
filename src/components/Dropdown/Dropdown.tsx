@@ -129,9 +129,12 @@ export const Dropdown: FC<PropsType> = ({
                 <div
                   key={item}
                   onClick={(event) => handleSelect(event, item)}
-                  className={classNames('dropdown-list-item', {
-                    'dropdown-list-item_selected': isSelected,
-                  })}
+                  className={classNames(
+                    'dropdown-list-item dropdown-list-item_simple',
+                    {
+                      'dropdown-list-item_selected': isSelected,
+                    }
+                  )}
                 >
                   {item}
                   {isSelected && (

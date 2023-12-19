@@ -16,3 +16,45 @@
     justify-content: center;
   }
 }
+
+.menu-filter-list {
+  box-sizing: border-box;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  overflow: auto;
+  z-index: 999999;
+  top: 0;
+  bottom: 0;
+  left: -100%;
+  background-color: rgba(var(--white));
+  transition: all 0.5s;
+  width: 100%;
+  padding: 2rem 1.5rem;
+
+  &_open {
+    left: 0;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+
+    &__label {
+      color: rgba(var(--grey-800));
+      font-size: 1rem;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+  }
+}

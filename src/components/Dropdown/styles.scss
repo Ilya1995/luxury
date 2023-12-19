@@ -84,12 +84,19 @@
       justify-content: space-between;
       cursor: pointer;
 
+      &_simple {
+        margin-right: 0.75rem;
+        padding: 0.5rem;
+      }
+
       &_selected {
-        font-weight: 500;
+        font-weight: 600;
+        transition: all 0.1s;
+        background-color: rgba(var(--grey-100));
       }
 
       &__check {
-        margin-right: 0.891875rem;
+        margin-right: 0.47rem;
       }
     }
 

@@ -67,7 +67,7 @@ export const brandsOptions = [
   { title: 'Pinomyh', options: options7 },
 ];
 
-export const availabilityOptions = ['В наличии', 'Под заказ'];
+// export const availabilityOptions = ['В наличии', 'Под заказ'];
 
 export const colorOptions = [
   'Желтый',

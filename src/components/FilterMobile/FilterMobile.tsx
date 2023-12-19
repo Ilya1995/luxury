@@ -9,17 +9,17 @@ import { useWatch } from '../../hooks';
 import {
   brandsOptions,
   typeProductOptions,
-  availabilityOptions,
   colorOptions,
 } from '../Filter/constants';
+import { MenuFilterList } from './MenuFilterList';
 
 import './styles.scss';
 
 type PropsType = {
-  onChangeFilter: (type: string, value?: string | string[]) => void;
+  onChangeFilter: (type: string, value?: string | string[] | boolean) => void;
   typeProduct: string;
   brands: string[];
-  availability: string[];
+  isOnlyStock: boolean;
   colors: string[];
   className?: string;
 };
@@ -29,14 +29,21 @@ export const FilterMobile: FC<PropsType> = ({
   onChangeFilter,
   typeProduct,
   brands,
-  availability,
+  isOnlyStock,
   colors,
 }) => {
   const { t } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className={classNames('filter-mobile', className)}>
-      <div className="filter-mobile__button">
+      <MenuFilterList
+        isOpen={isOpen}
+        onChangeOpen={setIsOpen}
+        isOnlyStock={isOnlyStock}
+        onChangeFilter={onChangeFilter}
+      />
+      <div className="filter-mobile__button" onClick={() => setIsOpen(true)}>
         {t('filters')}
         <Icon
           //   className={classNames('dropdown-header-icon', {

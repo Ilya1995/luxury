@@ -29,13 +29,14 @@ export const Catalog: FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [typeProduct, setTypeProduct] = useState('');
   const [brands, setBrands] = useState<string[]>([]);
-  const [availability, setAvailability] = useState<string[]>([]);
+  const [isOnlyStock, setIsOnlyStock] = useState(false);
+
   const [colors, setColors] = useState<string[]>([]);
   const { searchText } = useSelector((state: RootState) => state.general);
 
   useEffect(() => {
     getCatalog();
-  }, [activeTab, typeProduct, brands, availability, colors, searchText]);
+  }, [activeTab, typeProduct, brands, isOnlyStock, colors, searchText]);
 
   useWatch(() => {
     handleResetFilters();
@@ -71,7 +72,10 @@ export const Catalog: FC = () => {
     navigate(`/catalog/${tab.path}`);
   };
 
-  const handleChangeFilter = (type: string, value?: string | string[]) => {
+  const handleChangeFilter = (
+    type: string,
+    value?: string | string[] | boolean
+  ) => {
     if (type === 'reset') {
       return handleResetFilters();
     }
@@ -84,8 +88,8 @@ export const Catalog: FC = () => {
       return setBrands(value);
     }
 
-    if (type === 'availability' && Array.isArray(value)) {
-      return setAvailability(value);
+    if (type === 'isOnlyStock' && typeof value === 'boolean') {
+      return setIsOnlyStock(value);
     }
 
     if (type === 'color' && Array.isArray(value)) {
@@ -96,7 +100,7 @@ export const Catalog: FC = () => {
   const handleResetFilters = () => {
     setTypeProduct('');
     setBrands([]);
-    setAvailability([]);
+    setIsOnlyStock(false);
     setColors([]);
     dispatch(setSearchText(''));
   };
@@ -141,7 +145,7 @@ export const Catalog: FC = () => {
               onChangeFilter={handleChangeFilter}
               typeProduct={typeProduct}
               brands={brands}
-              availability={availability}
+              isOnlyStock={isOnlyStock}
               colors={colors}
             />
           )}
@@ -150,7 +154,7 @@ export const Catalog: FC = () => {
               onChangeFilter={handleChangeFilter}
               typeProduct={typeProduct}
               brands={brands}
-              availability={availability}
+              isOnlyStock={isOnlyStock}
               colors={colors}
             />
           )}

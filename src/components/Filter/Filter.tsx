@@ -4,20 +4,16 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { Dropdown } from '../Dropdown';
-import {
-  brandsOptions,
-  typeProductOptions,
-  availabilityOptions,
-  colorOptions,
-} from './constants';
+import { Switcher } from '../ui/Switcher';
+import { brandsOptions, typeProductOptions, colorOptions } from './constants';
 
 import './styles.scss';
 
 type PropsType = {
-  onChangeFilter: (type: string, value?: string | string[]) => void;
+  onChangeFilter: (type: string, value?: string | string[] | boolean) => void;
   typeProduct: string;
   brands: string[];
-  availability: string[];
+  isOnlyStock: boolean;
   colors: string[];
   className?: string;
 };
@@ -27,7 +23,7 @@ export const Filter: FC<PropsType> = ({
   onChangeFilter,
   typeProduct,
   brands,
-  availability,
+  isOnlyStock,
   colors,
 }) => {
   const { t } = useTranslation();
@@ -39,10 +35,7 @@ export const Filter: FC<PropsType> = ({
   };
 
   const showResetFilters =
-    !!typeProduct ||
-    !!brands.length ||
-    !!availability.length ||
-    !!colors.length;
+    !!typeProduct || !!brands.length || isOnlyStock || !!colors.length;
 
   return (
     <div className={classNames('filter', className)}>
@@ -62,13 +55,6 @@ export const Filter: FC<PropsType> = ({
         onChange={(value) => onChangeFilter('brand', value)}
       />
       <Dropdown
-        options={availabilityOptions}
-        title="Наличие"
-        multiple
-        selected={availability}
-        onChange={(value) => onChangeFilter('availability', value)}
-      />
-      <Dropdown
         options={colorOptions}
         title="Цвет"
         multiple
@@ -76,6 +62,13 @@ export const Filter: FC<PropsType> = ({
         classNameList="filter__color-list"
         onChange={(value) => onChangeFilter('color', value)}
       />
+      <div className="filter__switcher">
+        <div className="filter__switcher-label">Только товары в наличии</div>
+        <Switcher
+          value={isOnlyStock}
+          onChange={(value) => onChangeFilter('isOnlyStock', value)}
+        />
+      </div>
       <Animate
         play={showResetFilters}
         start={{ opacity: 0 }}

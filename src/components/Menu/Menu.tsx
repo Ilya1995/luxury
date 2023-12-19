@@ -75,12 +75,7 @@ export const Menu: FC<PropsType> = ({
         })}
       >
         <div>
-          <img
-            alt="close"
-            className="menu__side-close"
-            src="./close.svg"
-            onClick={() => setIsOpen(false)}
-          />
+          <Icon name="close2" size={1.5} handleClick={() => setIsOpen(false)} />
           <div className="menu__side-links">
             <NavLink className="menu__side-link" to="/catalog">
               {t('catalog')}
