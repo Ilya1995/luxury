@@ -1,4 +1,8 @@
 .tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: max-content;
   background-color: rgba(var(--grey-100));
   border-radius: 0.25rem;
   padding: 0.5rem 0.75rem;

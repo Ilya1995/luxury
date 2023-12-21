@@ -67,6 +67,7 @@ export const Search: FC<PropsType> = ({ className, isWhite }) => {
         className={classNames('search__input', {
           search__input_active: isActive,
         })}
+        hasClear
         isFocused={isActive && !value}
         value={value}
         onChange={setValue}

@@ -15,6 +15,7 @@ type PropsType = {
   className?: string;
   messageError?: string;
   isFocused?: boolean;
+  hasClear?: boolean;
 };
 
 export const Input: FC<PropsType> = ({
@@ -26,6 +27,7 @@ export const Input: FC<PropsType> = ({
   placeholder,
   messageError,
   isFocused,
+  hasClear = false,
 }) => {
   const { t } = useTranslation();
   const inputEl = useRef<any>(null);
@@ -75,6 +77,7 @@ export const Input: FC<PropsType> = ({
           input_focus: isFocus,
           'input_has-text': !!value,
           'input_has-icon': !!iconName,
+          'input_has-clear': !!hasClear,
           'input_has-error': !!messageError,
         },
         className
@@ -90,14 +93,19 @@ export const Input: FC<PropsType> = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
+      {value && hasClear && (
+        <Icon
+          name="close3"
+          size={1.5}
+          pointer
+          handleClick={() => onChange('')}
+          className="input__clear"
+        />
+      )}
       <div
-        className={classNames(
-          'input__error-message',
-          {
-            'input__error-message-visible': !!messageError,
-          },
-          className
-        )}
+        className={classNames('input__error-message', {
+          'input__error-message-visible': !!messageError,
+        })}
       >
         {messageError}
       </div>

@@ -12,6 +12,11 @@
       max-width: 0 !important;
     }
 
+    .input__clear {
+      max-height: 0 !important;
+      max-width: 0 !important;
+    }
+
     &_active {
       width: 275px;
       max-width: 275px;
@@ -19,6 +24,11 @@
       opacity: 1;
 
       .input__icon {
+        max-height: none !important;
+        max-width: none !important;
+      }
+
+      .input__clear {
         max-height: none !important;
         max-width: none !important;
       }

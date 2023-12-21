@@ -11,6 +11,37 @@
     }
   }
 
+  &_mobile {
+    width: auto;
+
+    .dropdown-header {
+      border-bottom: none;
+
+      &-title {
+        text-decoration-color: rgba(var(--white));
+      }
+    }
+
+    .dropdown-list {
+      max-height: 100%;
+
+      &__scroll {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        height: calc(100svh - 160px);
+
+        &_mask {
+          mask-image: none;
+        }
+      }
+
+      &-item_simple {
+        margin-right: 0;
+      }
+    }
+  }
+
   &-header {
     display: flex;
     align-items: center;

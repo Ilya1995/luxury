@@ -1,17 +1,10 @@
 import { FC, useState } from 'react';
-import { Animate } from 'react-simple-animate';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
-import { Dropdown } from '../Dropdown';
 import { Icon } from '../ui/Icon';
-import { useWatch } from '../../hooks';
-import {
-  brandsOptions,
-  typeProductOptions,
-  colorOptions,
-} from '../Filter/constants';
 import { MenuFilterList } from './MenuFilterList';
+import { MenuFilterItem } from './MenuFilterItem';
 
 import './styles.scss';
 
@@ -34,25 +27,32 @@ export const FilterMobile: FC<PropsType> = ({
 }) => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const [currentFilter, setCurrentFilter] = useState('');
+
+  const handleOpenCurrentFilter = (value: string) => {
+    setCurrentFilter(value);
+  };
 
   return (
     <div className={classNames('filter-mobile', className)}>
       <MenuFilterList
         isOpen={isOpen}
+        typeProduct={typeProduct}
         onChangeOpen={setIsOpen}
         isOnlyStock={isOnlyStock}
         onChangeFilter={onChangeFilter}
+        onOpenCurrentFilter={handleOpenCurrentFilter}
+      />
+      <MenuFilterItem
+        currentFilter={currentFilter}
+        onChangeFilter={onChangeFilter}
+        typeProduct={typeProduct}
+        onClose={() => setCurrentFilter('')}
+        onApply={() => setCurrentFilter('')}
       />
       <div className="filter-mobile__button" onClick={() => setIsOpen(true)}>
         {t('filters')}
-        <Icon
-          //   className={classNames('dropdown-header-icon', {
-          //     'dropdown-header-icon_open': isOpen,
-          //   })}
-          name="filter"
-          color="rgba(var(--grey-800))"
-          size={1.5}
-        />
+        <Icon name="filter" color="rgba(var(--grey-800))" size={1.5} />
       </div>
     </div>
   );

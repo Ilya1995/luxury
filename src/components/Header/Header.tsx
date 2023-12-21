@@ -36,7 +36,7 @@ export const Header: FC<PropsType> = ({
 
       <Icon
         name="logo"
-        width={isMobile ? 8.55 : 11.6875}
+        width={isMobile ? 8.55 : 10.6875}
         height={isMobile ? 2 : 2.5625}
         color={isWhite ? 'rgba(var(--white))' : 'rgba(var(--grey-800))'}
         pointer

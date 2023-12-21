@@ -19,6 +19,7 @@ type PropsType = {
   options: string[] | { title: string; options: string[] }[];
   withSearch?: boolean;
   multiple?: boolean;
+  isMobile?: boolean;
   selected: string | string[];
   onChange: (value: string | string[]) => void;
 };
@@ -30,10 +31,11 @@ export const Dropdown: FC<PropsType> = ({
   title,
   withSearch = false,
   multiple = false,
+  isMobile = false,
   selected,
   onChange,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(isMobile ? true : false);
   const [searchText, setSearchText] = useState('');
   const refScroll = useRef<any>();
   const { isEndVisible } = useElementScroll(refScroll, isOpen);
@@ -41,6 +43,7 @@ export const Dropdown: FC<PropsType> = ({
   const isDifficult = typeof options[0] === 'object';
 
   const handleChangeOpen = (event: any) => {
+    if (isMobile) return;
     event.stopPropagation();
 
     setIsOpen(!isOpen);
@@ -72,19 +75,25 @@ export const Dropdown: FC<PropsType> = ({
 
   return (
     <div
-      className={classNames('dropdown', { dropdown_open: isOpen }, className)}
+      className={classNames(
+        'dropdown',
+        { dropdown_open: isOpen, dropdown_mobile: isMobile },
+        className
+      )}
     >
       <div className="dropdown-header" onClick={handleChangeOpen}>
         <div className="dropdown-header-title">{title}</div>
-        <Icon
-          className={classNames('dropdown-header-icon', {
-            'dropdown-header-icon_open': isOpen,
-          })}
-          name="arrow-down"
-          color="rgba(var(--grey-600))"
-          pointer
-          size={1.5}
-        />
+        {!isMobile && (
+          <Icon
+            className={classNames('dropdown-header-icon', {
+              'dropdown-header-icon_open': isOpen,
+            })}
+            name="arrow-down"
+            color="rgba(var(--grey-600))"
+            pointer
+            size={1.5}
+          />
+        )}
       </div>
       <div
         className={classNames(
