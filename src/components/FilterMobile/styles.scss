@@ -21,9 +21,6 @@
 .menu-filter-item {
   box-sizing: border-box;
   position: fixed;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
   z-index: 999999;
   top: 0;
   bottom: 0;
@@ -37,11 +34,20 @@
     left: 0;
   }
 
+  &__close {
+    margin-left: 1.5rem;
+  }
+
   &__content {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     margin-top: 1.5rem;
+  }
+
+  &-wrapper {
+    background-color: rgba(var(--white));
+    padding: 1rem 1.5rem 2rem;
   }
 
   &-item {
@@ -68,5 +74,30 @@
       align-items: center;
       gap: 0.5rem;
     }
+
+    &__tabs {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0 1.5rem;
+      position: relative;
+      overflow-x: auto;
+    }
+  }
+}
+
+.menu-filter-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem 0;
+
+  &-item {
+    margin: 0 1.5rem;
+  }
+
+  &__content {
+    overflow: auto;
+    position: relative;
+    height: calc(100svh - 165px);
   }
 }

@@ -1,43 +1,54 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import classNames from 'classnames';
 
 import { Icon } from '../ui/Icon';
 import { Dropdown } from '../Dropdown';
-import { typeProductOptions } from '../Filter/constants';
+import { Input } from '../ui/Input';
+import {
+  typeProductOptions,
+  brandsOptions,
+  colorOptions,
+} from '../Filter/constants';
 
 import './styles.scss';
 
 type PropsType = {
+  isOpen: boolean;
   currentFilter: string;
   onChangeFilter: (type: string, value?: string | string[] | boolean) => void;
   onClose: () => void;
-  onApply: () => void;
   typeProduct: string;
+  brands: string[];
+  colors: string[];
   className?: string;
 };
 
 export const MenuFilterItem: FC<PropsType> = ({
-  className,
+  isOpen,
   currentFilter,
   typeProduct,
+  brands,
+  colors,
   onChangeFilter,
   onClose,
-  onApply,
+  className,
 }) => {
+  const [searchText, setSearchText] = useState('');
+
   return (
     <div
       className={classNames('menu-filter-item', className, {
-        'menu-filter-item_open': !!currentFilter,
+        'menu-filter-item_open': !!isOpen,
       })}
     >
-      <div>
-        <Icon
-          name="arrow-left"
-          color="rgba(var(--grey-800))"
-          size={1.5}
-          handleClick={onClose}
-        />
-        <div className="menu-filter-item__content">
+      <Icon
+        name="arrow-left"
+        color="rgba(var(--grey-800))"
+        size={1.5}
+        handleClick={onClose}
+      />
+      <div className="menu-filter-item__content" data-filter={currentFilter}>
+        {currentFilter === 'product' && (
           <Dropdown
             options={typeProductOptions}
             isMobile
@@ -45,7 +56,29 @@ export const MenuFilterItem: FC<PropsType> = ({
             selected={typeProduct}
             onChange={(value) => onChangeFilter('product', value)}
           />
-        </div>
+        )}
+        {currentFilter === 'brand' && (
+          <>
+            <Input type="search" value={searchText} onChange={setSearchText} />
+            <Dropdown
+              options={brandsOptions}
+              isMobile
+              title="Бренд"
+              selected={brands}
+              onChange={(value) => onChangeFilter('brand', value)}
+            />
+          </>
+        )}
+        {currentFilter === 'color' && (
+          <Dropdown
+            options={colorOptions}
+            isMobile
+            title="Цвет"
+            multiple
+            selected={colors}
+            onChange={(value) => onChangeFilter('color', value)}
+          />
+        )}
       </div>
     </div>
   );

@@ -38,7 +38,7 @@ export const Breadcrumbs: FC<PropsType> = ({ className }) => {
     const result = [{ label: 'Главная', path: '/' }];
 
     names.forEach((item) => {
-      result.push({ label: MAP[item].label, path: MAP[item].path });
+      result.push({ label: MAP[item]?.label, path: MAP[item]?.path });
     });
 
     return result;

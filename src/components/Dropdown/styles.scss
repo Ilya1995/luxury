@@ -30,10 +30,6 @@
         flex-direction: column;
         gap: 1rem;
         height: calc(100svh - 160px);
-
-        &_mask {
-          mask-image: none;
-        }
       }
 
       &-item_simple {
@@ -144,6 +140,14 @@
 
     &__search {
       margin-bottom: 1rem;
+    }
+  }
+}
+
+[data-filter='brand'] {
+  .dropdown_mobile {
+    .dropdown-list__scroll {
+      height: calc(100svh - 230px);
     }
   }
 }

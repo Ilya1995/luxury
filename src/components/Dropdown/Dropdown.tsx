@@ -77,7 +77,10 @@ export const Dropdown: FC<PropsType> = ({
     <div
       className={classNames(
         'dropdown',
-        { dropdown_open: isOpen, dropdown_mobile: isMobile },
+        {
+          dropdown_open: isOpen,
+          dropdown_mobile: isMobile,
+        },
         className
       )}
     >

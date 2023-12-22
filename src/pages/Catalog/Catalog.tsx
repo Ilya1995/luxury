@@ -1,6 +1,6 @@
 import { FC, useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useMedia, useWatch } from '../../hooks';
@@ -22,10 +22,14 @@ export const Catalog: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const { tab } = useParams();
 
   const isMobile = useMedia('(max-width: 768px)');
-  const [activeTab, setActiveTab] = useState<TabType>(tabs[0]);
+  const [activeTab, setActiveTab] = useState<TabType>(() => {
+    const newTab = tabs.find(({ path }) => path === tab);
+    return newTab ? newTab : tabs[0];
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [typeProduct, setTypeProduct] = useState('');
   const [brands, setBrands] = useState<string[]>([]);
@@ -37,6 +41,14 @@ export const Catalog: FC = () => {
   useEffect(() => {
     getCatalog();
   }, [activeTab, typeProduct, brands, isOnlyStock, colors, searchText]);
+
+  useEffect(() => {
+    const newTab = tabs.find(({ path }) => path === tab);
+
+    if (!newTab && pathname !== '/catalog') {
+      navigate('/');
+    }
+  }, [tab, pathname, navigate]);
 
   useWatch(() => {
     handleResetFilters();
