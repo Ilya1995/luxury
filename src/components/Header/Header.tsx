@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, NavLink } from 'react-router-dom';
@@ -23,10 +23,11 @@ export const Header: FC<PropsType> = ({
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [searchActive, setSearchActive] = useState(false);
 
   return (
     <div className={classNames('header', { header_white: isWhite }, className)}>
-      {isMobile && (
+      {!searchActive && isMobile && (
         <Menu
           handleChangePage={() => {}}
           anchorMapToPage={{}}
@@ -34,20 +35,23 @@ export const Header: FC<PropsType> = ({
         />
       )}
 
-      <Icon
-        name="logo"
-        width={isMobile ? 8.55 : 10.6875}
-        height={isMobile ? 2 : 2.5625}
-        color={isWhite ? 'rgba(var(--white))' : 'rgba(var(--grey-800))'}
-        pointer
-        handleClick={() => navigate('/')}
-      />
+      {!searchActive && (
+        <Icon
+          name="logo"
+          width={isMobile ? 8.55 : 10.6875}
+          height={isMobile ? 2 : 2.5625}
+          color={isWhite ? 'rgba(var(--white))' : 'rgba(var(--grey-800))'}
+          pointer
+          handleClick={() => navigate('/')}
+        />
+      )}
 
       {isMobile && (
-        <Icon
-          name="search"
-          size={1.5}
-          color={isWhite ? 'rgba(var(--white))' : 'rgba(var(--grey-800))'}
+        <Search
+          isWhite={isWhite}
+          onChangeActive={setSearchActive}
+          hasClose
+          className={classNames({ header__search_active: searchActive })}
         />
       )}
       {!isMobile && (

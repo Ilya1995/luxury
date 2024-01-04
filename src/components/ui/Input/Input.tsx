@@ -53,6 +53,11 @@ export const Input: FC<PropsType> = ({
     onFocus(false);
   }
 
+  function handleClear() {
+    onChange('');
+    handleFocus();
+  }
+
   const iconName = useMemo(() => {
     if (!!messageError) return 'warning';
     if (type === 'search') return 'search2';
@@ -98,7 +103,7 @@ export const Input: FC<PropsType> = ({
           name="close3"
           size={1.5}
           pointer
-          handleClick={() => onChange('')}
+          handleClick={handleClear}
           className="input__clear"
         />
       )}

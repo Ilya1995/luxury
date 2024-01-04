@@ -1,5 +1,14 @@
 .search {
   display: flex;
+  align-items: center;
+
+  & > div:not(.search__input_active) {
+    border: 0px solid rgba(var(--blue-grey-300));
+
+    .input__field {
+      padding: 0;
+    }
+  }
 
   &__input {
     max-width: 0;
@@ -23,6 +32,11 @@
       max-height: 40px !important;
       opacity: 1;
 
+      @media (max-width: 768px) {
+        width: 100%;
+        max-width: calc(100vw - 4rem);
+      }
+
       .input__icon {
         max-height: none !important;
         max-width: none !important;
@@ -33,6 +47,10 @@
         max-width: none !important;
       }
     }
+  }
+
+  &__close {
+    margin-left: 0.5rem;
   }
 
   &__icon {

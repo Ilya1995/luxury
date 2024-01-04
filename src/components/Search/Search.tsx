@@ -14,9 +14,16 @@ import './styles.scss';
 type PropsType = {
   className?: string;
   isWhite?: boolean;
+  hasClose?: boolean;
+  onChangeActive?: (value: boolean) => void;
 };
 
-export const Search: FC<PropsType> = ({ className, isWhite }) => {
+export const Search: FC<PropsType> = ({
+  className,
+  isWhite,
+  hasClose = false,
+  onChangeActive = () => {},
+}) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -40,6 +47,10 @@ export const Search: FC<PropsType> = ({ className, isWhite }) => {
       setIsActive(false);
     }
   }, [isFocused, value]);
+
+  useEffect(() => {
+    onChangeActive(isActive);
+  }, [isActive, onChangeActive]);
 
   useWatch(() => {
     dispatch(setSearchText(debouncedValue));
@@ -73,6 +84,15 @@ export const Search: FC<PropsType> = ({ className, isWhite }) => {
         onChange={setValue}
         onFocus={setIsFocused}
       />
+      {isActive && hasClose && (
+        <Icon
+          className="search__close"
+          name="close2"
+          size={1.5}
+          handleClick={() => setValue('')}
+          color="rgba(var(--grey-600))"
+        />
+      )}
     </div>
   );
 };

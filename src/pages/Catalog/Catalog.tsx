@@ -11,6 +11,7 @@ import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Filter } from '../../components/Filter';
 import { FilterMobile } from '../../components/FilterMobile';
 import { CatalogList } from '../../components/CatalogList';
+import { SearchResultText } from '../../components/SearchResultText';
 import { TabType } from '../../types';
 import { RootState } from '../../store';
 import { setSearchText } from '../../store/reducer';
@@ -132,37 +133,23 @@ export const Catalog: FC = () => {
             />
           ))}
         </div>
-        {!isMobile && <Breadcrumbs />}
+        {!isMobile && !searchText && <Breadcrumbs />}
+        {isMobile && (
+          <FilterMobile
+            onChangeFilter={handleChangeFilter}
+            typeProduct={typeProduct}
+            brands={brands}
+            isOnlyStock={isOnlyStock}
+            colors={colors}
+          />
+        )}
         {!searchText && <div className="catalog-page__title">{title}</div>}
         {!isMobile && searchText && (
-          <div className="catalog-page-find">
-            <div className="catalog-page-find__result">
-              Найдено&nbsp;
-              {!isLoading && (
-                <span className="catalog-page-find__result-count">
-                  7 товаров
-                </span>
-              )}
-              {isLoading && (
-                <div className="catalog-page-find__result-count-skeleton" />
-              )}
-              &nbsp;по запросу
-            </div>
-            <div className="catalog-page-find__text">{searchText}</div>
-          </div>
+          <SearchResultText isLoading={isLoading} text={searchText} />
         )}
         <div className="catalog-page-blocks">
           {!isMobile && (
             <Filter
-              onChangeFilter={handleChangeFilter}
-              typeProduct={typeProduct}
-              brands={brands}
-              isOnlyStock={isOnlyStock}
-              colors={colors}
-            />
-          )}
-          {isMobile && (
-            <FilterMobile
               onChangeFilter={handleChangeFilter}
               typeProduct={typeProduct}
               brands={brands}
