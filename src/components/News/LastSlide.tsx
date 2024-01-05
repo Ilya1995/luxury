@@ -28,7 +28,7 @@ export const LastSlide: FC<PropsType> = ({ isMobile }) => {
       className="last-slide card"
       style={{ height: `${height - padding}px` }}
     >
-      <img className="last-slide__img" alt="Лого" src="./logo-visit.svg" />
+      <img className="last-slide__img" alt="Лого" src="/logo-visit.svg" />
       <div className="card__content">
         <div className="card__content-title">{t('all-news-company')}</div>
         <ButtonMore />

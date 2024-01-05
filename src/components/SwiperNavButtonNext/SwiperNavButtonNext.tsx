@@ -9,7 +9,7 @@ export const SwiperNavButtonNext: FC = () => {
       className="swiper-nav-button swiper-nav-button_next"
       onClick={() => swiper.slideNext()}
       alt="next"
-      src="./nav-next.svg"
+      src="/nav-next.svg"
     />
   );
 };

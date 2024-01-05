@@ -83,7 +83,7 @@ export const FAQ: FC<PropsType> = () => {
                   end={{ opacity: 1 }}
                   easeType="ease-in"
                 >
-                  <img alt="plus" src="./plus.svg" />
+                  <img alt="plus" src="/plus.svg" />
                 </Animate>
                 <Animate
                   play={open[id]}
@@ -91,7 +91,7 @@ export const FAQ: FC<PropsType> = () => {
                   end={{ opacity: 1 }}
                   easeType="ease-in"
                 >
-                  <img alt="minus" src="./minus.svg" />
+                  <img alt="minus" src="/minus.svg" />
                 </Animate>
               </div>
             </div>

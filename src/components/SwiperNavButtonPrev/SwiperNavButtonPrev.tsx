@@ -9,7 +9,7 @@ export const SwiperNavButtonPrev: FC = () => {
       className="swiper-nav-button swiper-nav-button_prev"
       onClick={() => swiper.slidePrev()}
       alt="prev"
-      src="./nav-prev.svg"
+      src="/nav-prev.svg"
     />
   );
 };

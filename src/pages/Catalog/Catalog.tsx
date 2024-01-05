@@ -12,9 +12,12 @@ import { Filter } from '../../components/Filter';
 import { FilterMobile } from '../../components/FilterMobile';
 import { CatalogList } from '../../components/CatalogList';
 import { SearchResultText } from '../../components/SearchResultText';
-import { TabType } from '../../types';
+import { ProductsNotFound } from '../../components/ProductsNotFound';
+import { TabType, Product } from '../../types';
 import { RootState } from '../../store';
 import { setSearchText } from '../../store/reducer';
+import { data as mockProducts } from '../../components/CatalogList/mock';
+
 import { tabs } from './constants';
 
 import './styles.scss';
@@ -35,12 +38,30 @@ export const Catalog: FC = () => {
   const [typeProduct, setTypeProduct] = useState('');
   const [brands, setBrands] = useState<string[]>([]);
   const [isOnlyStock, setIsOnlyStock] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
 
   const [colors, setColors] = useState<string[]>([]);
   const { searchText } = useSelector((state: RootState) => state.general);
 
   useEffect(() => {
-    getCatalog();
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+
+      // условия для дебага
+      if (searchText === '11' || searchText === '111') {
+        setProducts([]);
+        return;
+      }
+
+      if (isOnlyStock) {
+        setProducts([]);
+        return;
+      }
+
+      setProducts(mockProducts);
+    }, 2000);
   }, [activeTab, typeProduct, brands, isOnlyStock, colors, searchText]);
 
   useEffect(() => {
@@ -68,14 +89,6 @@ export const Catalog: FC = () => {
     if (activeTab.path === 'all') return t('catalog');
     return activeTab?.label || t('catalog');
   }, [t, activeTab]);
-
-  const getCatalog = () => {
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  };
 
   const handleChangeTab = (tab: TabType) => {
     if (tab.path === 'all' || activeTab.label === tab.label) {
@@ -118,6 +131,14 @@ export const Catalog: FC = () => {
     dispatch(setSearchText(''));
   };
 
+  const showTitle = !searchText && (!isMobile || !!products.length);
+  const showSearchResult = searchText || (isMobile && !products.length);
+  const showCatalog = !!products.length || isLoading;
+  const showNotFound = !products.length && !isLoading;
+  const showBreadcrumbs = !isMobile && !searchText;
+  const showFilterDesk =
+    !isMobile && (!!products.length || !searchText || isLoading);
+
   return (
     <div className="page catalog-page">
       <Header className="catalog-page__header" isMobile={isMobile} />
@@ -133,7 +154,7 @@ export const Catalog: FC = () => {
             />
           ))}
         </div>
-        {!isMobile && !searchText && <Breadcrumbs />}
+        {showBreadcrumbs && <Breadcrumbs />}
         {isMobile && (
           <FilterMobile
             onChangeFilter={handleChangeFilter}
@@ -143,12 +164,17 @@ export const Catalog: FC = () => {
             colors={colors}
           />
         )}
-        {!searchText && <div className="catalog-page__title">{title}</div>}
-        {!isMobile && searchText && (
-          <SearchResultText isLoading={isLoading} text={searchText} />
+        {showTitle && <div className="catalog-page__title">{title}</div>}
+        {showSearchResult && (
+          <SearchResultText
+            isLoading={isLoading}
+            text={searchText}
+            count={products.length}
+            className="catalog-page__search-result"
+          />
         )}
         <div className="catalog-page-blocks">
-          {!isMobile && (
+          {showFilterDesk && (
             <Filter
               onChangeFilter={handleChangeFilter}
               typeProduct={typeProduct}
@@ -157,7 +183,12 @@ export const Catalog: FC = () => {
               colors={colors}
             />
           )}
-          <CatalogList isLoading={isLoading} />
+          {showCatalog && (
+            <CatalogList isLoading={isLoading} products={products} />
+          )}
+          {showNotFound && (
+            <ProductsNotFound searchEmpty={!searchText} isMobile={isMobile} />
+          )}
         </div>
       </div>
 

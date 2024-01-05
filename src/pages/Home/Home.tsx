@@ -34,7 +34,7 @@ export const Home: FC = () => {
         </div>
       </div>
       <div className="home-page__business-inf business-inf">
-        <img className="business-inf__logo" alt="Лого" src="./logo-visit.svg" />
+        <img className="business-inf__logo" alt="Лого" src="/logo-visit.svg" />
         <div className="business-inf__content">
           <div className="business-inf__content-text">
             {t('business-inf-1')}

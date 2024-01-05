@@ -133,16 +133,6 @@ export const MenuFilterList: FC<PropsType> = ({
             )}
           </div>
 
-          <div className="menu-filter-list-item">
-            <div className="menu-filter-list-item__label">
-              Только товары в наличии
-            </div>
-            <Switcher
-              value={isOnlyStock}
-              onChange={(value) => onChangeFilter('isOnlyStock', value)}
-            />
-          </div>
-
           <div className="menu-filter-list-item-wrapper">
             <div
               className="menu-filter-list-item"
@@ -170,6 +160,16 @@ export const MenuFilterList: FC<PropsType> = ({
                 ))}
               </div>
             )}
+          </div>
+
+          <div className="menu-filter-list-item">
+            <div className="menu-filter-list-item__label">
+              Только товары в наличии
+            </div>
+            <Switcher
+              value={isOnlyStock}
+              onChange={(value) => onChangeFilter('isOnlyStock', value)}
+            />
           </div>
         </div>
       </div>

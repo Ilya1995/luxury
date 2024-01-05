@@ -29,10 +29,10 @@ export const Footer: FC<PropsType> = ({ isMobile }) => {
           {!isMobile && (
             <div className="footer__contacts-social">
               <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
-                <img alt="instagram" src="./instagram.svg" />
+                <img alt="instagram" src="/instagram.svg" />
               </a>
               <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
-                <img alt="whatsap" src="./whatsap.svg" />
+                <img alt="whatsap" src="/whatsap.svg" />
               </a>
             </div>
           )}
