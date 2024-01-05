@@ -2,11 +2,13 @@ import { FC, useMemo } from 'react';
 import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { Product } from '../../types';
 import { Icon } from '../ui/Icon';
 
 import './styles.scss';
 
 type PropsType = {
+  product?: Product;
   className?: string;
 };
 
@@ -22,7 +24,7 @@ const MAP: Record<string, any> = {
   furniture: { label: 'Мебель', path: '/catalog/furniture' },
 };
 
-export const Breadcrumbs: FC<PropsType> = ({ className }) => {
+export const Breadcrumbs: FC<PropsType> = ({ className, product }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -37,9 +39,17 @@ export const Breadcrumbs: FC<PropsType> = ({ className }) => {
 
     const result = [{ label: 'Главная', path: '/' }];
 
-    names.forEach((item) => {
+    names.forEach((item, index) => {
+      console.log(
+        222,
+        '/' + names.slice(0, index + 1).join('/'),
+        MAP[item]?.path
+      );
+      if (item === 'all') return;
+
       result.push({ label: MAP[item]?.label, path: MAP[item]?.path });
     });
+    console.log(333, names, result);
 
     return result;
   }, [pathname]);

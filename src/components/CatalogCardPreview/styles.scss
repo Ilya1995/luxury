@@ -6,6 +6,7 @@
   height: 26.5625rem;
   border-radius: 0.5rem;
   background-color: rgba(var(--white));
+  cursor: pointer;
 
   @media (max-width: 768px) {
     width: 9.6875rem;
@@ -84,7 +85,6 @@
     font-size: 0.875rem;
     line-height: 1.57;
     color: rgba(var(--orange));
-    cursor: pointer;
   }
 }
 

@@ -98,6 +98,10 @@ export const Catalog: FC = () => {
     navigate(`/catalog/${tab.path}`);
   };
 
+  const handleGoToCard = (id: number) => {
+    navigate(`/catalog/${activeTab.path}/${id}`);
+  };
+
   const handleChangeFilter = (
     type: string,
     value?: string | string[] | boolean
@@ -140,7 +144,7 @@ export const Catalog: FC = () => {
     !isMobile && (!!products.length || !searchText || isLoading);
 
   return (
-    <div className="page catalog-page">
+    <div className="catalog-page">
       <Header className="catalog-page__header" isMobile={isMobile} />
 
       <div className="catalog-page__content">
@@ -184,10 +188,18 @@ export const Catalog: FC = () => {
             />
           )}
           {showCatalog && (
-            <CatalogList isLoading={isLoading} products={products} />
+            <CatalogList
+              isLoading={isLoading}
+              products={products}
+              onGoToCard={handleGoToCard}
+            />
           )}
           {showNotFound && (
-            <ProductsNotFound searchEmpty={!searchText} isMobile={isMobile} />
+            <ProductsNotFound
+              searchEmpty={!searchText}
+              isMobile={isMobile}
+              onGoToCard={handleGoToCard}
+            />
           )}
         </div>
       </div>

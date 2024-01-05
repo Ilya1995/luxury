@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 import './styles.scss';
 
@@ -9,15 +10,23 @@ type PropsType = {
 
 export const Footer: FC<PropsType> = ({ isMobile }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <div className="footer">
       <div className="footer__first">
-        <img className="footer__logo" alt="Лого" src="/logo-visit.svg" />
+        <img
+          className="footer__logo pointer"
+          alt="Лого"
+          src="/logo-visit.svg"
+          onClick={() => navigate('/')}
+        />
         <div className="footer__contacts">
           <div className="footer-links-group">
             <div className="footer__contacts-links">
-              <div className="pointer">{t('catalog')}</div>
+              <NavLink className="footer-contacts-link" to="/catalog">
+                {t('catalog')}
+              </NavLink>
               <div className="pointer">{t('brands')}</div>
               <div className="pointer">{t('projects')}</div>
             </div>

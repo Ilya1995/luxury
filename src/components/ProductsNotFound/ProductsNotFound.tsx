@@ -10,6 +10,7 @@ import './styles.scss';
 type PropsType = {
   searchEmpty: boolean;
   isMobile: boolean;
+  onGoToCard: (id: number) => void;
   className?: string;
 };
 
@@ -17,6 +18,7 @@ export const ProductsNotFound: FC<PropsType> = ({
   className,
   searchEmpty,
   isMobile,
+  onGoToCard,
 }) => {
   const { t } = useTranslation();
 
@@ -32,7 +34,11 @@ export const ProductsNotFound: FC<PropsType> = ({
           </div>
           <div className="products-not-found__products">
             {data.map((card) => (
-              <CatalogCardPreview key={card.id} {...card} />
+              <CatalogCardPreview
+                key={card.id}
+                {...card}
+                onGoToCard={onGoToCard}
+              />
             ))}
           </div>
         </>

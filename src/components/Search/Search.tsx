@@ -54,8 +54,9 @@ export const Search: FC<PropsType> = ({
 
   useWatch(() => {
     dispatch(setSearchText(debouncedValue));
+    const isCardProduct = Number(pathname.split('/').at(-1)) > 0;
 
-    if (pathname === '/' && !!debouncedValue) {
+    if ((pathname === '/' || isCardProduct) && !!debouncedValue) {
       navigate('/catalog');
     }
   }, [debouncedValue, dispatch, navigate, pathname]);

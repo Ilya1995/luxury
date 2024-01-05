@@ -18,7 +18,7 @@ export const Home: FC = () => {
   const isMobile = useMedia('(max-width: 768px)');
 
   return (
-    <div className="page home-page">
+    <div className="home-page">
       <div className="bg">
         <Header className="home-page__header" isMobile={isMobile} isWhite />
         <div className="home-page__tagline">

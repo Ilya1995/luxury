@@ -9,6 +9,7 @@ import {
 
 import { Home } from './pages/Home';
 import { Catalog } from './pages/Catalog';
+import { CatalogCard } from './pages/CatalogCard';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: '/catalog/:tab',
     element: <Catalog />,
+  },
+  {
+    path: '/catalog/:tab/:productId',
+    element: <CatalogCard />,
   },
   {
     path: '*',

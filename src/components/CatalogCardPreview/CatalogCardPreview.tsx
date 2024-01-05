@@ -4,22 +4,29 @@ import classNames from 'classnames';
 import './styles.scss';
 
 type PropsType = {
+  id: number;
   src: string;
   name: string;
   brand: string;
   material: string;
+  onGoToCard: (id: number) => void;
   className?: string;
 };
 
 export const CatalogCardPreview: FC<PropsType> = ({
   className,
+  id,
   src,
   name,
   brand,
   material,
+  onGoToCard,
 }) => {
   return (
-    <div className={classNames('catalog-card-preview', className)}>
+    <div
+      className={classNames('catalog-card-preview', className)}
+      onClick={() => onGoToCard(id)}
+    >
       <img className="catalog-card-preview__img" src={src} alt="card" />
       <div className="catalog-card-preview__content">
         <div className="catalog-card-preview__content-info">

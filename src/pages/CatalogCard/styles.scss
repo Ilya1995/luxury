@@ -1,0 +1,36 @@
+.catalog-card-page {
+  background-color: rgba(var(--white));
+
+  &__header {
+    padding: 3rem 6.875rem 0;
+
+    @media (max-width: 768px) {
+      padding: 2rem 1rem 1.5rem;
+    }
+  }
+
+  &__content {
+    padding: 2rem 6.875rem 3rem;
+
+    @media (max-width: 768px) {
+      padding: 0;
+    }
+  }
+
+  &-tabs {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0 1rem;
+
+    @media (max-width: 1000px) {
+      position: relative;
+      gap: 0.5rem;
+      border-bottom: none;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 768px) {
+      padding: 0 1rem 1.5rem;
+    }
+  }
+}

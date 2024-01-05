@@ -22,6 +22,10 @@
     flex-direction: column;
   }
 
+  &-contacts-link {
+    color: rgba(var(--grey-600));
+  }
+
   &__contacts {
     display: flex;
     justify-content: space-between;
@@ -42,7 +46,6 @@
         flex-direction: column;
         align-items: flex-start;
         font-size: 0.875rem;
-        color: rgba(var(--grey-600));
         gap: 1.3rem;
       }
     }
