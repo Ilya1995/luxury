@@ -1,12 +1,17 @@
 import { FC, useEffect, useState, useMemo } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import { Tab } from '../../components/Tab';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { useMedia } from '../../hooks';
-import { TabType } from '../../types';
+import { Product, TabType } from '../../types';
+import { data as mock1 } from '../../components/CatalogList/mock';
+import { data as mock2 } from '../../components/ProductsNotFound/mock';
+import { CatalogCardInfo } from '../../components/CatalogCardInfo';
+import { CatalogCardPhoto } from '../../components/CatalogCardPhoto';
 import { tabs } from '../Catalog/constants';
 
 import './styles.scss';
@@ -14,21 +19,44 @@ import './styles.scss';
 export const CatalogCard: FC = () => {
   const isMobile = useMedia('(max-width: 768px)');
   const { tab, productId } = useParams();
-  const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const [product, setProduct] = useState<Product>();
+
+  useEffect(() => {
+    const isCardProduct = Number(productId) > 0;
+
+    if (!isCardProduct) {
+      navigate('/');
+    }
+  }, [productId, navigate]);
+
+  useEffect(() => {
+    if (!productId) {
+      return navigate('/');
+    }
+
+    setTimeout(() => {
+      const product1 = mock1.find((el) => el.id === +productId);
+      const product2 = mock2.find((el) => el.id === +productId);
+      const product3 = product1 || product2;
+
+      if (!product3) {
+        return navigate('/');
+      }
+      setProduct(product3);
+    }, 100);
+  }, [productId, navigate]);
 
   const activeTab = useMemo(() => {
     const newTab = tabs.find(({ path }) => path === tab);
     return newTab ? newTab : tabs[0];
   }, [tab]);
 
-  useEffect(() => {
-    const isCardProduct = Number(pathname.split('/').at(-1)) > 0;
-
-    if (!isCardProduct) {
-      navigate('/');
-    }
-  }, [pathname, navigate]);
+  const title = useMemo(() => {
+    if (activeTab.path === 'all') return t('catalog');
+    return activeTab?.label || t('catalog');
+  }, [t, activeTab]);
 
   const handleChangeTab = (tab: TabType) => {
     if (tab.path === 'all' || activeTab.label === tab.label) {
@@ -38,12 +66,14 @@ export const CatalogCard: FC = () => {
     navigate(`/catalog/${tab.path}`);
   };
 
+  const showBreadcrumbs = !isMobile && product;
+
   return (
     <div className="catalog-card-page">
       <Header className="catalog-card-page__header" isMobile={isMobile} />
 
       <div className="catalog-card-page__content">
-        <div className="catalog-card-page-tabs">
+        <div className="catalog-card-page__tabs">
           {tabs.map((tab) => (
             <Tab
               key={tab.label}
@@ -53,7 +83,14 @@ export const CatalogCard: FC = () => {
             />
           ))}
         </div>
-        {!isMobile && <Breadcrumbs />}
+        {showBreadcrumbs && <Breadcrumbs product={product} />}
+        {!isMobile && <div className="catalog-card-page__title">{title}</div>}
+        {product && (
+          <div className="catalog-card-page__info">
+            <CatalogCardPhoto product={product} />
+            <CatalogCardInfo product={product} />
+          </div>
+        )}
       </div>
 
       <Footer isMobile={isMobile} />

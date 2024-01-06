@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { Icon } from '../ui/Icon';
 import { Input } from '../ui/Input';
@@ -27,6 +27,7 @@ export const Search: FC<PropsType> = ({
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { productId } = useParams();
 
   const { searchText } = useSelector((state: RootState) => state.general);
 
@@ -54,12 +55,12 @@ export const Search: FC<PropsType> = ({
 
   useWatch(() => {
     dispatch(setSearchText(debouncedValue));
-    const isCardProduct = Number(pathname.split('/').at(-1)) > 0;
+    const isCardProduct = Number(productId) > 0;
 
     if ((pathname === '/' || isCardProduct) && !!debouncedValue) {
       navigate('/catalog');
     }
-  }, [debouncedValue, dispatch, navigate, pathname]);
+  }, [debouncedValue, dispatch, navigate, pathname, productId]);
 
   return (
     <div className={classNames('search', className)}>

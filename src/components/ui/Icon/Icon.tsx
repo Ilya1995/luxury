@@ -28,12 +28,25 @@ export const Icon: FC<PropsType> = ({
   const iconWidth = (size || width) + 'rem';
   const cursor = pointer ? 'pointer' : 'default';
 
+  /* Есть два типа иконок:
+   *  - regular - которым можно задать цвет
+   *  - colored - которые имеют элементы разных цветов. Они не подразумевают перекрашивание
+   *
+   * colored иконки задаются при помощи префикса в виде буквы и дефиса, например 'c-search'.
+   */
+  const coloredIconsPrefixes = /^f-|^c-/;
+  const type = coloredIconsPrefixes.test(name) ? 'colored' : 'regular';
+
   return (
     <i
       className={classNames('icon', className)}
       onClick={handleClick}
       style={{
-        WebkitMaskImage: `url('/${name}.svg')`,
+        WebkitMaskImage: type === 'colored' ? 'unset' : `url('/${name}.svg')`,
+        background:
+          type === 'colored'
+            ? `no-repeat url('/${name}.svg') transparent`
+            : 'auto',
         color,
         height: iconHeight,
         width: iconWidth,

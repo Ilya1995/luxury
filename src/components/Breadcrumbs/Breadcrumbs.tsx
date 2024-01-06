@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react';
 import classNames from 'classnames';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { Product } from '../../types';
 import { Icon } from '../ui/Icon';
@@ -13,19 +13,20 @@ type PropsType = {
 };
 
 const MAP: Record<string, any> = {
-  catalog: { label: 'Каталог', path: '/catalog' },
-  present: { label: 'Подарки', path: '/catalog/present' },
-  serving: { label: 'Сервировка', path: '/catalog/serving' },
-  accessories: { label: 'Аксессуары', path: '/catalog/accessories' },
-  textile: { label: 'Текстиль', path: '/catalog/textile' },
-  carpets: { label: 'Ковры', path: '/catalog/carpets' },
-  wallpaper: { label: 'Обои', path: '/catalog/wallpaper' },
-  paints: { label: 'Краски', path: '/catalog/paints' },
-  furniture: { label: 'Мебель', path: '/catalog/furniture' },
+  catalog: 'Каталог',
+  present: 'Подарки',
+  serving: 'Сервировка',
+  accessories: 'Аксессуары',
+  textile: 'Текстиль',
+  carpets: 'Ковры',
+  wallpaper: 'Обои',
+  paints: 'Краски',
+  furniture: 'Мебель',
 };
 
 export const Breadcrumbs: FC<PropsType> = ({ className, product }) => {
   const { pathname } = useLocation();
+  const { productId } = useParams();
   const navigate = useNavigate();
 
   const handleNavigate = (path: string) => {
@@ -36,23 +37,23 @@ export const Breadcrumbs: FC<PropsType> = ({ className, product }) => {
 
   const items = useMemo(() => {
     const names = pathname.split('/').slice(1);
-
     const result = [{ label: 'Главная', path: '/' }];
 
     names.forEach((item, index) => {
-      console.log(
-        222,
-        '/' + names.slice(0, index + 1).join('/'),
-        MAP[item]?.path
-      );
       if (item === 'all') return;
+      const path = '/' + names.slice(0, index + 1).join('/');
 
-      result.push({ label: MAP[item]?.label, path: MAP[item]?.path });
+      if (product && item === productId) {
+        const label = `${product.brand} ${product.name}`;
+        result.push({ label, path });
+        return;
+      }
+
+      result.push({ label: MAP[item], path });
     });
-    console.log(333, names, result);
 
     return result;
-  }, [pathname]);
+  }, [pathname, product, productId]);
 
   return (
     <div className={classNames('breadcrumbs', className)}>
