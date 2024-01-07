@@ -6,6 +6,7 @@ import { Animate } from 'react-simple-animate';
 
 import { Product } from '../../types';
 import { Icon } from '../ui/Icon';
+import { ModalPhoto } from '../modals/ModalPhoto';
 import { SwiperNav } from './SwiperNav';
 
 import './styles.scss';
@@ -18,6 +19,7 @@ type PropsType = {
 export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
   const [activePhoto, setActivePhoto] = useState(product.src);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
   const [showNavButton, setShowNavButton] = useState({
     showPrev: false,
     showNext: true,
@@ -38,6 +40,14 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
 
   return (
     <div className={classNames('catalog-card-photo', className)}>
+      {openModal && (
+        <ModalPhoto
+          active={activePhoto}
+          photos={product.photos}
+          onClose={() => setOpenModal(false)}
+        />
+      )}
+
       <div className="catalog-card-photo__wrapper-img">
         <Animate
           play
@@ -50,6 +60,7 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
           <img
             className="catalog-card-photo__img"
             src={activePhoto}
+            onClick={() => setOpenModal(true)}
             alt="card"
           />
         </Animate>
@@ -57,6 +68,7 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
         <Icon
           name="c-search"
           pointer
+          handleClick={() => setOpenModal(true)}
           className="catalog-card-photo__icon"
           size={1.5}
         />
