@@ -22,7 +22,7 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
   const [openModal, setOpenModal] = useState(false);
   const [showNavButton, setShowNavButton] = useState({
     showPrev: false,
-    showNext: true,
+    showNext: product.photos.length > 4,
   });
 
   const handleChangeShowNawButtons = ({

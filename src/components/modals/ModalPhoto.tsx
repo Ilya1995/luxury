@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, useRef } from 'react';
 import classNames from 'classnames';
 
 import { Icon } from '../ui/Icon';
@@ -18,11 +18,12 @@ export const ModalPhoto: FC<PropsType> = ({
   active,
   onClose,
 }) => {
-  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [innerWidth, setInnerWidth] = useState(0);
   const [activePhoto, setActivePhoto] = useState(active);
   const [activeIndex, setActiveIndex] = useState(
     () => photos.findIndex((photo) => photo === active) || 0
   );
+  const scroll = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -34,16 +35,17 @@ export const ModalPhoto: FC<PropsType> = ({
 
   useEffect(() => {
     const callback = () => {
-      setInnerWidth(window.innerWidth);
+      setInnerWidth(scroll.current?.clientWidth || 0);
     };
 
+    setInnerWidth(scroll.current?.clientWidth || 0);
     window.addEventListener('resize', callback);
     return () => {
       window.removeEventListener('resize', callback);
     };
   }, []);
 
-  const widthLine = (innerWidth - 32) / photos.length;
+  const widthLine = innerWidth / photos.length;
 
   return (
     <div className={classNames('modal-photo', className)}>
@@ -58,7 +60,7 @@ export const ModalPhoto: FC<PropsType> = ({
       <div className="modal-photo__content">
         <img className="modal-photo__active-img" src={activePhoto} alt="img" />
         <div className="modal-photo__scroll-wrapper">
-          <div className="modal-photo__scroll">
+          <div className="modal-photo__scroll" ref={scroll}>
             <div
               className="modal-photo__scroll-item"
               style={{
