@@ -17,12 +17,22 @@ type PropsType = {
 
 export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
   const [activePhoto, setActivePhoto] = useState(product.src);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [showNavButton, setShowNavButton] = useState({
     showPrev: false,
     showNext: true,
   });
 
-  const handleChangeShowNawButtons = ({ isBeginning, isEnd }: SwiperClass) => {
+  const handleChangeShowNawButtons = ({
+    isBeginning,
+    isEnd,
+    activeIndex,
+  }: SwiperClass) => {
+    // костыль для градиетнта
+    setActiveIndex(1000);
+    setTimeout(() => {
+      setActiveIndex(activeIndex);
+    }, 400);
     setShowNavButton({ showPrev: !isBeginning, showNext: !isEnd });
   };
 
@@ -62,12 +72,17 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
             mousewheel={product.photos.length > 4}
             modules={[Mousewheel, Navigation]}
           >
-            {product.photos.map((photo) => (
+            {product.photos.map((photo, index) => (
               <SwiperSlide key={photo}>
                 <img
                   className={classNames('catalog-card-photo__carousel-img', {
                     'catalog-card-photo__carousel-img_active':
                       photo === activePhoto,
+                    'catalog-card-photo__carousel-img-shadow_right':
+                      index > activeIndex + 2 &&
+                      product.photos.length - 1 !== index,
+                    'catalog-card-photo__carousel-img-shadow_left':
+                      activeIndex === index && activeIndex,
                   })}
                   src={photo}
                   onClick={() => setActivePhoto(photo)}

@@ -37,6 +37,33 @@
       &_active {
         outline: 3px solid rgba(var(--grey-400));
       }
+
+      &-shadow {
+        &_right {
+          -webkit-mask-image: linear-gradient(
+            to left,
+            rgba(255, 255, 255, 0.24) -5%,
+            black 80%
+          );
+          mask-image: linear-gradient(
+            to left,
+            rgba(255, 255, 255, 0.24) -5%,
+            black 80%
+          );
+        }
+        &_left {
+          -webkit-mask-image: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.24) -5%,
+            black 80%
+          );
+          mask-image: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.24) -5%,
+            black 80%
+          );
+        }
+      }
     }
 
     &-wrapper {
@@ -45,7 +72,6 @@
 
     &-arrow {
       position: absolute;
-      // right: -0.5px;
       top: 3.5px;
       bottom: 3.5px;
       z-index: 2;
@@ -56,7 +82,6 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      // box-shadow: -4px 0 4px 0 rgba(34, 37, 45, 0.15);
       animation: 0.3s show ease;
 
       &.-prev {
@@ -73,7 +98,6 @@
         width: 4px;
         background-color: transparent;
         position: absolute;
-        // right: -0.5px;
         top: 3.5px;
         bottom: 3.5px;
         animation: 0.3s show ease;
