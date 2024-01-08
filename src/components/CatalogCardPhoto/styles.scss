@@ -37,33 +37,6 @@
       &_active {
         outline: 3px solid rgba(var(--grey-400));
       }
-
-      &-shadow {
-        &_right {
-          -webkit-mask-image: linear-gradient(
-            to left,
-            rgba(255, 255, 255, 0.24) -15%,
-            black 80%
-          );
-          mask-image: linear-gradient(
-            to left,
-            rgba(255, 255, 255, 0.24) -15%,
-            black 80%
-          );
-        }
-        &_left {
-          -webkit-mask-image: linear-gradient(
-            to right,
-            rgba(255, 255, 255, 0.24) -15%,
-            black 80%
-          );
-          mask-image: linear-gradient(
-            to right,
-            rgba(255, 255, 255, 0.24) -15%,
-            black 80%
-          );
-        }
-      }
     }
 
     &-wrapper {
@@ -122,5 +95,34 @@
         }
       }
     }
+  }
+}
+
+.mask {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background-color: rgba(var(--white));
+  mask-size: 100%;
+
+  mask-position: 100%;
+  animation: show 1.5s ease;
+
+  &_right {
+    mask-image: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.24),
+      rgba(255, 255, 255, 0)
+    );
+  }
+
+  &_left {
+    mask-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.24),
+      rgba(255, 255, 255, 0)
+    );
   }
 }

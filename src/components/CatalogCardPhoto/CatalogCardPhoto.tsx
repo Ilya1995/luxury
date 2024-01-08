@@ -30,12 +30,22 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
     isEnd,
     activeIndex,
   }: SwiperClass) => {
-    // костыль для градиетнта
-    setActiveIndex(1000);
-    setTimeout(() => {
-      setActiveIndex(activeIndex);
-    }, 400);
+    setActiveIndex(activeIndex);
     setShowNavButton({ showPrev: !isBeginning, showNext: !isEnd });
+  };
+
+  const showMask = (direction: 'left' | 'right', index: number) => {
+    if (direction === 'right') {
+      return Boolean(
+        index > activeIndex + 2 && product.photos.length - 1 !== index
+      );
+    }
+
+    if (direction === 'left') {
+      return Boolean(activeIndex === index && activeIndex);
+    }
+
+    return false;
   };
 
   return (
@@ -90,16 +100,15 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
                   className={classNames('catalog-card-photo__carousel-img', {
                     'catalog-card-photo__carousel-img_active':
                       photo === activePhoto,
-                    'catalog-card-photo__carousel-img-shadow_right':
-                      index > activeIndex + 2 &&
-                      product.photos.length - 1 !== index,
-                    'catalog-card-photo__carousel-img-shadow_left':
-                      activeIndex === index && activeIndex,
                   })}
                   src={photo}
                   onClick={() => setActivePhoto(photo)}
                   alt="furniture"
                 />
+                {showMask('right', index) && (
+                  <div className="mask mask_right" />
+                )}
+                {showMask('left', index) && <div className="mask mask_left" />}
               </SwiperSlide>
             ))}
             {showNavButton.showPrev && (
