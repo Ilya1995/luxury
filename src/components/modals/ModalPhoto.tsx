@@ -1,5 +1,7 @@
 import { FC, useEffect, useState, useRef } from 'react';
 import classNames from 'classnames';
+// @ts-ignore
+import ImageZoom from 'react-image-zooom';
 
 import { Icon } from '../ui/Icon';
 
@@ -45,7 +47,25 @@ export const ModalPhoto: FC<PropsType> = ({
     };
   }, []);
 
+  const handleNext = () => {
+    if (!showArrowRight) return;
+    const newActiveIndex = activeIndex + 1;
+
+    setActivePhoto(photos[newActiveIndex]);
+    setActiveIndex(newActiveIndex);
+  };
+
+  const handlePrev = () => {
+    if (!showArrowLeft) return;
+    const newActiveIndex = activeIndex - 1;
+
+    setActivePhoto(photos[newActiveIndex]);
+    setActiveIndex(newActiveIndex);
+  };
+
   const widthLine = innerWidth / photos.length;
+  const showArrowRight = activeIndex + 1 < photos.length;
+  const showArrowLeft = !!activeIndex;
 
   return (
     <div className={classNames('modal-photo', className)}>
@@ -58,7 +78,17 @@ export const ModalPhoto: FC<PropsType> = ({
         size={2}
       />
       <div className="modal-photo__content">
-        <img className="modal-photo__active-img" src={activePhoto} alt="img" />
+        {photos.map((photo) => (
+          <ImageZoom
+            src={photo}
+            key={photo}
+            alt="img"
+            zoom="150"
+            className={classNames('modal-photo__active-img', {
+              'modal-photo__active-img_show': activePhoto === photo,
+            })}
+          />
+        ))}
         <div className="modal-photo__scroll-wrapper">
           <div className="modal-photo__scroll" ref={scroll}>
             <div
@@ -73,6 +103,24 @@ export const ModalPhoto: FC<PropsType> = ({
             {activeIndex + 1} из {photos.length}
           </div>
         </div>
+        <Icon
+          name="arrow-right4"
+          handleClick={handleNext}
+          className={classNames('modal-photo__arrow-right', {
+            'modal-photo__arrow-right_show': showArrowRight,
+          })}
+          color="rgba(var(--grey-600))"
+          size={2.5}
+        />
+        <Icon
+          name="arrow-right4"
+          handleClick={handlePrev}
+          className={classNames('modal-photo__arrow-left', {
+            'modal-photo__arrow-left_show': showArrowLeft,
+          })}
+          color="rgba(var(--grey-600))"
+          size={2.5}
+        />
       </div>
     </div>
   );
