@@ -36,16 +36,14 @@ export const CatalogCard: FC = () => {
       return navigate('/');
     }
 
-    setTimeout(() => {
-      const product1 = mock1.find((el) => el.id === +productId);
-      const product2 = mock2.find((el) => el.id === +productId);
-      const product3 = product1 || product2;
+    const product1 = mock1.find((el) => el.id === +productId);
+    const product2 = mock2.find((el) => el.id === +productId);
+    const product3 = product1 || product2;
 
-      if (!product3) {
-        return navigate('/');
-      }
-      setProduct(product3);
-    }, 100);
+    if (!product3) {
+      return navigate('/');
+    }
+    setProduct(product3);
   }, [productId, navigate]);
 
   const activeTab = useMemo(() => {
@@ -67,6 +65,7 @@ export const CatalogCard: FC = () => {
   };
 
   const showBreadcrumbs = !isMobile && product;
+  const showTitle = !isMobile && product;
 
   return (
     <div className="catalog-card-page">
@@ -84,7 +83,7 @@ export const CatalogCard: FC = () => {
           ))}
         </div>
         {showBreadcrumbs && <Breadcrumbs product={product} />}
-        {!isMobile && <div className="catalog-card-page__title">{title}</div>}
+        {showTitle && <div className="catalog-card-page__title">{title}</div>}
         {product && (
           <div className="catalog-card-page__info">
             <CatalogCardPhoto product={product} />

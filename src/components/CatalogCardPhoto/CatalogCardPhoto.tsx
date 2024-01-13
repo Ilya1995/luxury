@@ -106,9 +106,17 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
                   alt="furniture"
                 />
                 {showMask('right', index) && (
-                  <div className="mask mask_right" />
+                  <div
+                    className="mask mask_right"
+                    onClick={() => setActivePhoto(photo)}
+                  />
                 )}
-                {showMask('left', index) && <div className="mask mask_left" />}
+                {showMask('left', index) && (
+                  <div
+                    className="mask mask_left"
+                    onClick={() => setActivePhoto(photo)}
+                  />
+                )}
               </SwiperSlide>
             ))}
             {showNavButton.showPrev && (
