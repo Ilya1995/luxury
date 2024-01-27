@@ -102,6 +102,18 @@ export const Catalog: FC = () => {
     navigate(`/catalog/${activeTab.path}/${id}`);
   };
 
+  const handleChangeAllFilters = (filters: {
+    typeProduct: string;
+    brands: string[];
+    isOnlyStock: boolean;
+    colors: string[];
+  }) => {
+    setTypeProduct(filters.typeProduct);
+    setBrands(filters.brands);
+    setIsOnlyStock(filters.isOnlyStock);
+    setColors(filters.colors);
+  };
+
   const handleChangeFilter = (
     type: string,
     value?: string | string[] | boolean
@@ -161,7 +173,7 @@ export const Catalog: FC = () => {
         {showBreadcrumbs && <Breadcrumbs />}
         {isMobile && (
           <FilterMobile
-            onChangeFilter={handleChangeFilter}
+            onChangeAllFilters={handleChangeAllFilters}
             typeProduct={typeProduct}
             brands={brands}
             isOnlyStock={isOnlyStock}

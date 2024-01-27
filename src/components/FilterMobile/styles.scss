@@ -34,8 +34,18 @@
     left: 0;
   }
 
+  &__icons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   &__close {
     margin-left: 1.5rem;
+  }
+
+  &__clear {
+    margin-right: 1.5rem;
   }
 
   &__content {

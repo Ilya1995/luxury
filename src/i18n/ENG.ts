@@ -37,6 +37,7 @@ export const ENG = {
     email: 'E-mail',
     'reset-filters': 'Reset filters',
     filters: 'Filters',
+    'product-count': 'Show {{num}} {{value}}',
     'not-found-search':
       "We couldn't find anything matching your request.\nChange your search query or see our recommendations",
   },

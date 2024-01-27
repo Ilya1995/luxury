@@ -36,6 +36,7 @@ export const RUS = {
     search: 'Поиск',
     email: 'E-mail',
     'reset-filters': 'Сбросить фильтры',
+    'product-count': 'Показать {{num}} {{value}}',
     filters: 'Фильтры',
     'not-found-search':
       'Ничего не удалось найти по вашему запросу.\nИзмените поисковый запрос или посмотрите наши рекомендации',

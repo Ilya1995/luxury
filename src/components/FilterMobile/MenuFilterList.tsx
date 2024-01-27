@@ -1,12 +1,14 @@
 import { FC, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import { Animate } from 'react-simple-animate';
+import { useTranslation } from 'react-i18next';
 
 import { TabType } from '../../types';
 import { Icon } from '../ui/Icon';
 import { Switcher } from '../ui/Switcher';
 import { Counter } from '../ui/Counter';
 import { Tab } from '../Tab';
+import { plural } from '../../i18n/utils';
 
 import './styles.scss';
 
@@ -15,10 +17,13 @@ type PropsType = {
   onChangeOpen: (value: boolean) => void;
   onChangeFilter: (type: string, value?: string | string[] | boolean) => void;
   onOpenCurrentFilter: (value: string) => void;
+  onApplyFilters: () => void;
+  onResetFilters: () => void;
   isOnlyStock: boolean;
   typeProduct: string;
   brands: string[];
   colors: string[];
+  productCount: number;
   className?: string;
 };
 
@@ -29,10 +34,15 @@ export const MenuFilterList: FC<PropsType> = ({
   typeProduct,
   brands,
   colors,
+  productCount,
   onChangeFilter,
   onChangeOpen,
   onOpenCurrentFilter,
+  onApplyFilters,
+  onResetFilters,
 }) => {
+  const { t } = useTranslation();
+
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'auto';
 
@@ -70,13 +80,24 @@ export const MenuFilterList: FC<PropsType> = ({
       })}
     >
       <div>
-        <Icon
-          name="close2"
-          color="rgba(var(--grey-800))"
-          className="menu-filter-list__close"
-          size={1.5}
-          handleClick={() => onChangeOpen(false)}
-        />
+        <div className="menu-filter-list__icons">
+          <Icon
+            name="close2"
+            color="rgba(var(--grey-800))"
+            className="menu-filter-list__close"
+            size={1.5}
+            handleClick={() => onChangeOpen(false)}
+          />
+          {showGoods && (
+            <Icon
+              name="clear-filter"
+              color="rgba(var(--grey-800))"
+              className="menu-filter-list__clear"
+              size={1}
+              handleClick={onResetFilters}
+            />
+          )}
+        </div>
         <div className="menu-filter-list__content">
           <div className="menu-filter-list-item-wrapper">
             <div
@@ -180,11 +201,22 @@ export const MenuFilterList: FC<PropsType> = ({
         easeType="ease-in"
         duration={0.3}
       >
-        <div className="menu-filter-list-wrapper">
-          <button className="button shadow" onClick={() => onChangeOpen(false)}>
-            Показать 7 товаров
-          </button>
-        </div>
+        {showGoods && (
+          <div className="menu-filter-list-wrapper">
+            <button className="button shadow" onClick={onApplyFilters}>
+              {t('product-count', {
+                num: productCount,
+                value: plural(
+                  {
+                    RUS: ['товар', 'товара', 'товаров'],
+                    ENG: ['product', 'products'],
+                  },
+                  productCount
+                ),
+              })}
+            </button>
+          </div>
+        )}
       </Animate>
     </div>
   );

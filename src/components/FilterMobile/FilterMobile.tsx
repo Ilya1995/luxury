@@ -1,4 +1,4 @@
-import { FC, useState, useMemo } from 'react';
+import { FC, useState, useMemo, useEffect } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -6,11 +6,18 @@ import { Icon } from '../ui/Icon';
 import { Counter } from '../ui/Counter';
 import { MenuFilterList } from './MenuFilterList';
 import { MenuFilterItem } from './MenuFilterItem';
+import type { Product } from '../../types';
+import { data as mockProducts } from '../../components/CatalogList/mock';
 
 import './styles.scss';
 
 type PropsType = {
-  onChangeFilter: (type: string, value?: string | string[] | boolean) => void;
+  onChangeAllFilters: (filters: {
+    typeProduct: string;
+    brands: string[];
+    isOnlyStock: boolean;
+    colors: string[];
+  }) => void;
   typeProduct: string;
   brands: string[];
   isOnlyStock: boolean;
@@ -20,7 +27,7 @@ type PropsType = {
 
 export const FilterMobile: FC<PropsType> = ({
   className,
-  onChangeFilter,
+  onChangeAllFilters,
   typeProduct,
   brands,
   isOnlyStock,
@@ -30,6 +37,70 @@ export const FilterMobile: FC<PropsType> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSecond, setIsOpenSecond] = useState(false);
   const [currentFilter, setCurrentFilter] = useState('');
+  const [products, setProducts] = useState<Product[]>([]);
+
+  const [localTypeProduct, setLocalTypeProduct] = useState('');
+  const [localBrands, setLocalBrands] = useState<string[]>([]);
+  const [localIsOnlyStock, setLocalIsOnlyStock] = useState(false);
+  const [localColors, setLocalColors] = useState<string[]>([]);
+
+  useEffect(() => {
+    setLocalTypeProduct(typeProduct);
+    setLocalBrands(brands);
+    setLocalIsOnlyStock(isOnlyStock);
+    setLocalColors(colors);
+  }, [isOpen, brands, colors, isOnlyStock, typeProduct]);
+
+  useEffect(() => {
+    // условия для дебага
+    if (localIsOnlyStock) {
+      setProducts([]);
+      return;
+    }
+
+    setProducts(mockProducts);
+  }, [localTypeProduct, localBrands, localIsOnlyStock, localColors]);
+
+  const handleApplyFilters = () => {
+    setIsOpen(false);
+    onChangeAllFilters({
+      typeProduct: localTypeProduct,
+      brands: localBrands,
+      isOnlyStock: localIsOnlyStock,
+      colors: localColors,
+    });
+  };
+
+  const handleResetFilters = () => {
+    setIsOpen(false);
+    onChangeAllFilters({
+      typeProduct: '',
+      brands: [],
+      isOnlyStock: false,
+      colors: [],
+    });
+  };
+
+  const handleChangeFilter = (
+    type: string,
+    value?: string | string[] | boolean
+  ) => {
+    if (type === 'product' && typeof value === 'string') {
+      return setLocalTypeProduct(value);
+    }
+
+    if (type === 'brand' && Array.isArray(value)) {
+      return setLocalBrands(value);
+    }
+
+    if (type === 'isOnlyStock' && typeof value === 'boolean') {
+      return setLocalIsOnlyStock(value);
+    }
+
+    if (type === 'color' && Array.isArray(value)) {
+      return setLocalColors(value);
+    }
+  };
 
   const selectedCount = useMemo(() => {
     let count = 0;
@@ -55,22 +126,25 @@ export const FilterMobile: FC<PropsType> = ({
     <div className={classNames('filter-mobile', className)}>
       <MenuFilterList
         isOpen={isOpen}
-        typeProduct={typeProduct}
-        brands={brands}
-        colors={colors}
+        typeProduct={localTypeProduct}
+        brands={localBrands}
+        colors={localColors}
         onChangeOpen={setIsOpen}
-        isOnlyStock={isOnlyStock}
-        onChangeFilter={onChangeFilter}
+        onApplyFilters={handleApplyFilters}
+        onResetFilters={handleResetFilters}
+        isOnlyStock={localIsOnlyStock}
+        productCount={products.length}
+        onChangeFilter={handleChangeFilter}
         onOpenCurrentFilter={handleOpenCurrentFilter}
       />
       {isOpen && (
         <MenuFilterItem
           isOpen={isOpenSecond}
           currentFilter={currentFilter}
-          onChangeFilter={onChangeFilter}
-          typeProduct={typeProduct}
-          brands={brands}
-          colors={colors}
+          onChangeFilter={handleChangeFilter}
+          typeProduct={localTypeProduct}
+          brands={localBrands}
+          colors={localColors}
           onClose={() => setIsOpenSecond(false)}
         />
       )}
