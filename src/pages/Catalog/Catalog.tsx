@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useMemo } from 'react';
+import { FC, useState, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -39,30 +39,54 @@ export const Catalog: FC = () => {
   const [brands, setBrands] = useState<string[]>([]);
   const [isOnlyStock, setIsOnlyStock] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0);
 
   const [colors, setColors] = useState<string[]>([]);
   const { searchText } = useSelector((state: RootState) => state.general);
 
+  const getProducts = useCallback(
+    (nextPage: number) => {
+      setTotal(mockProducts.length);
+      !nextPage && setIsLoading(true);
+
+      setTimeout(() => {
+        !nextPage && setIsLoading(false);
+
+        // условия для дебага
+        if (searchText === '11' || searchText === '111') {
+          setProducts([]);
+          return;
+        }
+
+        if (isOnlyStock) {
+          setProducts([]);
+          return;
+        }
+
+        // добавляем по 7 элементов
+        setProducts(mockProducts.slice(0, (nextPage + 1) * 7));
+      }, 2000);
+    },
+    [isOnlyStock, searchText]
+  );
+
   useEffect(() => {
-    setIsLoading(true);
+    setPage(0);
+    getProducts(0);
+  }, [
+    activeTab,
+    typeProduct,
+    brands,
+    isOnlyStock,
+    colors,
+    searchText,
+    getProducts,
+  ]);
 
-    setTimeout(() => {
-      setIsLoading(false);
-
-      // условия для дебага
-      if (searchText === '11' || searchText === '111') {
-        setProducts([]);
-        return;
-      }
-
-      if (isOnlyStock) {
-        setProducts([]);
-        return;
-      }
-
-      setProducts(mockProducts);
-    }, 2000);
-  }, [activeTab, typeProduct, brands, isOnlyStock, colors, searchText]);
+  useWatch(() => {
+    !!page && getProducts(page);
+  }, [page, getProducts]);
 
   useEffect(() => {
     const newTab = tabs.find(({ path }) => path === tab);
@@ -100,6 +124,10 @@ export const Catalog: FC = () => {
 
   const handleGoToCard = (id: number) => {
     navigate(`/catalog/${activeTab.path}/${id}`);
+  };
+
+  const handleNextPage = () => {
+    setPage((prev) => prev + 1);
   };
 
   const handleChangeAllFilters = (filters: {
@@ -203,6 +231,8 @@ export const Catalog: FC = () => {
             <CatalogList
               isLoading={isLoading}
               products={products}
+              total={total}
+              onNextPage={handleNextPage}
               onGoToCard={handleGoToCard}
             />
           )}
