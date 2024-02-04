@@ -3,7 +3,7 @@ import classNames from 'classnames';
 // @ts-ignore
 import ImageZoom from 'react-image-zooom';
 
-import { Icon } from '../ui/Icon';
+import { Icon } from '../../ui/Icon';
 
 import './styles.scss';
 

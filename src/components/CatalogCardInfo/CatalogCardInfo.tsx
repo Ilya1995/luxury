@@ -1,6 +1,9 @@
 import { FC } from 'react';
 import classNames from 'classnames';
+import { useNavigate } from 'react-router-dom';
 
+import { CatalogCardPreview } from '../CatalogCardPreview';
+import { data } from '../ProductsNotFound/mock';
 import { Product } from '../../types';
 
 import './styles.scss';
@@ -8,9 +11,24 @@ import './styles.scss';
 type PropsType = {
   product: Product;
   className?: string;
+  isMobile?: boolean;
 };
 
-export const CatalogCardInfo: FC<PropsType> = ({ className, product }) => {
+export const CatalogCardInfo: FC<PropsType> = ({
+  className,
+  product,
+  isMobile,
+}) => {
+  const navigate = useNavigate();
+
+  const handleGoToCard = (id: number) => {
+    navigate(`/catalog/all/${id}`);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <div className={classNames('catalog-card-info', className)}>
       <div className="catalog-card-info__header">
@@ -22,12 +40,14 @@ export const CatalogCardInfo: FC<PropsType> = ({ className, product }) => {
         <div className="catalog-card-info__header-price">Цена по запросу</div>
       </div>
 
-      <button
-        className="catalog-card-info__button button shadow"
-        onClick={() => console.log('Уточнить наличие')}
-      >
-        Уточнить наличие
-      </button>
+      {!isMobile && (
+        <button
+          className="catalog-card-info__button button shadow"
+          onClick={() => console.log('Уточнить наличие')}
+        >
+          Уточнить наличие
+        </button>
+      )}
 
       <div className="catalog-card-info__description">
         {product.description}
@@ -64,6 +84,23 @@ export const CatalogCardInfo: FC<PropsType> = ({ className, product }) => {
           </div>
         )}
       </div>
+
+      {isMobile && (
+        <div className="catalog-card-info__like">
+          <div className="catalog-card-info__like-header">
+            Вам может понравиться
+          </div>
+          <div className="catalog-card-info__like-products">
+            {data.map((card) => (
+              <CatalogCardPreview
+                key={card.id}
+                {...card}
+                onGoToCard={handleGoToCard}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -12,6 +12,7 @@ import { data as mock1 } from '../../components/CatalogList/mock';
 import { data as mock2 } from '../../components/ProductsNotFound/mock';
 import { CatalogCardInfo } from '../../components/CatalogCardInfo';
 import { CatalogCardPhoto } from '../../components/CatalogCardPhoto';
+import { CatalogCardPhotoMobile } from '../../components/CatalogCardPhotoMobile';
 import { tabs } from '../Catalog/constants';
 
 import './styles.scss';
@@ -66,28 +67,47 @@ export const CatalogCard: FC = () => {
 
   const showBreadcrumbs = !isMobile && product;
   const showTitle = !isMobile && product;
+  const showTabs = !isMobile;
+  const showInfoDesk = !isMobile && product;
+  const showInfoMobile = isMobile && product;
 
   return (
     <div className="catalog-card-page">
       <Header className="catalog-card-page__header" isMobile={isMobile} />
 
       <div className="catalog-card-page__content">
-        <div className="catalog-card-page__tabs">
-          {tabs.map((tab) => (
-            <Tab
-              key={tab.label}
-              item={tab}
-              isActive={activeTab.label === tab.label}
-              onClick={handleChangeTab}
-            />
-          ))}
-        </div>
+        {showTabs && (
+          <div className="catalog-card-page__tabs">
+            {tabs.map((tab) => (
+              <Tab
+                key={tab.label}
+                item={tab}
+                isActive={activeTab.label === tab.label}
+                onClick={handleChangeTab}
+              />
+            ))}
+          </div>
+        )}
         {showBreadcrumbs && <Breadcrumbs product={product} />}
         {showTitle && <div className="catalog-card-page__title">{title}</div>}
-        {product && (
+        {showInfoDesk && (
           <div className="catalog-card-page__info">
             <CatalogCardPhoto product={product} />
             <CatalogCardInfo product={product} />
+          </div>
+        )}
+        {showInfoMobile && (
+          <div className="catalog-card-page__info">
+            <CatalogCardPhotoMobile product={product} />
+            <CatalogCardInfo product={product} isMobile={isMobile} />
+            <div className="catalog-card-page__wrapper">
+              <button
+                className="catalog-card-page__wrapper-button button shadow"
+                onClick={() => console.log('Уточнить наличие')}
+              >
+                Уточнить наличие
+              </button>
+            </div>
           </div>
         )}
       </div>
