@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 
 import { CatalogCardPreview } from '../CatalogCardPreview';
+import { ModalFeedback } from '../modals/ModalFeedback';
 import { data } from '../ProductsNotFound/mock';
 import { Product } from '../../types';
 
@@ -20,6 +21,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
   isMobile,
 }) => {
   const navigate = useNavigate();
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const handleGoToCard = (id: number) => {
     navigate(`/catalog/all/${id}`);
@@ -31,6 +33,10 @@ export const CatalogCardInfo: FC<PropsType> = ({
 
   return (
     <div className={classNames('catalog-card-info', className)}>
+      <ModalFeedback
+        isOpen={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
+      />
       <div className="catalog-card-info__header">
         <div className="catalog-card-info__header-brand">{product.brand}</div>
         <div className="catalog-card-info__header-name">{product.name}</div>
@@ -43,7 +49,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
       {!isMobile && (
         <button
           className="catalog-card-info__button button shadow"
-          onClick={() => console.log('Уточнить наличие')}
+          onClick={() => setIsOpenModal(true)}
         >
           Уточнить наличие
         </button>

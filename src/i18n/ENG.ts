@@ -40,5 +40,7 @@ export const ENG = {
     'product-count': 'Show {{num}} {{value}}',
     'not-found-search':
       "We couldn't find anything matching your request.\nChange your search query or see our recommendations",
+    'modal-feedback-subtitle':
+      'Choose a convenient method of communication\nand we will contact you as quickly as possible to tell\nyou all the details',
   },
 };
