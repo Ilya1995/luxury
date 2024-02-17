@@ -22,7 +22,7 @@ type PropsType = {
   isOnlyStock: boolean;
   typeProduct: string;
   brands: string[];
-  colors: string[];
+  // colors: string[];
   productCount: number;
   className?: string;
 };
@@ -33,7 +33,7 @@ export const MenuFilterList: FC<PropsType> = ({
   isOnlyStock,
   typeProduct,
   brands,
-  colors,
+  // colors,
   productCount,
   onChangeFilter,
   onChangeOpen,
@@ -53,9 +53,11 @@ export const MenuFilterList: FC<PropsType> = ({
 
   const showGoods = useMemo(() => {
     return Boolean(
-      typeProduct || isOnlyStock || brands.length || colors.length
+      typeProduct || isOnlyStock || brands.length
+      // typeProduct || isOnlyStock || brands.length || colors.length
     );
-  }, [typeProduct, isOnlyStock, brands.length, colors.length]);
+  }, [typeProduct, isOnlyStock, brands.length]);
+  // }, [typeProduct, isOnlyStock, brands.length, colors.length]);
 
   const handleRemoveItem = (type: string, value?: TabType) => {
     if (type === 'product') {
@@ -67,10 +69,10 @@ export const MenuFilterList: FC<PropsType> = ({
       onChangeFilter('brand', newBrands);
     }
 
-    if (type === 'color' && value) {
-      const newColors = colors.filter((color) => color !== value.label);
-      onChangeFilter('color', newColors);
-    }
+    // if (type === 'color' && value) {
+    //   const newColors = colors.filter((color) => color !== value.label);
+    //   onChangeFilter('color', newColors);
+    // }
   };
 
   return (
@@ -154,7 +156,7 @@ export const MenuFilterList: FC<PropsType> = ({
             )}
           </div>
 
-          <div className="menu-filter-list-item-wrapper">
+          {/* <div className="menu-filter-list-item-wrapper">
             <div
               className="menu-filter-list-item"
               onClick={() => onOpenCurrentFilter('color')}
@@ -181,7 +183,7 @@ export const MenuFilterList: FC<PropsType> = ({
                 ))}
               </div>
             )}
-          </div>
+          </div> */}
 
           <div className="menu-filter-list-item">
             <div className="menu-filter-list-item__label">

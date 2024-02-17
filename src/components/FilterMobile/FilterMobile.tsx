@@ -16,12 +16,12 @@ type PropsType = {
     typeProduct: string;
     brands: string[];
     isOnlyStock: boolean;
-    colors: string[];
+    // colors: string[];
   }) => void;
   typeProduct: string;
   brands: string[];
   isOnlyStock: boolean;
-  colors: string[];
+  // colors: string[];
   className?: string;
 };
 
@@ -31,7 +31,7 @@ export const FilterMobile: FC<PropsType> = ({
   typeProduct,
   brands,
   isOnlyStock,
-  colors,
+  // colors,
 }) => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
@@ -42,14 +42,15 @@ export const FilterMobile: FC<PropsType> = ({
   const [localTypeProduct, setLocalTypeProduct] = useState('');
   const [localBrands, setLocalBrands] = useState<string[]>([]);
   const [localIsOnlyStock, setLocalIsOnlyStock] = useState(false);
-  const [localColors, setLocalColors] = useState<string[]>([]);
+  // const [localColors, setLocalColors] = useState<string[]>([]);
 
   useEffect(() => {
     setLocalTypeProduct(typeProduct);
     setLocalBrands(brands);
     setLocalIsOnlyStock(isOnlyStock);
-    setLocalColors(colors);
-  }, [isOpen, brands, colors, isOnlyStock, typeProduct]);
+    // setLocalColors(colors);
+  }, [isOpen, brands, isOnlyStock, typeProduct]);
+  // }, [isOpen, brands, colors, isOnlyStock, typeProduct]);
 
   useEffect(() => {
     // условия для дебага
@@ -59,7 +60,8 @@ export const FilterMobile: FC<PropsType> = ({
     }
 
     setProducts(mockProducts);
-  }, [localTypeProduct, localBrands, localIsOnlyStock, localColors]);
+  }, [localTypeProduct, localBrands, localIsOnlyStock]);
+  // }, [localTypeProduct, localBrands, localIsOnlyStock, localColors]);
 
   const handleApplyFilters = () => {
     setIsOpen(false);
@@ -67,7 +69,7 @@ export const FilterMobile: FC<PropsType> = ({
       typeProduct: localTypeProduct,
       brands: localBrands,
       isOnlyStock: localIsOnlyStock,
-      colors: localColors,
+      // colors: localColors,
     });
   };
 
@@ -77,7 +79,7 @@ export const FilterMobile: FC<PropsType> = ({
       typeProduct: '',
       brands: [],
       isOnlyStock: false,
-      colors: [],
+      // colors: [],
     });
   };
 
@@ -97,9 +99,9 @@ export const FilterMobile: FC<PropsType> = ({
       return setLocalIsOnlyStock(value);
     }
 
-    if (type === 'color' && Array.isArray(value)) {
-      return setLocalColors(value);
-    }
+    // if (type === 'color' && Array.isArray(value)) {
+    //   return setLocalColors(value);
+    // }
   };
 
   const selectedCount = useMemo(() => {
@@ -110,12 +112,13 @@ export const FilterMobile: FC<PropsType> = ({
     if (brands.length) {
       count += brands.length;
     }
-    if (colors.length) {
-      count += colors.length;
-    }
+    // if (colors.length) {
+    //   count += colors.length;
+    // }
 
     return count;
-  }, [typeProduct, isOnlyStock, brands.length, colors.length]);
+  }, [typeProduct, isOnlyStock, brands.length]);
+  // }, [typeProduct, isOnlyStock, brands.length, colors.length]);
 
   const handleOpenCurrentFilter = (value: string) => {
     setCurrentFilter(value);
@@ -128,7 +131,7 @@ export const FilterMobile: FC<PropsType> = ({
         isOpen={isOpen}
         typeProduct={localTypeProduct}
         brands={localBrands}
-        colors={localColors}
+        // colors={localColors}
         onChangeOpen={setIsOpen}
         onApplyFilters={handleApplyFilters}
         onResetFilters={handleResetFilters}
@@ -144,7 +147,7 @@ export const FilterMobile: FC<PropsType> = ({
           onChangeFilter={handleChangeFilter}
           typeProduct={localTypeProduct}
           brands={localBrands}
-          colors={localColors}
+          // colors={localColors}
           onClose={() => setIsOpenSecond(false)}
         />
       )}

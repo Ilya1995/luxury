@@ -14,7 +14,7 @@ type PropsType = {
   typeProduct: string;
   brands: string[];
   isOnlyStock: boolean;
-  colors: string[];
+  // colors: string[];
   className?: string;
 };
 
@@ -24,7 +24,7 @@ export const Filter: FC<PropsType> = ({
   typeProduct,
   brands,
   isOnlyStock,
-  colors,
+  // colors,
 }) => {
   const { t } = useTranslation();
 
@@ -34,8 +34,8 @@ export const Filter: FC<PropsType> = ({
     onChangeFilter('reset');
   };
 
-  const showResetFilters =
-    !!typeProduct || !!brands.length || isOnlyStock || !!colors.length;
+  const showResetFilters = !!typeProduct || !!brands.length || isOnlyStock;
+  // !!typeProduct || !!brands.length || isOnlyStock || !!colors.length;
 
   return (
     <div className={classNames('filter', className)}>
@@ -54,14 +54,14 @@ export const Filter: FC<PropsType> = ({
         classNameList="filter__brand-list"
         onChange={(value) => onChangeFilter('brand', value)}
       />
-      <Dropdown
+      {/* <Dropdown
         options={colorOptions}
         title="Цвет"
         multiple
         selected={colors}
         classNameList="filter__color-list"
         onChange={(value) => onChangeFilter('color', value)}
-      />
+      /> */}
       <div className="filter__switcher">
         <div className="filter__switcher-label">Только товары в наличии</div>
         <Switcher

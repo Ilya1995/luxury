@@ -42,7 +42,7 @@ export const Catalog: FC = () => {
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(0);
 
-  const [colors, setColors] = useState<string[]>([]);
+  // const [colors, setColors] = useState<string[]>([]);
   const { searchText } = useSelector((state: RootState) => state.general);
 
   const getProducts = useCallback(
@@ -79,7 +79,7 @@ export const Catalog: FC = () => {
     typeProduct,
     brands,
     isOnlyStock,
-    colors,
+    // colors,
     searchText,
     getProducts,
   ]);
@@ -138,12 +138,12 @@ export const Catalog: FC = () => {
     typeProduct: string;
     brands: string[];
     isOnlyStock: boolean;
-    colors: string[];
+    // colors: string[];
   }) => {
     setTypeProduct(filters.typeProduct);
     setBrands(filters.brands);
     setIsOnlyStock(filters.isOnlyStock);
-    setColors(filters.colors);
+    // setColors(filters.colors);
   };
 
   const handleChangeFilter = (
@@ -166,16 +166,16 @@ export const Catalog: FC = () => {
       return setIsOnlyStock(value);
     }
 
-    if (type === 'color' && Array.isArray(value)) {
-      return setColors(value);
-    }
+    // if (type === 'color' && Array.isArray(value)) {
+    //   return setColors(value);
+    // }
   };
 
   const handleResetFilters = () => {
     setTypeProduct('');
     setBrands([]);
     setIsOnlyStock(false);
-    setColors([]);
+    // setColors([]);
     dispatch(setSearchText(''));
   };
 
@@ -209,7 +209,7 @@ export const Catalog: FC = () => {
             typeProduct={typeProduct}
             brands={brands}
             isOnlyStock={isOnlyStock}
-            colors={colors}
+            // colors={colors}
           />
         )}
         {showTitle && <div className="catalog-page__title">{title}</div>}
@@ -228,7 +228,7 @@ export const Catalog: FC = () => {
               typeProduct={typeProduct}
               brands={brands}
               isOnlyStock={isOnlyStock}
-              colors={colors}
+              // colors={colors}
             />
           )}
           {showCatalog && (

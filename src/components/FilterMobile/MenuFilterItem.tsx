@@ -19,7 +19,7 @@ type PropsType = {
   onClose: () => void;
   typeProduct: string;
   brands: string[];
-  colors: string[];
+  // colors: string[];
   className?: string;
 };
 
@@ -28,7 +28,7 @@ export const MenuFilterItem: FC<PropsType> = ({
   currentFilter,
   typeProduct,
   brands,
-  colors,
+  // colors,
   onChangeFilter,
   onClose,
   className,
@@ -69,7 +69,7 @@ export const MenuFilterItem: FC<PropsType> = ({
             />
           </>
         )}
-        {currentFilter === 'color' && (
+        {/* {currentFilter === 'color' && (
           <Dropdown
             options={colorOptions}
             isMobile
@@ -78,7 +78,7 @@ export const MenuFilterItem: FC<PropsType> = ({
             selected={colors}
             onChange={(value) => onChangeFilter('color', value)}
           />
-        )}
+        )} */}
       </div>
     </div>
   );
