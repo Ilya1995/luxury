@@ -35,6 +35,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
     <div className={classNames('catalog-card-info', className)}>
       <ModalFeedback
         isOpen={isOpenModal}
+        product={product}
         onClose={() => setIsOpenModal(false)}
       />
       <div className="catalog-card-info__header">
@@ -48,7 +49,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
 
       {!isMobile && (
         <button
-          className="catalog-card-info__button button shadow"
+          className="catalog-card-info__button button"
           onClick={() => setIsOpenModal(true)}
         >
           Уточнить наличие

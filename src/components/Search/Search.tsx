@@ -34,7 +34,7 @@ export const Search: FC<PropsType> = ({
   const [isActive, setIsActive] = useState(!!searchText);
   const [isFocused, setIsFocused] = useState(false);
   const [value, setValue] = useState(searchText);
-  const debouncedValue = useDebounce<string>(value, 500);
+  const debouncedValue = useDebounce<string>(value, 1000);
 
   // сброс строки поиска, если обнулили вне компонента
   useEffect(() => {

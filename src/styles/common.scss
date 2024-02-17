@@ -66,6 +66,8 @@ body {
   display: inline-block;
   border: none;
   cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -84,6 +86,10 @@ body {
     &.shadow:hover {
       box-shadow: none;
     }
+  }
+
+  &:not(.button_disabled):hover {
+    background-color: rgba(var(--orange-300));
   }
 }
 

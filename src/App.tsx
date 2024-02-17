@@ -44,7 +44,7 @@ export const App = () => {
   return (
     <div className="App">
       <RouterProvider router={router} />
-      <ToastContainer autoClose={2000} />
+      <ToastContainer autoClose={2000} hideProgressBar />
     </div>
   );
 };

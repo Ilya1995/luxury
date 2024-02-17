@@ -76,10 +76,7 @@ export const Filter: FC<PropsType> = ({
         easeType="ease-in"
         duration={0.3}
       >
-        <button
-          className="button shadow filter__button"
-          onClick={handleResetFilters}
-        >
+        <button className="button filter__button" onClick={handleResetFilters}>
           {t('reset-filters')}
         </button>
       </Animate>

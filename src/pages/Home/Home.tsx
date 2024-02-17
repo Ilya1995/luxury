@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Animate } from 'react-simple-animate';
 import { useTranslation } from 'react-i18next';
 
@@ -16,6 +16,10 @@ import './styles.scss';
 export const Home: FC = () => {
   const { t } = useTranslation();
   const isMobile = useMedia('(max-width: 768px)');
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   return (
     <div className="home-page">
@@ -43,7 +47,7 @@ export const Home: FC = () => {
             {t('business-inf-2')}
           </div>
         </div>
-        <button className="button shadow button_small">{t('more2')}</button>
+        <button className="button button_small">{t('more2')}</button>
       </div>
       <BrandsCarousel />
       <Catalogg />

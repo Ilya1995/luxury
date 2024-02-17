@@ -89,6 +89,10 @@ export const Catalog: FC = () => {
   }, [page, getProducts]);
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
+
+  useEffect(() => {
     const newTab = tabs.find(({ path }) => path === tab);
 
     if (!newTab && pathname !== '/catalog') {

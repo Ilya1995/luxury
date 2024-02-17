@@ -102,7 +102,7 @@ export const CatalogCard: FC = () => {
             <CatalogCardInfo product={product} isMobile={isMobile} />
             <div className="catalog-card-page__wrapper">
               <button
-                className="catalog-card-page__wrapper-button button shadow"
+                className="catalog-card-page__wrapper-button button"
                 onClick={() => console.log('Уточнить наличие')}
               >
                 Уточнить наличие

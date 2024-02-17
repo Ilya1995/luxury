@@ -25,7 +25,7 @@ export const ENG = {
     subscribe: 'Subscribe',
     'you-agree': 'By clicking on the button, you agree\nto',
     'privacy-policy': 'Privacy policy',
-    'email-error': 'Please check if the address is correct',
+    'email-error': 'Please check if the e-mail is correct',
     faq: 'FAQ',
     'know-about-us': 'Everything you need to know about us',
     'return-policy': 'Return policy',
@@ -35,6 +35,7 @@ export const ENG = {
     'error-subscribe': 'Try later',
     search: 'Search',
     email: 'E-mail',
+    phone: '+7 (000) 000 00 00',
     'reset-filters': 'Reset filters',
     filters: 'Filters',
     'product-count': 'Show {{num}} {{value}}',
@@ -42,5 +43,9 @@ export const ENG = {
       "We couldn't find anything matching your request.\nChange your search query or see our recommendations",
     'modal-feedback-subtitle':
       'Choose a convenient method of communication\nand we will contact you as quickly as possible to tell\nyou all the details',
+    'contact-with-me': 'Contact with me',
+    'fill-one-field': 'Fill in at least one field',
+    'correct-phone': 'Enter the correct number',
+    'contacted-soon': 'You will be contacted soon',
   },
 };

@@ -203,7 +203,7 @@ export const MenuFilterList: FC<PropsType> = ({
       >
         {showGoods && (
           <div className="menu-filter-list-wrapper">
-            <button className="button shadow" onClick={onApplyFilters}>
+            <button className="button" onClick={onApplyFilters}>
               {t('product-count', {
                 num: productCount,
                 value: plural(

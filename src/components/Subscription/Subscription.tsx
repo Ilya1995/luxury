@@ -64,7 +64,7 @@ export const Subscription: FC<PropsType> = ({ isMobile }) => {
           />
 
           <button
-            className={classNames('button shadow', {
+            className={classNames('button', {
               button_disabled: isLock || showError,
             })}
             onClick={handleSendEmail}

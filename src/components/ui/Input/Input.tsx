@@ -1,6 +1,7 @@
 import { FC, useState, useMemo, useRef, ChangeEvent, useEffect } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { useIMask } from 'react-imask';
 
 import { Icon } from '../Icon';
 
@@ -10,7 +11,7 @@ type PropsType = {
   value: string;
   onChange: (value: string) => void;
   onFocus?: (value: boolean) => void;
-  type?: 'text' | 'email' | 'search';
+  type?: 'text' | 'email' | 'search' | 'phone';
   placeholder?: string;
   className?: string;
   messageError?: string;
@@ -32,6 +33,14 @@ export const Input: FC<PropsType> = ({
   const { t } = useTranslation();
   const inputEl = useRef<any>(null);
   const [isFocus, setIsFocus] = useState(false);
+  const {
+    ref: refMask,
+    value: valueMask,
+    unmaskedValue,
+    setValue,
+  } = useIMask({
+    mask: '+{7} (000) 000 00 00',
+  });
 
   useEffect(() => {
     if (isFocused) {
@@ -39,9 +48,22 @@ export const Input: FC<PropsType> = ({
     }
   }, [isFocused]);
 
+  useEffect(() => {
+    if (type === 'phone' && value === '') {
+      setValue('');
+    }
+  }, [type, value, setValue]);
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value.trim());
+    if (type === 'phone') {
+      onChange(unmaskedValue);
+    } else {
+      onChange(event.target.value.trim());
+    }
   };
+
+  const currentValue = type === 'phone' ? valueMask : value;
+  const currentRef = type === 'phone' ? refMask : inputEl;
 
   function handleFocus() {
     setIsFocus(true);
@@ -62,6 +84,7 @@ export const Input: FC<PropsType> = ({
     if (!!messageError) return 'warning';
     if (type === 'search') return 'search2';
     if (type === 'email') return 'message2';
+    if (type === 'phone') return 'phone';
 
     return;
   }, [type, messageError]);
@@ -70,6 +93,7 @@ export const Input: FC<PropsType> = ({
     if (placeholder) return placeholder;
     if (type === 'search') return t('search');
     if (type === 'email') return t('email');
+    if (type === 'phone') return t('phone');
 
     return;
   }, [type, placeholder, t]);
@@ -80,7 +104,7 @@ export const Input: FC<PropsType> = ({
         'input',
         {
           input_focus: isFocus,
-          'input_has-text': !!value,
+          'input_has-text': !!currentValue,
           'input_has-icon': !!iconName,
           'input_has-clear': !!hasClear,
           'input_has-error': !!messageError,
@@ -91,14 +115,14 @@ export const Input: FC<PropsType> = ({
       {iconName && <Icon name={iconName} size={1.5} className="input__icon" />}
       <input
         className="input__field"
-        ref={inputEl}
-        value={value}
+        ref={currentRef}
+        value={currentValue}
         placeholder={customPlaceholder}
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
-      {value && hasClear && (
+      {currentValue && hasClear && (
         <Icon
           name="close3"
           size={1.5}
