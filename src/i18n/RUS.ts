@@ -47,5 +47,6 @@ export const RUS = {
     'fill-one-field': 'Заполните хотя бы одно поле',
     'correct-phone': 'Введите корректный номер',
     'contacted-soon': 'С вами скоро свяжутся',
+    close: 'Закрыть',
   },
 };

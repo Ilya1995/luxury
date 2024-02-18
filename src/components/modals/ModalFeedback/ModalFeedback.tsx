@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 
 import { Product } from '../../../types';
 import { useWatch, useValidate } from '../../../hooks';
@@ -12,6 +11,7 @@ import './styles.scss';
 
 type PropsType = {
   onClose: () => void;
+  onApply: () => void;
   isOpen: boolean;
   product: Product;
   className?: string;
@@ -24,6 +24,7 @@ export const ModalFeedback: FC<PropsType> = ({
   isOpen,
   product,
   onClose,
+  onApply,
 }) => {
   const { t } = useTranslation();
   const [isLock, setIsLock] = useState(false);
@@ -90,12 +91,9 @@ export const ModalFeedback: FC<PropsType> = ({
     setIsLock(true);
 
     try {
-      await toast.promise(fakeRequest(), {
-        pending: t('wait'),
-        success: t('contacted-soon'),
-        error: t('error-subscribe'),
-      });
-      onClose();
+      await fakeRequest();
+
+      onApply();
       setEmail('');
       setPhone('');
     } catch (error) {

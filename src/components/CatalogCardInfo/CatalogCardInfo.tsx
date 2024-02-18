@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { CatalogCardPreview } from '../CatalogCardPreview';
 import { ModalFeedback } from '../modals/ModalFeedback';
+import { ModalFeedbackSuccess } from '../modals/ModalFeedbackSuccess';
 import { data } from '../ProductsNotFound/mock';
 import { Product } from '../../types';
 
@@ -22,6 +23,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
 }) => {
   const navigate = useNavigate();
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenSecondModal, setIsOpenSecondModal] = useState(false);
 
   const handleGoToCard = (id: number) => {
     navigate(`/catalog/all/${id}`);
@@ -31,12 +33,22 @@ export const CatalogCardInfo: FC<PropsType> = ({
     });
   };
 
+  const handleApplyFeedback = () => {
+    setIsOpenModal(false);
+    setIsOpenSecondModal(true);
+  };
+
   return (
     <div className={classNames('catalog-card-info', className)}>
       <ModalFeedback
         isOpen={isOpenModal}
         product={product}
         onClose={() => setIsOpenModal(false)}
+        onApply={handleApplyFeedback}
+      />
+      <ModalFeedbackSuccess
+        isOpen={isOpenSecondModal}
+        onClose={() => setIsOpenSecondModal(false)}
       />
       <div className="catalog-card-info__header">
         <div className="catalog-card-info__header-brand">{product.brand}</div>

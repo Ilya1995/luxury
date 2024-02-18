@@ -47,5 +47,6 @@ export const ENG = {
     'fill-one-field': 'Fill in at least one field',
     'correct-phone': 'Enter the correct number',
     'contacted-soon': 'You will be contacted soon',
+    close: 'Close',
   },
 };

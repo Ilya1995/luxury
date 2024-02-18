@@ -1,4 +1,4 @@
-.modal-feedback {
+.modal-feedback-success {
   background-color: rgba(var(--white));
   padding: 2.5rem;
   display: inline-block;
@@ -36,78 +36,13 @@
     font-family: var(--merriweather);
     color: rgba(var(--grey-600));
     text-align: left;
-    white-space: pre-line;
     margin-top: 0.5rem;
-  }
-
-  &__product {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
-    margin: 1.5rem 0;
-
-    &-img {
-      height: 100px;
-      width: 100px;
-      border-radius: 0.5rem;
-      object-fit: cover;
-      display: block;
-    }
-
-    &-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
-      gap: 0.5rem;
-
-      &-name {
-        font-weight: 400;
-        font-size: 0.875rem;
-        line-height: 1.57;
-        font-family: var(--merriweather);
-        color: rgba(var(--grey-800));
-      }
-
-      &-material {
-        font-weight: 400;
-        font-size: 0.75rem;
-        line-height: 1.5;
-        color: rgba(var(--grey-600));
-      }
-    }
-  }
-
-  &__fields {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
   }
 
   &__button {
     margin-top: 2rem;
     height: 3rem !important;
     width: 100%;
-  }
-
-  @media (max-width: 1300px) {
-    padding: 2rem;
-
-    .modal-feedback__fields {
-      gap: 1rem;
-    }
-
-    .modal-feedback__button {
-      margin-top: 1.5rem;
-    }
-
-    .modal-feedback__line {
-      margin: 1.5rem 0;
-    }
-
-    .modal-feedback__product {
-      margin: 1rem 0;
-    }
   }
 
   &-wrapper {
@@ -129,11 +64,11 @@
 
     &_open {
       transform: scale(1);
-      .modal-feedback-wrapper__background {
+      .modal-feedback-success-wrapper__background {
         background-color: rgba(var(--black));
         animation: fadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 
-        .modal-feedback {
+        .modal-feedback-success {
           opacity: 0;
           animation: scaleUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
         }
@@ -144,10 +79,10 @@
       transform: scale(1);
       animation: quickScaleDown 0s 0.5s linear forwards;
 
-      .modal-feedback-wrapper__background {
+      .modal-feedback-success-wrapper__background {
         animation: fadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 
-        .modal-feedback {
+        .modal-feedback-success {
           animation: scaleDown 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
         }
       }
