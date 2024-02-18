@@ -67,6 +67,16 @@ export const brandsOptions = [
   { title: 'Pinomyh', options: options7 },
 ];
 
+export const brandsOptionsNew = [
+  'Ancienne Manufacture Royale',
+  'Bernardaud',
+  'Christofle',
+  'Hermes',
+  'J.Seignolles',
+  'Gdaasing',
+  'Pinomyh',
+];
+
 // export const availabilityOptions = ['В наличии', 'Под заказ'];
 
 export const colorOptions = [

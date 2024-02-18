@@ -5,7 +5,12 @@ import { useTranslation } from 'react-i18next';
 
 import { Dropdown } from '../Dropdown';
 import { Switcher } from '../ui/Switcher';
-import { brandsOptions, typeProductOptions, colorOptions } from './constants';
+import {
+  brandsOptions,
+  typeProductOptions,
+  colorOptions,
+  brandsOptionsNew,
+} from './constants';
 
 import './styles.scss';
 
@@ -47,9 +52,10 @@ export const Filter: FC<PropsType> = ({
         onChange={(value) => onChangeFilter('product', value)}
       />
       <Dropdown
-        options={brandsOptions}
+        options={brandsOptionsNew}
         title="Бренд"
         withSearch
+        multiple
         selected={brands}
         classNameList="filter__brand-list"
         onChange={(value) => onChangeFilter('brand', value)}

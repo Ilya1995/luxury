@@ -8,6 +8,7 @@ import {
   typeProductOptions,
   brandsOptions,
   colorOptions,
+  brandsOptionsNew,
 } from '../Filter/constants';
 
 import './styles.scss';
@@ -61,9 +62,10 @@ export const MenuFilterItem: FC<PropsType> = ({
           <>
             <Input type="search" value={searchText} onChange={setSearchText} />
             <Dropdown
-              options={brandsOptions}
+              options={brandsOptionsNew}
               isMobile
               title="Бренд"
+              multiple
               selected={brands}
               onChange={(value) => onChangeFilter('brand', value)}
             />

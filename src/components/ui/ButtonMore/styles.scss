@@ -1,21 +1,3 @@
-@keyframes arrow {
-  0% {
-    transform: translateX(0);
-  }
-  30% {
-    transform: translateX(8px);
-  }
-  50% {
-    transform: translateX(5px);
-  }
-  70% {
-    transform: translateX(8px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
 .button-more {
   display: flex;
   align-items: center;
@@ -24,13 +6,15 @@
   color: rgba(var(--orange));
   line-height: 1.625rem;
   font-weight: 500;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
 
   &__icon {
     height: 1rem;
     margin-left: 0.5rem;
   }
 
-  &:hover .button-more__icon {
-    animation: arrow 1s;
+  &:hover {
+    color: rgba(var(--orange-300));
   }
 }
