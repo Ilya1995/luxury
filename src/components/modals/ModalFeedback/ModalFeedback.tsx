@@ -147,7 +147,7 @@ export const ModalFeedback: FC<PropsType> = ({
                 {[product.brand, product.name, product.volume].join(' ')}
               </div>
               <div className="modal-feedback__product-info-material">
-                {product.material}
+                {product.materials}
               </div>
             </div>
           </div>

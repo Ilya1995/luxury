@@ -5,12 +5,11 @@ import { useTranslation } from 'react-i18next';
 
 import { Dropdown } from '../Dropdown';
 import { Switcher } from '../ui/Switcher';
-import {
-  brandsOptions,
-  typeProductOptions,
-  colorOptions,
-  brandsOptionsNew,
-} from './constants';
+import // brandsOptions,
+// typeProductOptions,
+// colorOptions,
+// brandsOptionsNew,
+'./constants';
 
 import './styles.scss';
 
@@ -20,6 +19,8 @@ type PropsType = {
   brands: string[];
   isOnlyStock: boolean;
   // colors: string[];
+  typeProductOptions?: any[];
+  brandsOptions?: any[];
   className?: string;
 };
 
@@ -29,6 +30,8 @@ export const Filter: FC<PropsType> = ({
   typeProduct,
   brands,
   isOnlyStock,
+  typeProductOptions,
+  brandsOptions,
   // colors,
 }) => {
   const { t } = useTranslation();
@@ -44,22 +47,27 @@ export const Filter: FC<PropsType> = ({
 
   return (
     <div className={classNames('filter', className)}>
-      <Dropdown
-        options={typeProductOptions}
-        title="Тип продукта"
-        selected={typeProduct}
-        classNameList="filter__product-list"
-        onChange={(value) => onChangeFilter('product', value)}
-      />
-      <Dropdown
-        options={brandsOptionsNew}
-        title="Бренд"
-        withSearch
-        multiple
-        selected={brands}
-        classNameList="filter__brand-list"
-        onChange={(value) => onChangeFilter('brand', value)}
-      />
+      {!!typeProductOptions?.length && (
+        <Dropdown
+          options={typeProductOptions}
+          title="Тип продукта"
+          selected={typeProduct}
+          classNameList="filter__product-list"
+          onChange={(value) => onChangeFilter('product', value)}
+        />
+      )}
+
+      {!!brandsOptions?.length && (
+        <Dropdown
+          options={brandsOptions}
+          title="Бренд"
+          withSearch
+          multiple
+          selected={brands}
+          classNameList="filter__brand-list"
+          onChange={(value) => onChangeFilter('brand', value)}
+        />
+      )}
       {/* <Dropdown
         options={colorOptions}
         title="Цвет"

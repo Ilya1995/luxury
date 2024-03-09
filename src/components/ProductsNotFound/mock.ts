@@ -1,10 +1,13 @@
 export const data = [
   {
     id: 8,
+    imageId: 1,
     src: '/card8.png',
-    brand: 'Gien',
+    // brand: 'Gien',
+    brand: null,
     name: 'Набор из 4 тарелок ассорти',
-    material: 'Фаянс',
+    title: 'Набор из 4 тарелок ассорти',
+    materials: 'Фаянс',
     country: 'Франция',
     photos: ['/card8.png', '/card9.png'],
     description:
@@ -12,10 +15,13 @@ export const data = [
   },
   {
     id: 9,
+    imageId: 1,
     src: '/card9.png',
-    brand: 'Haviland',
+    // brand: 'Haviland',
+    brand: null,
     name: 'Тарелка подстановочная',
-    material: 'Фарфор',
+    title: 'Тарелка подстановочная',
+    materials: 'Фарфор',
     country: 'Франция',
     photos: ['/card8.png', '/card9.png'],
     description:
@@ -23,10 +29,13 @@ export const data = [
   },
   {
     id: 10,
+    imageId: 1,
     src: '/card10.png',
-    brand: 'Haviland',
+    // brand: 'Haviland',
+    brand: null,
     name: 'Тарелка подстановочная',
-    material: 'Фарфор',
+    title: 'Тарелка подстановочная',
+    materials: 'Фарфор',
     country: 'Лимония',
     photos: ['/card10.png', '/card8.png', '/card9.png'],
     description:
@@ -34,10 +43,13 @@ export const data = [
   },
   {
     id: 11,
+    imageId: 1,
     src: '/card11.png',
-    brand: 'J.Seignolles',
+    // brand: 'J.Seignolles',
+    brand: null,
     name: 'Тарелка сервировочная, 30,5 см',
-    material: 'Фарфор',
+    title: 'Тарелка сервировочная, 30,5 см',
+    materials: 'Фарфор',
     country: 'Франция',
     photos: ['/card11.png', '/card8.png', '/card9.png'],
     description:

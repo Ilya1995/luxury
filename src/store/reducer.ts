@@ -22,6 +22,7 @@ const initialState: GeneralState = {
     isLoading: false,
     isSuccess: false,
   },
+  categories: [],
   searchText: '',
 };
 
@@ -59,10 +60,18 @@ export const counterSlice = createSlice({
     setSearchText: (state: any, action: PayloadAction<string>) => {
       state.searchText = action.payload;
     },
+    setCategories: (state: any, action: PayloadAction<any>) => {
+      state.categories = action.payload;
+    },
   },
 });
 
-export const { setSuccessData, setErrorData, setLoadingData, setSearchText } =
-  counterSlice.actions;
+export const {
+  setSuccessData,
+  setErrorData,
+  setLoadingData,
+  setSearchText,
+  setCategories,
+} = counterSlice.actions;
 
 export default counterSlice.reducer;

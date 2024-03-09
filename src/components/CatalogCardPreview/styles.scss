@@ -35,6 +35,14 @@
     border-radius: 0.5rem;
     object-fit: cover;
     display: block;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: rgba(var(--blue-grey-300));
+    }
 
     @media (max-width: 768px) {
       min-height: 10.9375rem;

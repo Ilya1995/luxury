@@ -2,7 +2,12 @@ import { AnyAction, Dispatch } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { Brand, Faq, News, Response } from './types';
-import { setSuccessData, setErrorData, setLoadingData } from './reducer';
+import {
+  setSuccessData,
+  setErrorData,
+  setLoadingData,
+  setCategories,
+} from './reducer';
 import { data as mockBrands } from '../components/BrandsCarousel/constants';
 import { data as mockNews } from '../components/News/constants';
 import { data as mockFaqs } from '../components/FAQ/constants';
@@ -15,7 +20,9 @@ export const getBrands = async (dispatch: Dispatch<AnyAction>) => {
   dispatch(setLoadingData({ key: 'brands' }));
 
   try {
-    const response: Response<Brand[]> = await axios.get('/brand');
+    const response: Response<Brand[]> = await axios.get(
+      '/brand?page=0&size=50&sort=number%2Ccreated%2CASC'
+    );
     if (response.status !== 200 || typeof response.data === 'string') {
       throw new Error('bad response');
     }
@@ -34,7 +41,7 @@ export const getNews = async (dispatch: Dispatch<AnyAction>) => {
   dispatch(setLoadingData({ key: 'news' }));
 
   try {
-    const response: Response<News[]> = await axios.get('/news');
+    const response: Response<News[]> = await axios.get('/news?page=0&size=50');
     if (response.status !== 200 || typeof response.data === 'string') {
       throw new Error('bad response');
     }
@@ -81,4 +88,19 @@ export const sendEmail = (email: string) => {
       })
       .catch(reject);
   });
+};
+
+export const getCategories = async (dispatch: Dispatch<AnyAction>) => {
+  try {
+    const response: Response<Faq[]> = await axios.get(
+      '/category?page=0&size=10&sort=number%2Ccreated%2CASC'
+    );
+    if (response.status !== 200 || typeof response.data === 'string') {
+      throw new Error('bad response');
+    }
+
+    dispatch(setCategories(response.data.content));
+  } catch (error) {
+    console.error(error);
+  }
 };

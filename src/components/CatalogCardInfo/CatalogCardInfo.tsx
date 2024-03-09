@@ -51,10 +51,12 @@ export const CatalogCardInfo: FC<PropsType> = ({
         onClose={() => setIsOpenSecondModal(false)}
       />
       <div className="catalog-card-info__header">
-        <div className="catalog-card-info__header-brand">{product.brand}</div>
+        <div className="catalog-card-info__header-brand">
+          {product.brand?.title}
+        </div>
         <div className="catalog-card-info__header-name">{product.name}</div>
         <div className="catalog-card-info__header-material">
-          {product.material}
+          {product.materials}
         </div>
         <div className="catalog-card-info__header-price">Цена по запросу</div>
       </div>
@@ -79,7 +81,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
         <div className="catalog-card-info-characteristic">
           <div className="catalog-card-info-characteristic__key">Бренд:</div>
           <div className="catalog-card-info-characteristic__value">
-            {product.brand}
+            {product.brand?.title}
           </div>
         </div>
         <div className="catalog-card-info-characteristic">
@@ -91,7 +93,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
         <div className="catalog-card-info-characteristic">
           <div className="catalog-card-info-characteristic__key">Материал:</div>
           <div className="catalog-card-info-characteristic__value">
-            {product.material}
+            {product.materials}
           </div>
         </div>
         {product.volume && (
@@ -104,7 +106,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
         )}
       </div>
 
-      {isMobile && (
+      {/* {isMobile && (
         <div className="catalog-card-info__like">
           <div className="catalog-card-info__like-header">
             Вам может понравиться
@@ -119,7 +121,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
             ))}
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

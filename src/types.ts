@@ -1,3 +1,5 @@
+import { Brand } from './store/types';
+
 export type TabType = {
   label: string;
   path: string;
@@ -6,11 +8,13 @@ export type TabType = {
 export type Product = {
   id: number;
   src: string;
-  brand: string;
+  brand: Brand | null;
   name: string;
-  material: string;
   description: string;
   country: string;
   photos: string[];
+  imageId: number | null;
+  title: string;
+  materials: string | null;
   volume?: string;
 };

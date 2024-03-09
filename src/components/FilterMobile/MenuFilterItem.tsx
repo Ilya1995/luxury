@@ -4,12 +4,11 @@ import classNames from 'classnames';
 import { Icon } from '../ui/Icon';
 import { Dropdown } from '../Dropdown';
 import { Input } from '../ui/Input';
-import {
-  typeProductOptions,
-  brandsOptions,
-  colorOptions,
-  brandsOptionsNew,
-} from '../Filter/constants';
+import // typeProductOptions,
+// brandsOptions,
+// colorOptions,
+// brandsOptionsNew,
+'../Filter/constants';
 
 import './styles.scss';
 
@@ -21,6 +20,8 @@ type PropsType = {
   typeProduct: string;
   brands: string[];
   // colors: string[];
+  typeProductOptions?: any[];
+  brandsOptions?: any[];
   className?: string;
 };
 
@@ -30,6 +31,8 @@ export const MenuFilterItem: FC<PropsType> = ({
   typeProduct,
   brands,
   // colors,
+  typeProductOptions,
+  brandsOptions,
   onChangeFilter,
   onClose,
   className,
@@ -49,7 +52,7 @@ export const MenuFilterItem: FC<PropsType> = ({
         handleClick={onClose}
       />
       <div className="menu-filter-item__content" data-filter={currentFilter}>
-        {currentFilter === 'product' && (
+        {currentFilter === 'product' && !!typeProductOptions?.length && (
           <Dropdown
             options={typeProductOptions}
             isMobile
@@ -58,11 +61,11 @@ export const MenuFilterItem: FC<PropsType> = ({
             onChange={(value) => onChangeFilter('product', value)}
           />
         )}
-        {currentFilter === 'brand' && (
+        {currentFilter === 'brand' && !!brandsOptions?.length && (
           <>
             <Input type="search" value={searchText} onChange={setSearchText} />
             <Dropdown
-              options={brandsOptionsNew}
+              options={brandsOptions}
               isMobile
               title="Бренд"
               multiple

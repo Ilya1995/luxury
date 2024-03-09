@@ -29,7 +29,7 @@ export const ProductsNotFound: FC<PropsType> = ({
           <div className="products-not-found__text">
             {t('not-found-search')}
           </div>
-          <div className="products-not-found__header">
+          {/* <div className="products-not-found__header">
             Вам может понравиться
           </div>
           <div className="products-not-found__products">
@@ -40,7 +40,7 @@ export const ProductsNotFound: FC<PropsType> = ({
                 onGoToCard={onGoToCard}
               />
             ))}
-          </div>
+          </div> */}
         </>
       )}
 

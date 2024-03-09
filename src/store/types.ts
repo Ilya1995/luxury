@@ -14,6 +14,7 @@ export type GeneralState = {
   brands: StateItems<Brand>;
   faqs: StateItems<Faq>;
   searchText: string;
+  categories: any[];
 };
 
 export type Brand = {
@@ -34,6 +35,7 @@ export type News = {
   newsDate: string;
   title: string;
   description?: string;
+  descriptionRus: string;
   imageId: number;
 };
 
@@ -42,7 +44,9 @@ export type Faq = {
   created?: string;
   updated?: string;
   title: string;
+  titleRu: string;
   description: string;
+  descriptionRu: string;
   lang: Lang;
   active: boolean;
 };
@@ -50,6 +54,7 @@ export type Faq = {
 export type Response<T> = {
   data: {
     content: T;
+    totalElements: number;
   };
   status: number;
 };

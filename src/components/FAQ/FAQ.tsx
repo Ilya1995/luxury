@@ -54,7 +54,7 @@ export const FAQ: FC<PropsType> = () => {
         <div className="faq__subtitle">{t('know-about-us')}</div>
       </div>
       <div className="faq-list">
-        {faqs.map(({ id, title, description }) => (
+        {faqs.map(({ id, titleRu, descriptionRu }) => (
           <div
             key={id}
             className="faq-list__item"
@@ -62,7 +62,7 @@ export const FAQ: FC<PropsType> = () => {
           >
             <div className="flex-between-start">
               <div className="faq-list__item-content">
-                <div className="faq-list__item-title">{title}</div>
+                <div className="faq-list__item-title">{titleRu}</div>
                 {open[id] && (
                   <Animate
                     play={open[id]}
@@ -71,7 +71,7 @@ export const FAQ: FC<PropsType> = () => {
                     easeType="ease-in"
                   >
                     <div className="faq-list__item-description">
-                      {Parser().parse(description)}
+                      {Parser().parse(descriptionRu)}
                     </div>
                   </Animate>
                 )}

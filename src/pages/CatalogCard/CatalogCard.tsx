@@ -8,7 +8,7 @@ import { Tab } from '../../components/Tab';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { useMedia } from '../../hooks';
 import { Product, TabType } from '../../types';
-import { data as mock1 } from '../../components/CatalogList/mock';
+// import { data as mock1 } from '../../components/CatalogList/mock';
 import { data as mock2 } from '../../components/ProductsNotFound/mock';
 import { CatalogCardInfo } from '../../components/CatalogCardInfo';
 import { CatalogCardPhoto } from '../../components/CatalogCardPhoto';
@@ -37,9 +37,9 @@ export const CatalogCard: FC = () => {
       return navigate('/');
     }
 
-    const product1 = mock1.find((el) => el.id === +productId);
+    // const product1 = mock1.find((el) => el.id === +productId);
     const product2 = mock2.find((el) => el.id === +productId);
-    const product3 = product1 || product2;
+    const product3 = product2;
 
     if (!product3) {
       return navigate('/');

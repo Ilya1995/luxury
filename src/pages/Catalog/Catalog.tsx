@@ -16,11 +16,14 @@ import { ProductsNotFound } from '../../components/ProductsNotFound';
 import { TabType, Product } from '../../types';
 import { RootState } from '../../store';
 import { setSearchText } from '../../store/reducer';
+import { getCategories } from '../../store/actionCreator';
 import { data as mockProducts } from '../../components/CatalogList/mock';
 
-import { tabs } from './constants';
+import { tabMap } from './constants';
 
 import './styles.scss';
+import { Response } from '../../store/types';
+import axios from 'axios';
 
 export const Catalog: FC = () => {
   const { t } = useTranslation();
@@ -29,55 +32,159 @@ export const Catalog: FC = () => {
   const { pathname } = useLocation();
   const { tab } = useParams();
 
-  const isMobile = useMedia('(max-width: 768px)');
-  const [activeTab, setActiveTab] = useState<TabType>(() => {
+  const { searchText, categories } = useSelector(
+    (state: RootState) => state.general
+  );
+
+  const tabs = useMemo(
+    () =>
+      categories.map(({ title }) => ({
+        label: title,
+        path: tabMap[title],
+      })),
+    [categories]
+  );
+
+  const activeTab = useMemo<TabType | undefined>(() => {
+    if (!tabs.length) return;
+
     const newTab = tabs.find(({ path }) => path === tab);
+
     return newTab ? newTab : tabs[0];
-  });
+  }, [tabs, tab]);
+
+  const isMobile = useMedia('(max-width: 768px)');
   const [isLoading, setIsLoading] = useState(true);
   const [typeProduct, setTypeProduct] = useState('');
-  const [brands, setBrands] = useState<string[]>([]);
+  const [filterBrands, setBrands] = useState<string[]>([]);
   const [isOnlyStock, setIsOnlyStock] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(0);
 
   // const [colors, setColors] = useState<string[]>([]);
-  const { searchText } = useSelector((state: RootState) => state.general);
+  const getBrandIds = useCallback(() => {
+    return categories
+      .find((category: any) => category.title === activeTab?.label)
+      ?.brands.filter((brand: any) => filterBrands.includes(brand.title))
+      ?.map((brand: any) => brand.id);
+  }, [activeTab?.label, categories, filterBrands]);
+
+  const getTypeId = useCallback(() => {
+    return categories
+      .find((category: any) => category.title === activeTab?.label)
+      ?.types.find((type: any) => type.title === typeProduct)?.id;
+  }, [activeTab?.label, categories, typeProduct]);
+
+  const getCategoryId = useCallback(() => {
+    return categories.find(
+      (category: any) => category.title === activeTab?.label
+    )?.id;
+  }, [activeTab?.label, categories]);
 
   const getProducts = useCallback(
-    (nextPage: number) => {
-      setTotal(mockProducts.length);
+    async (nextPage: number) => {
       !nextPage && setIsLoading(true);
 
-      setTimeout(() => {
-        !nextPage && setIsLoading(false);
+      try {
+        const urlWithText = `products/text-search?text=${searchText}&page=${nextPage}&size=10&sort=created%2CDESC`;
+        let urlWithoutText = `/products/search?page=${nextPage}&size=10&sort=created%2CDESC`;
 
-        // условия для дебага
-        if (searchText === '11' || searchText === '111') {
-          setProducts([]);
-          return;
+        if (filterBrands.length) {
+          const ids = getBrandIds();
+
+          if (ids?.length) {
+            urlWithoutText += '&brandIds=' + ids.join('&brandIds=');
+          }
+        }
+
+        if (typeProduct) {
+          const id = getTypeId();
+
+          if (id) {
+            urlWithoutText += '&typeId=' + id;
+          }
+        }
+
+        const id = getCategoryId();
+        if (id) {
+          urlWithoutText += '&categoryIds=' + id;
         }
 
         if (isOnlyStock) {
-          setProducts([]);
-          return;
+          urlWithoutText += '&inStock=true';
         }
 
-        // добавляем по 7 элементов
-        setProducts(mockProducts.slice(0, (nextPage + 1) * 7));
-      }, 2000);
+        const url = searchText ? urlWithText : urlWithoutText;
+        const response: Response<any> = await axios.get(url);
+        if (response.status !== 200 || typeof response.data === 'string') {
+          throw new Error('bad response');
+        }
+        setTotal(response.data.totalElements);
+
+        setProducts((prev) =>
+          nextPage ? [...prev, ...response.data.content] : response.data.content
+        );
+        // setProducts(response.data.content);
+        // setProducts(mockProducts.slice(0, (nextPage + 1) * 7));
+      } catch (error) {
+        console.error(error);
+        setProducts([]);
+      } finally {
+        !nextPage && setIsLoading(false);
+      }
+
+      // setTimeout(() => {
+      //   !nextPage && setIsLoading(false);
+
+      //   // условия для дебага
+      //   if (searchText === '11' || searchText === '111') {
+      //     setProducts([]);
+      //     return;
+      //   }
+
+      //   if (isOnlyStock) {
+      //     setProducts([]);
+      //     return;
+      //   }
+
+      //   // добавляем по 7 элементов
+      //   setProducts(mockProducts.slice(0, (nextPage + 1) * 7));
+      // }, 2000);
     },
-    [isOnlyStock, searchText]
+    [
+      typeProduct,
+      searchText,
+      filterBrands,
+      isOnlyStock,
+      getBrandIds,
+      getCategoryId,
+      getTypeId,
+    ]
   );
 
   useEffect(() => {
+    if (!categories.length) {
+      getCategories(dispatch);
+    }
+  }, [dispatch, categories.length]);
+
+  // useEffect(() => {
+  //   if (!tabs.length) return;
+
+  //   const newTab = tabs.find(({ path }) => path === tab);
+
+  //   setActiveTab(newTab ? newTab : tabs[0]);
+  // }, [tabs]);
+
+  useEffect(() => {
+    if (!activeTab) return;
     setPage(0);
     getProducts(0);
   }, [
     activeTab,
     typeProduct,
-    brands,
+    filterBrands,
     isOnlyStock,
     // colors,
     searchText,
@@ -93,33 +200,54 @@ export const Catalog: FC = () => {
   }, []);
 
   useEffect(() => {
+    if (!tabs.length) return;
     const newTab = tabs.find(({ path }) => path === tab);
 
     if (!newTab && pathname !== '/catalog') {
       navigate('/');
     }
-  }, [tab, pathname, navigate]);
+  }, [tab, tabs, pathname, navigate]);
 
   useWatch(() => {
     handleResetFilters();
 
     if (!tab) {
-      setActiveTab(tabs[0]);
+      // setActiveTab(tabs[0]);
       return;
     }
 
     const newTab = tabs.find(({ path }) => path === tab);
 
-    newTab ? setActiveTab(newTab) : navigate('/');
-  }, [tab, navigate]);
+    if (!newTab) {
+      navigate('/');
+    }
+
+    // newTab ? setActiveTab(newTab) : navigate('/');
+  }, [tabs, tab, navigate]);
 
   const title = useMemo(() => {
-    if (activeTab.path === 'all') return t('catalog');
+    if (!activeTab || activeTab.path === 'all') return t('catalog');
     return activeTab?.label || t('catalog');
   }, [t, activeTab]);
 
+  const typeProductOptions = useMemo<string[] | undefined>(
+    () =>
+      categories
+        .find((category: any) => category.title === activeTab?.label)
+        ?.types.map((type: any) => type.title),
+    [categories, activeTab]
+  );
+
+  const brandsOptions = useMemo<string[] | undefined>(
+    () =>
+      categories
+        .find((category: any) => category.title === activeTab?.label)
+        ?.brands.map((brand: any) => brand.title),
+    [categories, activeTab]
+  );
+
   const handleChangeTab = (tab: TabType) => {
-    if (tab.path === 'all' || activeTab.label === tab.label) {
+    if (tab.path === 'all' || activeTab?.label === tab.label) {
       return navigate('/catalog');
     }
 
@@ -127,7 +255,7 @@ export const Catalog: FC = () => {
   };
 
   const handleGoToCard = (id: number) => {
-    navigate(`/catalog/${activeTab.path}/${id}`);
+    // navigate(`/catalog/${activeTab?.path}/${id}`);
   };
 
   const handleNextPage = () => {
@@ -197,7 +325,7 @@ export const Catalog: FC = () => {
             <Tab
               key={tab.label}
               item={tab}
-              isActive={activeTab.label === tab.label}
+              isActive={activeTab?.label === tab.label}
               onClick={handleChangeTab}
             />
           ))}
@@ -207,8 +335,13 @@ export const Catalog: FC = () => {
           <FilterMobile
             onChangeAllFilters={handleChangeAllFilters}
             typeProduct={typeProduct}
-            brands={brands}
+            brands={filterBrands}
             isOnlyStock={isOnlyStock}
+            typeProductOptions={typeProductOptions}
+            brandsOptions={brandsOptions}
+            categoryId={getCategoryId()}
+            categories={categories}
+            initialTotal={total}
             // colors={colors}
           />
         )}
@@ -226,8 +359,10 @@ export const Catalog: FC = () => {
             <Filter
               onChangeFilter={handleChangeFilter}
               typeProduct={typeProduct}
-              brands={brands}
+              brands={filterBrands}
               isOnlyStock={isOnlyStock}
+              typeProductOptions={typeProductOptions}
+              brandsOptions={brandsOptions}
               // colors={colors}
             />
           )}

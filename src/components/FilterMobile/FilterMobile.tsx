@@ -1,4 +1,4 @@
-import { FC, useState, useMemo, useEffect } from 'react';
+import { FC, useState, useMemo, useEffect, useCallback } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -10,6 +10,8 @@ import type { Product } from '../../types';
 import { data as mockProducts } from '../../components/CatalogList/mock';
 
 import './styles.scss';
+import { Response } from '../../store/types';
+import axios from 'axios';
 
 type PropsType = {
   onChangeAllFilters: (filters: {
@@ -22,6 +24,11 @@ type PropsType = {
   brands: string[];
   isOnlyStock: boolean;
   // colors: string[];
+  typeProductOptions?: any[];
+  brandsOptions?: any[];
+  categoryId?: number;
+  categories: any[];
+  initialTotal: number;
   className?: string;
 };
 
@@ -31,18 +38,36 @@ export const FilterMobile: FC<PropsType> = ({
   typeProduct,
   brands,
   isOnlyStock,
+  typeProductOptions,
+  brandsOptions,
+  categoryId,
+  categories,
+  initialTotal,
   // colors,
 }) => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSecond, setIsOpenSecond] = useState(false);
   const [currentFilter, setCurrentFilter] = useState('');
-  const [products, setProducts] = useState<Product[]>([]);
 
   const [localTypeProduct, setLocalTypeProduct] = useState('');
   const [localBrands, setLocalBrands] = useState<string[]>([]);
   const [localIsOnlyStock, setLocalIsOnlyStock] = useState(false);
+  const [total, setTotal] = useState(initialTotal);
   // const [localColors, setLocalColors] = useState<string[]>([]);
+
+  const getTypeId = useCallback(() => {
+    return categories
+      .find((category: any) => category.id === categoryId)
+      ?.types.find((type: any) => type.title === localTypeProduct)?.id;
+  }, [categoryId, categories, localTypeProduct]);
+
+  const getBrandIds = useCallback(() => {
+    return categories
+      .find((category: any) => category.id === categoryId)
+      ?.brands.filter((brand: any) => localBrands.includes(brand.title))
+      ?.map((brand: any) => brand.id);
+  }, [categoryId, categories, localBrands]);
 
   useEffect(() => {
     setLocalTypeProduct(typeProduct);
@@ -53,14 +78,56 @@ export const FilterMobile: FC<PropsType> = ({
   // }, [isOpen, brands, colors, isOnlyStock, typeProduct]);
 
   useEffect(() => {
-    // условия для дебага
-    if (localIsOnlyStock) {
-      setProducts([]);
-      return;
+    if (!isOpen) return;
+
+    let urlWithoutText = `/products/search?page=0&size=10&sort=created%2CDESC`;
+
+    if (localBrands.length) {
+      const ids = getBrandIds();
+
+      if (ids?.length) {
+        urlWithoutText += '&brandIds=' + ids.join('&brandIds=');
+      }
     }
 
-    setProducts(mockProducts);
-  }, [localTypeProduct, localBrands, localIsOnlyStock]);
+    if (localTypeProduct) {
+      const id = getTypeId();
+
+      if (id) {
+        urlWithoutText += '&typeId=' + id;
+      }
+    }
+
+    if (categoryId) {
+      urlWithoutText += '&categoryIds=' + categoryId;
+    }
+
+    if (localIsOnlyStock) {
+      urlWithoutText += '&inStock=true';
+    }
+
+    const url = urlWithoutText;
+    axios
+      .get(url)
+      .then((response: Response<any>) => {
+        if (response.status !== 200 || typeof response.data === 'string') {
+          throw new Error('bad response');
+        }
+        setTotal(response.data.totalElements);
+      })
+      .catch((error) => {
+        console.error(error);
+        setTotal(0);
+      });
+  }, [
+    localTypeProduct,
+    localBrands,
+    localIsOnlyStock,
+    categoryId,
+    getBrandIds,
+    getTypeId,
+    isOpen,
+  ]);
   // }, [localTypeProduct, localBrands, localIsOnlyStock, localColors]);
 
   const handleApplyFilters = () => {
@@ -136,9 +203,11 @@ export const FilterMobile: FC<PropsType> = ({
         onApplyFilters={handleApplyFilters}
         onResetFilters={handleResetFilters}
         isOnlyStock={localIsOnlyStock}
-        productCount={products.length}
+        productCount={total}
         onChangeFilter={handleChangeFilter}
         onOpenCurrentFilter={handleOpenCurrentFilter}
+        typeProductOptions={typeProductOptions}
+        brandsOptions={brandsOptions}
       />
       {isOpen && (
         <MenuFilterItem
@@ -148,6 +217,8 @@ export const FilterMobile: FC<PropsType> = ({
           typeProduct={localTypeProduct}
           brands={localBrands}
           // colors={localColors}
+          typeProductOptions={typeProductOptions}
+          brandsOptions={brandsOptions}
           onClose={() => setIsOpenSecond(false)}
         />
       )}

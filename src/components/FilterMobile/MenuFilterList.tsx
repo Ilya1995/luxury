@@ -23,6 +23,8 @@ type PropsType = {
   typeProduct: string;
   brands: string[];
   // colors: string[];
+  typeProductOptions?: any[];
+  brandsOptions?: any[];
   productCount: number;
   className?: string;
 };
@@ -34,6 +36,8 @@ export const MenuFilterList: FC<PropsType> = ({
   typeProduct,
   brands,
   // colors,
+  typeProductOptions,
+  brandsOptions,
   productCount,
   onChangeFilter,
   onChangeOpen,
@@ -101,60 +105,64 @@ export const MenuFilterList: FC<PropsType> = ({
           )}
         </div>
         <div className="menu-filter-list__content">
-          <div className="menu-filter-list-item-wrapper">
-            <div
-              className="menu-filter-list-item"
-              onClick={() => onOpenCurrentFilter('product')}
-            >
-              <div className="menu-filter-list-item__label">Тип продукта</div>
-              <div className="menu-filter-list-item__action">
-                {typeProduct && <Counter value={1} />}
-                <Icon
-                  name="arrow-right3"
-                  color="rgba(var(--grey-600))"
-                  size={1.5}
-                />
+          {!!typeProductOptions?.length && (
+            <div className="menu-filter-list-item-wrapper">
+              <div
+                className="menu-filter-list-item"
+                onClick={() => onOpenCurrentFilter('product')}
+              >
+                <div className="menu-filter-list-item__label">Тип продукта</div>
+                <div className="menu-filter-list-item__action">
+                  {typeProduct && <Counter value={1} />}
+                  <Icon
+                    name="arrow-right3"
+                    color="rgba(var(--grey-600))"
+                    size={1.5}
+                  />
+                </div>
               </div>
-            </div>
-            {typeProduct && (
-              <div className="menu-filter-list-item__tabs">
-                <Tab
-                  item={{ label: typeProduct, path: typeProduct }}
-                  onClose={() => handleRemoveItem('product')}
-                  hasClose
-                />
-              </div>
-            )}
-          </div>
-
-          <div className="menu-filter-list-item-wrapper">
-            <div
-              className="menu-filter-list-item"
-              onClick={() => onOpenCurrentFilter('brand')}
-            >
-              <div className="menu-filter-list-item__label">Бренд</div>
-              <div className="menu-filter-list-item__action">
-                {!!brands.length && <Counter value={brands.length} />}
-                <Icon
-                  name="arrow-right3"
-                  color="rgba(var(--grey-600))"
-                  size={1.5}
-                />
-              </div>
-            </div>
-            {!!brands.length && (
-              <div className="menu-filter-list-item__tabs">
-                {brands.map((brand) => (
+              {typeProduct && (
+                <div className="menu-filter-list-item__tabs">
                   <Tab
-                    key={brand}
-                    item={{ label: brand, path: brand }}
-                    onClose={(value) => handleRemoveItem('brand', value)}
+                    item={{ label: typeProduct, path: typeProduct }}
+                    onClose={() => handleRemoveItem('product')}
                     hasClose
                   />
-                ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {!!brandsOptions?.length && (
+            <div className="menu-filter-list-item-wrapper">
+              <div
+                className="menu-filter-list-item"
+                onClick={() => onOpenCurrentFilter('brand')}
+              >
+                <div className="menu-filter-list-item__label">Бренд</div>
+                <div className="menu-filter-list-item__action">
+                  {!!brands.length && <Counter value={brands.length} />}
+                  <Icon
+                    name="arrow-right3"
+                    color="rgba(var(--grey-600))"
+                    size={1.5}
+                  />
+                </div>
               </div>
-            )}
-          </div>
+              {!!brands.length && (
+                <div className="menu-filter-list-item__tabs">
+                  {brands.map((brand) => (
+                    <Tab
+                      key={brand}
+                      item={{ label: brand, path: brand }}
+                      onClose={(value) => handleRemoveItem('brand', value)}
+                      hasClose
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
           {/* <div className="menu-filter-list-item-wrapper">
             <div

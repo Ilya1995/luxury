@@ -10,10 +10,16 @@ type PropsType = {
   id: number;
   imageId: number;
   title: string;
+  descriptionRus: string;
   newsDate: string;
 };
 
-export const Card: FC<PropsType> = ({ imageId, title, newsDate }) => {
+export const Card: FC<PropsType> = ({
+  imageId,
+  title,
+  descriptionRus,
+  newsDate,
+}) => {
   const [imgSrc, setImgSrc] = useState();
 
   useEffect(() => {
@@ -46,7 +52,7 @@ export const Card: FC<PropsType> = ({ imageId, title, newsDate }) => {
           <div className="card__content-date">
             {dayjs(newsDate).format('D MMMM YYYY')}
           </div>
-          <div className="card__content-title">{title}</div>
+          <div className="card__content-title">{descriptionRus}</div>
         </div>
         <ButtonMore />
       </div>
