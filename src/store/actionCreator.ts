@@ -16,6 +16,8 @@ import { data as mockFaqs } from '../components/FAQ/constants';
 //   axios.defaults.baseURL = 'http://localhost:8080';
 // }
 
+axios.defaults.baseURL = 'https://luxury-living-k3or.onrender.com';
+
 export const getBrands = async (dispatch: Dispatch<AnyAction>) => {
   dispatch(setLoadingData({ key: 'brands' }));
 
