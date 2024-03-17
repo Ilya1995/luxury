@@ -10,6 +10,7 @@ type PropsType = {
   item: TabType;
   isActive?: boolean;
   hasClose?: boolean;
+  isToLower?: boolean;
   onClick?: (value: TabType) => void;
   onClose?: (value: TabType) => void;
 };
@@ -18,14 +19,18 @@ export const Tab: FC<PropsType> = ({
   item,
   isActive = false,
   hasClose = false,
+  isToLower = false,
   onClick = () => {},
   onClose = () => {},
 }) => (
   <div
-    className={classNames('tab', { tab_active: isActive })}
+    className={classNames('tab', {
+      tab_active: isActive,
+      tab_capitalize: isToLower,
+    })}
     onClick={() => onClick(item)}
   >
-    {item.label}
+    {isToLower ? item.label.toLowerCase() : item.label}
     {hasClose && (
       <Icon
         name="close2"

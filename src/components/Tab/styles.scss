@@ -24,4 +24,8 @@
     background-color: rgba(var(--grey-800));
     color: rgba(var(--white));
   }
+
+  &_capitalize {
+    text-transform: capitalize;
+  }
 }

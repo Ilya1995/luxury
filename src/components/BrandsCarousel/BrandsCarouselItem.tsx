@@ -50,7 +50,7 @@ export const BrandsCarouselItem: FC<PropsType> = ({ imageId, title }) => {
           src={URL.createObjectURL(imgSrc)}
         />
       )}
-      <div className="brands-carousel-item__name">{title}</div>
+      <div className="brands-carousel-item__name">{title?.toUpperCase()}</div>
     </div>
   );
 };

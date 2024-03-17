@@ -114,3 +114,17 @@
     }
   }
 }
+
+.filter__brand-list {
+  .checkbox__label {
+    text-transform: capitalize;
+  }
+}
+
+[data-filter='brand'] {
+  .dropdown_mobile {
+    .checkbox__label {
+      text-transform: capitalize;
+    }
+  }
+}

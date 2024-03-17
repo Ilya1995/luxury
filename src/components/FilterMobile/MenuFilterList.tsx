@@ -154,6 +154,7 @@ export const MenuFilterList: FC<PropsType> = ({
                   {brands.map((brand) => (
                     <Tab
                       key={brand}
+                      isToLower
                       item={{ label: brand, path: brand }}
                       onClose={(value) => handleRemoveItem('brand', value)}
                       hasClose

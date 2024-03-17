@@ -12,12 +12,6 @@ import { data as mockBrands } from '../components/BrandsCarousel/constants';
 import { data as mockNews } from '../components/News/constants';
 import { data as mockFaqs } from '../components/FAQ/constants';
 
-// if (process.env.NODE_ENV !== 'production') {
-//   axios.defaults.baseURL = 'http://localhost:8080';
-// }
-
-axios.defaults.baseURL = 'https://luxury-sfo5.onrender.com';
-
 export const getBrands = async (dispatch: Dispatch<AnyAction>) => {
   dispatch(setLoadingData({ key: 'brands' }));
 

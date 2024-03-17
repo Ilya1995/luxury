@@ -167,6 +167,7 @@ export const Dropdown: FC<PropsType> = ({
                 key={item}
                 className="dropdown-list-item"
                 label={item}
+                isToLower={title === 'Бренд'}
                 value={selected.includes(item)}
                 onChange={(value) => handleSelectMultiple(item, value)}
               />

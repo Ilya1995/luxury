@@ -7,6 +7,7 @@ type PropsType = {
   value: boolean;
   label: string;
   onChange: (value: boolean) => void;
+  isToLower?: boolean;
   className?: string;
 };
 
@@ -27,6 +28,7 @@ export const Checkbox: FC<PropsType> = ({
   className,
   value,
   label,
+  isToLower = false,
   onChange,
 }) => {
   const customColor = useMemo(() => CUSTOM_COLOR_MAP[label], [label]);
@@ -43,7 +45,7 @@ export const Checkbox: FC<PropsType> = ({
         })}
       />
       <label htmlFor={'checkbox' + label} className="checkbox__label">
-        {label}
+        {isToLower ? label.toLowerCase() : label}
       </label>
     </div>
   );
