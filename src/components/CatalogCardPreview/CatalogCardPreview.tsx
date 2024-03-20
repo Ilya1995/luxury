@@ -1,14 +1,13 @@
-import { FC, useState, useEffect } from 'react';
+import { FC } from 'react';
 import classNames from 'classnames';
 
 import './styles.scss';
-import axios from 'axios';
 import { Brand } from '../../store/types';
+import { baseURL } from '../..';
 
 type PropsType = {
   id: number;
   src: string;
-  name: string;
   brand: Brand | null;
   materials: string | null;
   imageId: number | null;
@@ -26,37 +25,15 @@ export const CatalogCardPreview: FC<PropsType> = ({
   imageId,
   onGoToCard,
 }) => {
-  const [imgSrc, setImgSrc] = useState();
-
-  useEffect(() => {
-    load();
-  }, [imageId]);
-
-  const load = async () => {
-    if (!imageId) return;
-
-    const config: any = {
-      url: 'images/' + imageId,
-      method: 'get',
-      responseType: 'blob',
-    };
-
-    try {
-      const response = await axios.request(config);
-      setImgSrc(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <div
       className={classNames('catalog-card-preview', className)}
       onClick={() => onGoToCard(id)}
     >
-      {imgSrc && (
+      {imageId && (
         <img
           className="catalog-card-preview__img"
-          src={URL.createObjectURL(imgSrc)}
+          src={`${baseURL}/images/${imageId}`}
           alt="card"
         />
       )}

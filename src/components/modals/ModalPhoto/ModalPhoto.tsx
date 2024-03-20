@@ -8,8 +8,8 @@ import { Icon } from '../../ui/Icon';
 import './styles.scss';
 
 type PropsType = {
-  photos: string[];
-  active: string;
+  photos: number[];
+  active: number;
   onClose: () => void;
   className?: string;
 };

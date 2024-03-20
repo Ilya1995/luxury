@@ -6,6 +6,7 @@ import { Animate } from 'react-simple-animate';
 
 import { Product } from '../../types';
 import { Icon } from '../ui/Icon';
+import { baseURL } from '../..';
 import { ModalPhoto } from '../modals/ModalPhoto';
 import { SwiperNav } from './SwiperNav';
 
@@ -17,12 +18,12 @@ type PropsType = {
 };
 
 export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
-  const [activePhoto, setActivePhoto] = useState(product.src);
+  const [activePhoto, setActivePhoto] = useState(product.imageId);
   const [activeIndex, setActiveIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [showNavButton, setShowNavButton] = useState({
     showPrev: false,
-    showNext: product.photos.length > 4,
+    showNext: (product.imageIds?.length ?? 0) > 4,
   });
 
   const handleChangeShowNawButtons = ({
@@ -37,7 +38,7 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
   const showMask = (direction: 'left' | 'right', index: number) => {
     if (direction === 'right') {
       return Boolean(
-        index > activeIndex + 2 && product.photos.length - 1 !== index
+        index > activeIndex + 2 && (product.imageIds?.length ?? 0) - 1 !== index
       );
     }
 
@@ -50,10 +51,10 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
 
   return (
     <div className={classNames('catalog-card-photo', className)}>
-      {openModal && (
+      {!!product.imageIds?.length && !!activePhoto && openModal && (
         <ModalPhoto
           active={activePhoto}
-          photos={product.photos}
+          photos={product.imageIds}
           onClose={() => setOpenModal(false)}
         />
       )}
@@ -69,7 +70,8 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
         >
           <img
             className="catalog-card-photo__img"
-            src={activePhoto}
+            // src={activePhoto}
+            src={`${baseURL}/images/${activePhoto}`}
             onClick={() => setOpenModal(true)}
             alt="card"
           />
@@ -83,7 +85,7 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
           size={1.5}
         />
       </div>
-      {!!product.photos.length && (
+      {!!product.imageIds?.length && (
         <div className="catalog-card-photo__carousel">
           <Swiper
             slidesPerView={4}
@@ -91,17 +93,18 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
             speed={800}
             onActiveIndexChange={handleChangeShowNawButtons}
             wrapperClass="catalog-card-photo__carousel-wrapper"
-            mousewheel={product.photos.length > 4}
+            mousewheel={product.imageIds.length > 4}
             modules={[Mousewheel, Navigation]}
           >
-            {product.photos.map((photo, index) => (
+            {product.imageIds.map((photo, index) => (
               <SwiperSlide key={photo}>
                 <img
                   className={classNames('catalog-card-photo__carousel-img', {
                     'catalog-card-photo__carousel-img_active':
                       photo === activePhoto,
                   })}
-                  src={photo}
+                  // src={photo}
+                  src={`${baseURL}/images/${photo}`}
                   onClick={() => setActivePhoto(photo)}
                   alt="furniture"
                 />

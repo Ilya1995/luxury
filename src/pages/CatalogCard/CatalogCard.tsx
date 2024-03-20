@@ -1,6 +1,7 @@
-import { FC, useEffect, useState, useMemo } from 'react';
+import { FC, useEffect, useState, useMemo, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
@@ -8,12 +9,11 @@ import { Tab } from '../../components/Tab';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { useMedia } from '../../hooks';
 import { Product, TabType } from '../../types';
-// import { data as mock1 } from '../../components/CatalogList/mock';
-import { data as mock2 } from '../../components/ProductsNotFound/mock';
 import { CatalogCardInfo } from '../../components/CatalogCardInfo';
 import { CatalogCardPhoto } from '../../components/CatalogCardPhoto';
 import { CatalogCardPhotoMobile } from '../../components/CatalogCardPhotoMobile';
 import { tabs } from '../Catalog/constants';
+import { ResponseOne } from '../../store/types';
 
 import './styles.scss';
 
@@ -23,6 +23,21 @@ export const CatalogCard: FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [product, setProduct] = useState<Product>();
+
+  const getProduct = useCallback(async () => {
+    const url = `/products/${productId}`;
+
+    try {
+      const response: ResponseOne<Product> = await axios.get(url);
+      if (response.status !== 200 || typeof response.data === 'string') {
+        throw new Error('bad response');
+      }
+
+      setProduct(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [productId]);
 
   useEffect(() => {
     const isCardProduct = Number(productId) > 0;
@@ -37,15 +52,8 @@ export const CatalogCard: FC = () => {
       return navigate('/');
     }
 
-    // const product1 = mock1.find((el) => el.id === +productId);
-    const product2 = mock2.find((el) => el.id === +productId);
-    const product3 = product2;
-
-    if (!product3) {
-      return navigate('/');
-    }
-    setProduct(product3);
-  }, [productId, navigate]);
+    getProduct();
+  }, [productId, navigate, getProduct]);
 
   const activeTab = useMemo(() => {
     const newTab = tabs.find(({ path }) => path === tab);

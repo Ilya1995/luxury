@@ -44,7 +44,7 @@ export const Breadcrumbs: FC<PropsType> = ({ className, product }) => {
       const path = '/' + names.slice(0, index + 1).join('/');
 
       if (product && item === productId) {
-        const label = `${product.brand} ${product.name}`;
+        const label = `${product.brand?.title} ${product.title}`;
         result.push({ label, path });
         return;
       }

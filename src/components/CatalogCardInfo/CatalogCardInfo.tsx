@@ -2,10 +2,10 @@ import { FC, useState } from 'react';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 
-import { CatalogCardPreview } from '../CatalogCardPreview';
+// import { CatalogCardPreview } from '../CatalogCardPreview';
 import { ModalFeedback } from '../modals/ModalFeedback';
 import { ModalFeedbackSuccess } from '../modals/ModalFeedbackSuccess';
-import { data } from '../ProductsNotFound/mock';
+// import { data } from '../ProductsNotFound/mock';
 import { Product } from '../../types';
 
 import './styles.scss';
@@ -54,7 +54,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
         <div className="catalog-card-info__header-brand">
           {product.brand?.title}
         </div>
-        <div className="catalog-card-info__header-name">{product.name}</div>
+        <div className="catalog-card-info__header-name">{product.title}</div>
         <div className="catalog-card-info__header-material">
           {product.materials}
         </div>
@@ -64,7 +64,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
       {!isMobile && (
         <button
           className="catalog-card-info__button button"
-          onClick={() => setIsOpenModal(true)}
+          // onClick={() => setIsOpenModal(true)}
         >
           Уточнить наличие
         </button>
@@ -87,13 +87,13 @@ export const CatalogCardInfo: FC<PropsType> = ({
         <div className="catalog-card-info-characteristic">
           <div className="catalog-card-info-characteristic__key">Страна:</div>
           <div className="catalog-card-info-characteristic__value">
-            {product.country}
+            {product.country || '–'}
           </div>
         </div>
         <div className="catalog-card-info-characteristic">
           <div className="catalog-card-info-characteristic__key">Материал:</div>
           <div className="catalog-card-info-characteristic__value">
-            {product.materials}
+            {product.materials || '–'}
           </div>
         </div>
         {product.volume && (

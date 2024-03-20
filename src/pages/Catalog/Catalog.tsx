@@ -255,7 +255,7 @@ export const Catalog: FC = () => {
   };
 
   const handleGoToCard = (id: number) => {
-    // navigate(`/catalog/${activeTab?.path}/${id}`);
+    navigate(`/catalog/${activeTab?.path}/${id}`);
   };
 
   const handleNextPage = () => {

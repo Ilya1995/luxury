@@ -6,6 +6,7 @@ import { Product } from '../../../types';
 import { useWatch, useValidate } from '../../../hooks';
 import { Icon } from '../../ui/Icon';
 import { Input } from '../../ui/Input';
+import { baseURL } from '../../..';
 
 import './styles.scss';
 
@@ -139,12 +140,14 @@ export const ModalFeedback: FC<PropsType> = ({
           <div className="modal-feedback__product">
             <img
               className="modal-feedback__product-img"
-              src={product.src}
+              src={`${baseURL}/images/${product.imageId}`}
               alt="card"
             />
             <div className="modal-feedback__product-info">
               <div className="modal-feedback__product-info-name">
-                {[product.brand, product.name, product.volume].join(' ')}
+                {[product.brand?.title, product.title, product.volume].join(
+                  ' '
+                )}
               </div>
               <div className="modal-feedback__product-info-material">
                 {product.materials}

@@ -4,12 +4,13 @@ import { Swiper, SwiperSlide, SwiperClass } from 'swiper/react';
 import { Mousewheel, Navigation, Zoom } from 'swiper/modules';
 import 'swiper/css/zoom';
 
+import { baseURL } from '../../..';
 import { Icon } from '../../ui/Icon';
 
 import './styles.scss';
 
 type PropsType = {
-  photos: string[];
+  photos: number[];
   initialActiveIndex: number;
   onClose: () => void;
   className?: string;
@@ -73,7 +74,8 @@ export const ModalPhotoMobile: FC<PropsType> = ({
               <div className="swiper-zoom-container">
                 <img
                   className={classNames('modal-photo-mobile__img')}
-                  src={photo}
+                  // src={photo}
+                  src={`${baseURL}/images/${photo}`}
                   alt="furniture"
                 />
               </div>

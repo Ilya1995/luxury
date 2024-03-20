@@ -5,6 +5,7 @@ import { Mousewheel, Navigation } from 'swiper/modules';
 
 import { ModalPhotoMobile } from '../modals/ModalPhotoMobile';
 import { Product } from '../../types';
+import { baseURL } from '../..';
 
 import './styles.scss';
 
@@ -18,7 +19,7 @@ export const CatalogCardPhotoMobile: FC<PropsType> = ({
   product,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [activePhoto, setActivePhoto] = useState<string | null>();
+  const [activePhoto, setActivePhoto] = useState<number | null>();
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   useEffect(() => {
     const callback = () => {
@@ -31,45 +32,60 @@ export const CatalogCardPhotoMobile: FC<PropsType> = ({
     };
   }, []);
 
-  const widthLine = (innerWidth - 32) / product.photos.length;
+  const widthLine = (innerWidth - 32) / (product.imageIds?.length ?? 1);
 
   const handleChangeShowNawButtons = ({ activeIndex }: SwiperClass) => {
     setActiveIndex(activeIndex);
   };
 
-  const showScroll = product.photos.length > 1;
+  const showScroll = (product.imageIds?.length ?? 0) > 1;
 
   return (
     <div className={classNames('catalog-card-photo-mobile', className)}>
-      {!!activePhoto && (
+      {!!product.imageIds?.length && !!activePhoto && (
         <ModalPhotoMobile
           initialActiveIndex={activeIndex}
-          photos={product.photos}
+          photos={product.imageIds}
           onClose={() => setActivePhoto(null)}
         />
       )}
-      <div>
-        <Swiper
-          slidesPerView={1}
-          speed={800}
-          slidesOffsetBefore={16}
-          slidesOffsetAfter={-16}
-          onActiveIndexChange={handleChangeShowNawButtons}
-          mousewheel
-          modules={[Mousewheel, Navigation]}
-        >
-          {product.photos.map((photo) => (
-            <SwiperSlide key={photo}>
-              <img
-                className={classNames('catalog-card-photo-mobile__img')}
-                src={photo}
-                onClick={() => setActivePhoto(photo)}
-                alt="furniture"
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+      {!!product.imageIds?.length && (
+        <div>
+          <Swiper
+            slidesPerView={1}
+            speed={800}
+            slidesOffsetBefore={16}
+            slidesOffsetAfter={-16}
+            onActiveIndexChange={handleChangeShowNawButtons}
+            mousewheel
+            modules={[Mousewheel, Navigation]}
+          >
+            {product.imageIds?.map((photo) => (
+              <SwiperSlide key={photo}>
+                <img
+                  className={classNames('catalog-card-photo-mobile__img')}
+                  // src={photo}
+                  src={`${baseURL}/images/${photo}`}
+                  onClick={() => setActivePhoto(photo)}
+                  alt="furniture"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      )}
+
+      {!product.imageIds?.length && (
+        <div className="flex-center">
+          <img
+            className={classNames('catalog-card-photo-mobile__img')}
+            // src={photo}
+            src={`${baseURL}/images/${product.imageId}`}
+            onClick={() => setActivePhoto(product.imageId)}
+            alt="furniture"
+          />
+        </div>
+      )}
       {showScroll && (
         <div className="catalog-card-photo-mobile__scroll">
           <div

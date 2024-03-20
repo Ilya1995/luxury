@@ -1,11 +1,11 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { useSwiperSlide } from 'swiper/react';
 import classNames from 'classnames';
-import axios from 'axios';
 
 import { useMedia } from '../../hooks';
 
 import './styles.scss';
+import { baseURL } from '../..';
 
 type PropsType = {
   imageId: number;
@@ -14,24 +14,7 @@ type PropsType = {
 
 export const BrandsCarouselItem: FC<PropsType> = ({ imageId, title }) => {
   const swiperSlide = useSwiperSlide();
-  const [imgSrc, setImgSrc] = useState();
   const isMobile = useMedia('(max-width: 550px)');
-
-  useEffect(() => {
-    load();
-  }, [imageId]);
-
-  const load = async () => {
-    if (!imageId) return;
-
-    const config: any = {
-      url: 'images/' + imageId,
-      method: 'get',
-      responseType: 'blob',
-    };
-    const response = await axios.request(config);
-    setImgSrc(response.data);
-  };
 
   const isVisible = isMobile
     ? swiperSlide.isActive
@@ -43,11 +26,11 @@ export const BrandsCarouselItem: FC<PropsType> = ({ imageId, title }) => {
         'brands-carousel-item_visited': isVisible,
       })}
     >
-      {imgSrc && (
+      {imageId && (
         <img
           className="brands-carousel-item__img"
           alt="brand"
-          src={URL.createObjectURL(imgSrc)}
+          src={`${baseURL}/images/${imageId}`}
         />
       )}
       <div className="brands-carousel-item__name">{title?.toUpperCase()}</div>

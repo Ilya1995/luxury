@@ -58,3 +58,8 @@ export type Response<T> = {
   };
   status: number;
 };
+
+export type ResponseOne<T> = {
+  data: T;
+  status: number;
+};

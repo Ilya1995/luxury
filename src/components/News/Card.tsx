@@ -1,10 +1,10 @@
-import { FC, useState, useEffect } from 'react';
+import { FC } from 'react';
 import dayjs from 'dayjs';
-import axios from 'axios';
 
 import { ButtonMore } from '../ui/ButtonMore';
 
 import './styles.scss';
+import { baseURL } from '../..';
 
 type PropsType = {
   id: number;
@@ -20,31 +20,13 @@ export const Card: FC<PropsType> = ({
   descriptionRus,
   newsDate,
 }) => {
-  const [imgSrc, setImgSrc] = useState();
-
-  useEffect(() => {
-    load();
-  }, [imageId]);
-
-  const load = async () => {
-    if (!imageId) return;
-
-    const config: any = {
-      url: 'images/' + imageId,
-      method: 'get',
-      responseType: 'blob',
-    };
-    const response = await axios.request(config);
-    setImgSrc(response.data);
-  };
-
   return (
     <div className="card">
-      {imgSrc && (
+      {imageId && (
         <img
           className="card__img"
           alt="news"
-          src={URL.createObjectURL(imgSrc)}
+          src={`${baseURL}/images/${imageId}`}
         />
       )}
       <div className="card__content">

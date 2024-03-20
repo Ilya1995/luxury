@@ -53,6 +53,7 @@ export const BrandsCarousel: FC<PropsType> = () => {
       slidesPerView={4}
       spaceBetween={24}
       centeredSlides
+      initialSlide={2}
       speed={800}
       loop
       mousewheel
