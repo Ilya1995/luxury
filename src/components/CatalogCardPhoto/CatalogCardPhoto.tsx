@@ -85,7 +85,7 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
           size={1.5}
         />
       </div>
-      {!!product.imageIds?.length && (
+      {!!product.imageIds?.length && product.imageIds?.length > 1 && (
         <div className="catalog-card-photo__carousel">
           <Swiper
             slidesPerView={4}

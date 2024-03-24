@@ -39,6 +39,7 @@ export const CatalogCardPhotoMobile: FC<PropsType> = ({
   };
 
   const showScroll = (product.imageIds?.length ?? 0) > 1;
+  const showSlider = !!product.imageIds?.length && product.imageIds?.length > 1;
 
   return (
     <div className={classNames('catalog-card-photo-mobile', className)}>
@@ -49,7 +50,7 @@ export const CatalogCardPhotoMobile: FC<PropsType> = ({
           onClose={() => setActivePhoto(null)}
         />
       )}
-      {!!product.imageIds?.length && (
+      {showSlider && (
         <div>
           <Swiper
             slidesPerView={1}
@@ -75,7 +76,7 @@ export const CatalogCardPhotoMobile: FC<PropsType> = ({
         </div>
       )}
 
-      {!product.imageIds?.length && (
+      {!showSlider && (
         <div className="flex-center">
           <img
             className={classNames('catalog-card-photo-mobile__img')}
