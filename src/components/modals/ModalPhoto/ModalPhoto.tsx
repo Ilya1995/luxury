@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import ImageZoom from 'react-image-zooom';
 
 import { Icon } from '../../ui/Icon';
+import { baseURL } from '../../..';
 
 import './styles.scss';
 
@@ -80,7 +81,7 @@ export const ModalPhoto: FC<PropsType> = ({
       <div className="modal-photo__content">
         {photos.map((photo) => (
           <ImageZoom
-            src={photo}
+            src={`${baseURL}/images/${photo}`}
             key={photo}
             alt="img"
             zoom="150"

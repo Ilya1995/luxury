@@ -48,7 +48,6 @@ export const Products = () => {
       }
 
       setProducts(response.data);
-      console.log(111, response.data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -70,6 +69,12 @@ export const Products = () => {
   const handleCloseCard = () => {
     setSelected(null);
     setOpenCard(false);
+  };
+
+  const getCategoryTitles = (categories: any[]) => {
+    if (!categories?.length) return '-';
+
+    return categories.map(({ title }) => title).join(', ');
   };
 
   return (
@@ -132,7 +137,7 @@ export const Products = () => {
                   {COLUMNS.map((column, index) => (
                     <TableCell
                       key={column.id}
-                      align={index === 3 ? 'right' : 'left'}
+                      align={index === 5 ? 'right' : 'left'}
                       style={{ minWidth: column.minWidth }}
                     >
                       {column.label}
@@ -144,8 +149,16 @@ export const Products = () => {
                 {products.content.map((row: any) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     <TableCell align="left">{row.title}</TableCell>
-                    <TableCell align="left">{row.category.title}</TableCell>
+                    <TableCell align="left">
+                      {row.collectionTitle?.trim()}
+                    </TableCell>
+                    <TableCell align="left">
+                      {getCategoryTitles(row.categories)}
+                    </TableCell>
                     <TableCell align="left">{row.brand.title}</TableCell>
+                    <TableCell align="center">
+                      {row.inStock ? 'Да' : 'Нет'}
+                    </TableCell>
                     <TableCell align="right">
                       <Tooltip title="Редактировать">
                         <IconButton

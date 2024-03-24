@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, MouseEvent } from 'react';
+import { FC, useState, useEffect, MouseEvent, useRef } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Button from '@mui/material/Button';
@@ -10,23 +10,29 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
+import CancelIcon from '@mui/icons-material/Cancel';
 import Popover from '@mui/material/Popover';
 
 import { useMedia } from '../../../hooks';
-import { loadImage, uploadImage } from '../../utils';
+import { uploadImage } from '../../utils';
 import { Transition } from '../Transition';
+import { baseURL } from '../../..';
+
+import './styles.scss';
 
 export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const isMobile = useMedia('(max-width: 768px)');
   const [title, setTitle] = useState('');
   const [image, setImage] = useState();
-  const [imgSrc, setImgSrc] = useState();
+  const [images, setImages] = useState<any[]>([]);
+  const [imageIds, setImageIds] = useState<any[]>([]);
+  const refInput = useRef<any>();
 
   useEffect(() => {
     if (value && isOpen) {
       setTitle(value.title);
-      loadImage(value.imageId).then(setImgSrc);
+      setImageIds(value.imageIds || []);
     }
   }, [value, isOpen]);
 
@@ -35,6 +41,12 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
 
     if (!file) return;
     setImage(file);
+  };
+
+  const handleUploadImages = (event: any) => {
+    const files = event?.target?.files;
+
+    setImages((prev) => [...prev, ...files]);
   };
 
   const handleSave = async (event: MouseEvent<HTMLButtonElement>) => {
@@ -52,10 +64,21 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
         imageId = await uploadImage(image);
       }
 
+      const valueImageIds = [...imageIds];
+
+      if (images?.length) {
+        for (const value of images) {
+          const newId = await uploadImage(value);
+
+          valueImageIds.push(newId);
+        }
+      }
+
       const data = {
         ...value,
         title: title.trim(),
         imageId,
+        imageIds: valueImageIds,
       };
 
       const response = await axios.put(`/products/${value.id}`, data);
@@ -83,7 +106,17 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
   const clearForm = () => {
     setTitle('');
     setImage(undefined);
-    setImgSrc(undefined);
+    setImages([]);
+    setImageIds([]);
+  };
+
+  const removeImages = (index: number) => {
+    setImages(images.filter((item, ind) => ind !== index));
+    refInput.current.value = null;
+  };
+
+  const removeImageIds = (id: number) => {
+    setImageIds(imageIds.filter((item) => item !== id));
   };
 
   const open = Boolean(anchorEl);
@@ -163,7 +196,7 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
         autoComplete="off"
       >
         <Button variant="contained" component="label">
-          Загрузить картинку
+          Загрузить основную картинку
           <input
             type="file"
             hidden
@@ -172,15 +205,80 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
           />
         </Button>
 
-        {(image || imgSrc) && (
+        {(image || value?.imageId) && (
           <div>
             <img
               alt="not found"
               width="250px"
-              src={URL.createObjectURL(image || imgSrc!)}
+              src={
+                image
+                  ? URL.createObjectURL(image)
+                  : `${baseURL}/images/${value.imageId}`
+              }
             />
           </div>
         )}
+      </Box>
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': {
+            mb: 3,
+            mx: isMobile ? 0 : 2,
+            width: isMobile ? '100vw' : '50vw',
+          },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <Button variant="contained" component="label">
+          Загрузить дополнительные картинки
+          <input
+            type="file"
+            multiple
+            hidden
+            ref={refInput}
+            accept="image/*"
+            onChange={handleUploadImages}
+          />
+        </Button>
+
+        <div className="list-imgs">
+          {imageIds
+            ?.filter((id: number) => id !== value?.imageId)
+            ?.map((id: number) => (
+              <div key={id} className="list-img-item">
+                <img
+                  alt="not found"
+                  width="250px"
+                  src={`${baseURL}/images/${id}`}
+                />
+                <IconButton
+                  aria-label="delete"
+                  className="list-img-item__close"
+                  onClick={() => removeImageIds(id)}
+                >
+                  <CancelIcon />
+                </IconButton>
+              </div>
+            ))}
+          {images?.map((item, index) => (
+            <div key={index} className="list-img-item">
+              <img
+                alt="not found"
+                width="250px"
+                src={URL.createObjectURL(item)}
+              />
+              <IconButton
+                aria-label="delete"
+                className="list-img-item__close"
+                onClick={() => removeImages(index)}
+              >
+                <CancelIcon />
+              </IconButton>
+            </div>
+          ))}
+        </div>
       </Box>
     </Dialog>
   );

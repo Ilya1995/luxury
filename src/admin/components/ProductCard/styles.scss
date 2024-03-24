@@ -1,0 +1,14 @@
+.list-imgs {
+  display: flex;
+  gap: 35px;
+}
+
+.list-img-item {
+  position: relative;
+
+  &__close {
+    position: absolute !important;
+    top: -25px;
+    right: -30px;
+  }
+}

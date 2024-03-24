@@ -87,8 +87,8 @@ export const Catalog: FC = () => {
       !nextPage && setIsLoading(true);
 
       try {
-        const urlWithText = `products/text-search?text=${searchText}&page=${nextPage}&size=10&sort=created%2CDESC`;
-        let urlWithoutText = `/products/search?page=${nextPage}&size=10&sort=created%2CDESC`;
+        const urlWithText = `products/text-search?text=${searchText}&page=${nextPage}&size=10`;
+        let urlWithoutText = `/products/search?page=${nextPage}&size=10`;
 
         if (filterBrands.length) {
           const ids = getBrandIds();

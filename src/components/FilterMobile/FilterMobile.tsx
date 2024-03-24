@@ -80,7 +80,7 @@ export const FilterMobile: FC<PropsType> = ({
   useEffect(() => {
     if (!isOpen) return;
 
-    let urlWithoutText = `/products/search?page=0&size=10&sort=created%2CDESC`;
+    let urlWithoutText = `/products/search?page=0&size=10`;
 
     if (localBrands.length) {
       const ids = getBrandIds();

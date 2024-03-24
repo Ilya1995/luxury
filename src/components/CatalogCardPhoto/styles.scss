@@ -27,6 +27,7 @@
 
     &-img {
       width: 100%;
+      height: 100%;
       border-radius: 0.5rem;
       object-fit: cover;
       display: block;
@@ -95,6 +96,11 @@
         }
       }
     }
+  }
+
+  .swiper-slide {
+    height: auto !important;
+    aspect-ratio: 1 / 1;
   }
 }
 
