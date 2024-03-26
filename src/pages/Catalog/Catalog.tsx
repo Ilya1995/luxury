@@ -17,7 +17,6 @@ import { TabType, Product } from '../../types';
 import { RootState } from '../../store';
 import { setSearchText } from '../../store/reducer';
 import { getCategories } from '../../store/actionCreator';
-import { data as mockProducts } from '../../components/CatalogList/mock';
 
 import { tabMap } from './constants';
 

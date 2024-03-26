@@ -37,10 +37,18 @@ export const Footer: FC<PropsType> = ({ isMobile }) => {
           </div>
           {!isMobile && (
             <div className="footer__contacts-social">
-              <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
+              <a
+                href="https://www.instagram.com/luxuryliving.ru?igsh=MTJpODVvYmNxcHZsZA=="
+                rel="noreferrer"
+                target="_blank"
+              >
                 <img alt="instagram" src="/instagram.svg" />
               </a>
-              <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
+              <a
+                href="https://wa.me/79892351933"
+                rel="noreferrer"
+                target="_blank"
+              >
                 <img alt="whatsap" src="/whatsap.svg" />
               </a>
             </div>

@@ -2,6 +2,7 @@ import { FC, useEffect, useState, useMemo, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
@@ -12,8 +13,10 @@ import { Product, TabType } from '../../types';
 import { CatalogCardInfo } from '../../components/CatalogCardInfo';
 import { CatalogCardPhoto } from '../../components/CatalogCardPhoto';
 import { CatalogCardPhotoMobile } from '../../components/CatalogCardPhotoMobile';
-import { tabs } from '../Catalog/constants';
+import { tabMap } from '../Catalog/constants';
 import { ResponseOne } from '../../store/types';
+import { RootState } from '../../store';
+import { getCategories } from '../../store/actionCreator';
 
 import './styles.scss';
 
@@ -21,8 +24,20 @@ export const CatalogCard: FC = () => {
   const isMobile = useMedia('(max-width: 768px)');
   const { tab, productId } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [product, setProduct] = useState<Product>();
+
+  const { categories } = useSelector((state: RootState) => state.general);
+
+  const tabs = useMemo(
+    () =>
+      categories.map(({ title }) => ({
+        label: title,
+        path: tabMap[title],
+      })),
+    [categories]
+  );
 
   const getProduct = useCallback(async () => {
     const url = `/products/${productId}`;
@@ -40,6 +55,12 @@ export const CatalogCard: FC = () => {
   }, [productId]);
 
   useEffect(() => {
+    if (!categories.length) {
+      getCategories(dispatch);
+    }
+  }, [dispatch, categories.length]);
+
+  useEffect(() => {
     const isCardProduct = Number(productId) > 0;
 
     if (!isCardProduct) {
@@ -55,18 +76,21 @@ export const CatalogCard: FC = () => {
     getProduct();
   }, [productId, navigate, getProduct]);
 
-  const activeTab = useMemo(() => {
+  const activeTab = useMemo<TabType | undefined>(() => {
+    if (!tabs.length) return;
+
     const newTab = tabs.find(({ path }) => path === tab);
+
     return newTab ? newTab : tabs[0];
-  }, [tab]);
+  }, [tabs, tab]);
 
   const title = useMemo(() => {
-    if (activeTab.path === 'all') return t('catalog');
+    if (!activeTab || activeTab.path === 'all') return t('catalog');
     return activeTab?.label || t('catalog');
   }, [t, activeTab]);
 
   const handleChangeTab = (tab: TabType) => {
-    if (tab.path === 'all' || activeTab.label === tab.label) {
+    if (tab.path === 'all' || activeTab?.label === tab.label) {
       return navigate('/catalog');
     }
 
@@ -90,7 +114,7 @@ export const CatalogCard: FC = () => {
               <Tab
                 key={tab.label}
                 item={tab}
-                isActive={activeTab.label === tab.label}
+                isActive={activeTab?.label === tab.label}
                 onClick={handleChangeTab}
               />
             ))}

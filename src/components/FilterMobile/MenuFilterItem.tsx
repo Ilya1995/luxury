@@ -4,11 +4,6 @@ import classNames from 'classnames';
 import { Icon } from '../ui/Icon';
 import { Dropdown } from '../Dropdown';
 import { Input } from '../ui/Input';
-import // typeProductOptions,
-// brandsOptions,
-// colorOptions,
-// brandsOptionsNew,
-'../Filter/constants';
 
 import './styles.scss';
 

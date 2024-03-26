@@ -110,10 +110,18 @@ export const Menu: FC<PropsType> = ({
         <div className="menu__footer">
           <LangMenu isWhite />
           <div className="menu__side-social">
-            <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
+            <a
+              href="https://www.instagram.com/luxuryliving.ru?igsh=MTJpODVvYmNxcHZsZA=="
+              rel="noreferrer"
+              target="_blank"
+            >
               <Icon name="instagram" size={1.5} />
             </a>
-            <a href="https://dzen.ru/" rel="noreferrer" target="_blank">
+            <a
+              href="https://wa.me/79892351933"
+              rel="noreferrer"
+              target="_blank"
+            >
               <Icon name="whatsap" size={1.5} />
             </a>
           </div>

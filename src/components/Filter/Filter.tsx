@@ -5,11 +5,6 @@ import { useTranslation } from 'react-i18next';
 
 import { Dropdown } from '../Dropdown';
 import { Switcher } from '../ui/Switcher';
-import // brandsOptions,
-// typeProductOptions,
-// colorOptions,
-// brandsOptionsNew,
-'./constants';
 
 import './styles.scss';
 
