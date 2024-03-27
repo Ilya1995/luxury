@@ -64,7 +64,7 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
         imageId = await uploadImage(image);
       }
 
-      const valueImageIds = [...imageIds];
+      const valueImageIds = [...imageIds].filter((id) => id !== value?.imageId);
 
       if (images?.length) {
         for (const value of images) {
