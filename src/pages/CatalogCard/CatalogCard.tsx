@@ -17,6 +17,8 @@ import { tabMap } from '../Catalog/constants';
 import { ResponseOne } from '../../store/types';
 import { RootState } from '../../store';
 import { getCategories } from '../../store/actionCreator';
+import { ModalFeedback } from '../../components/modals/ModalFeedback';
+import { ModalFeedbackSuccess } from '../../components/modals/ModalFeedbackSuccess';
 
 import './styles.scss';
 
@@ -27,6 +29,8 @@ export const CatalogCard: FC = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [product, setProduct] = useState<Product>();
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenSecondModal, setIsOpenSecondModal] = useState(false);
 
   const { categories } = useSelector((state: RootState) => state.general);
 
@@ -97,6 +101,11 @@ export const CatalogCard: FC = () => {
     navigate(`/catalog/${tab.path}`);
   };
 
+  const handleApplyFeedback = () => {
+    setIsOpenModal(false);
+    setIsOpenSecondModal(true);
+  };
+
   const showBreadcrumbs = !isMobile && product;
   const showTitle = !isMobile && product;
   const showTabs = !isMobile;
@@ -106,6 +115,23 @@ export const CatalogCard: FC = () => {
   return (
     <div className="catalog-card-page">
       <Header className="catalog-card-page__header" isMobile={isMobile} />
+
+      {product && (
+        <>
+          <ModalFeedback
+            isOpen={isOpenModal}
+            product={product}
+            isMobile={isMobile}
+            onClose={() => setIsOpenModal(false)}
+            onApply={handleApplyFeedback}
+          />
+          <ModalFeedbackSuccess
+            isMobile={isMobile}
+            isOpen={isOpenSecondModal}
+            onClose={() => setIsOpenSecondModal(false)}
+          />
+        </>
+      )}
 
       <div className="catalog-card-page__content">
         {showTabs && (
@@ -135,7 +161,7 @@ export const CatalogCard: FC = () => {
             <div className="catalog-card-page__wrapper">
               <button
                 className="catalog-card-page__wrapper-button button"
-                onClick={() => console.log('Уточнить наличие')}
+                onClick={() => setIsOpenModal(true)}
               >
                 Уточнить наличие
               </button>

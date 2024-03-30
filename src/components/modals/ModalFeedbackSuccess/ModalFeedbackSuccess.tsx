@@ -10,6 +10,7 @@ import './styles.scss';
 type PropsType = {
   onClose: () => void;
   isOpen: boolean;
+  isMobile?: boolean;
   className?: string;
 };
 
@@ -18,6 +19,7 @@ let firstRender = true;
 export const ModalFeedbackSuccess: FC<PropsType> = ({
   className,
   isOpen,
+  isMobile = false,
   onClose,
 }) => {
   const { t } = useTranslation();
@@ -65,14 +67,17 @@ export const ModalFeedbackSuccess: FC<PropsType> = ({
             name="close2"
             handleClick={onClose}
             className="modal-feedback-success__close"
-            color="rgba(var(--blue-grey-300))"
-            size={2}
+            color={
+              isMobile ? 'rgba(var(--grey-800))' : 'rgba(var(--blue-grey-300))'
+            }
+            size={isMobile ? 1.5 : 2}
             pointer
           />
           <Icon
             name="logo"
             width={11.6875}
-            height={2.5625}
+            height={2.8}
+            className="modal-feedback__logo"
             color={'rgba(var(--grey-800))'}
           />
           <div className="modal-feedback-success__line" />

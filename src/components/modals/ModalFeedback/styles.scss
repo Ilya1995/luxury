@@ -12,6 +12,11 @@
     position: absolute;
     top: 0;
     right: -2.5rem;
+
+    @media (max-width: 768px) {
+      top: 1.5rem;
+      right: 1.5rem;
+    }
   }
 
   &__line {
@@ -19,6 +24,10 @@
     width: 100%;
     background-color: rgba(var(--blue-grey-300));
     margin: 2rem 0;
+
+    @media (max-width: 768px) {
+      margin: 2rem 0 !important;
+    }
   }
 
   &__title {
@@ -45,6 +54,10 @@
     align-items: flex-start;
     gap: 1.5rem;
     margin: 1.5rem 0;
+
+    @media (max-width: 768px) {
+      margin: 1.5rem 0 !important;
+    }
 
     &-img {
       height: 100px;
@@ -84,10 +97,25 @@
     gap: 1.5rem;
   }
 
+  &__logo {
+    @media (max-width: 768px) {
+      margin-top: 3rem;
+    }
+  }
+
   &__button {
     margin-top: 2rem;
     height: 3rem !important;
     width: 100%;
+
+    @media (max-width: 768px) {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      margin-top: 0 !important;
+      width: auto !important;
+    }
   }
 
   @media (max-width: 1300px) {
@@ -110,6 +138,14 @@
     }
   }
 
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    border-radius: 0;
+    padding: 1rem;
+  }
+
   &-wrapper {
     position: fixed;
     display: table;
@@ -119,6 +155,10 @@
     left: 0;
     transform: scale(0);
     z-index: 1;
+
+    @media (max-width: 768px) {
+      z-index: 2;
+    }
 
     &__background {
       display: table-cell;

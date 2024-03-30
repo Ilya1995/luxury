@@ -1,6 +1,8 @@
 import { FC, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 import { Product } from '../../../types';
 import { useWatch, useValidate } from '../../../hooks';
@@ -10,11 +12,18 @@ import { baseURL } from '../../..';
 
 import './styles.scss';
 
+type FeedbackData = {
+  productId: number;
+  email?: string;
+  phone?: string;
+};
+
 type PropsType = {
   onClose: () => void;
   onApply: () => void;
   isOpen: boolean;
   product: Product;
+  isMobile?: boolean;
   className?: string;
 };
 
@@ -26,6 +35,7 @@ export const ModalFeedback: FC<PropsType> = ({
   product,
   onClose,
   onApply,
+  isMobile = false,
 }) => {
   const { t } = useTranslation();
   const [isLock, setIsLock] = useState(false);
@@ -75,14 +85,6 @@ export const ModalFeedback: FC<PropsType> = ({
     setShowError(false);
   };
 
-  const fakeRequest = () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve('ok');
-      }, 1000);
-    });
-  };
-
   const handleSend = async () => {
     if (messageErrorEmail || messageErrorPhone) {
       setShowError(true);
@@ -92,13 +94,27 @@ export const ModalFeedback: FC<PropsType> = ({
     setIsLock(true);
 
     try {
-      await fakeRequest();
+      const data: FeedbackData = {
+        productId: product.id,
+      };
+      if (email) {
+        data.email = email;
+      }
+      if (phone) {
+        data.phone = phone;
+      }
+
+      const response = await axios.post('/order', data);
+      if (response.status !== 200) {
+        throw new Error('bad response');
+      }
 
       onApply();
       setEmail('');
       setPhone('');
     } catch (error) {
       console.log(error);
+      toast.error('Что-то пошло не так');
     } finally {
       setIsLock(false);
     }
@@ -122,14 +138,17 @@ export const ModalFeedback: FC<PropsType> = ({
             name="close2"
             handleClick={onClose}
             className="modal-feedback__close"
-            color="rgba(var(--blue-grey-300))"
-            size={2}
+            color={
+              isMobile ? 'rgba(var(--grey-800))' : 'rgba(var(--blue-grey-300))'
+            }
+            size={isMobile ? 1.5 : 2}
             pointer
           />
           <Icon
             name="logo"
             width={11.6875}
-            height={2.5625}
+            height={2.8}
+            className="modal-feedback__logo"
             color={'rgba(var(--grey-800))'}
           />
           <div className="modal-feedback__line" />

@@ -64,7 +64,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
       {!isMobile && (
         <button
           className="catalog-card-info__button button"
-          // onClick={() => setIsOpenModal(true)}
+          onClick={() => setIsOpenModal(true)}
         >
           Уточнить наличие
         </button>
