@@ -8,6 +8,7 @@ import { News } from '../News';
 import { Brands } from '../Brands';
 import { FAQ } from '../FAQ';
 import { Products } from '../Products';
+import { Feedback } from '../Feedback';
 import { SIDEBAR_ITEMS } from '../../constants';
 
 export const Home = () => {
@@ -23,6 +24,7 @@ export const Home = () => {
     [SIDEBAR_ITEMS[1].name]: Brands,
     [SIDEBAR_ITEMS[2].name]: FAQ,
     [SIDEBAR_ITEMS[3].name]: Products,
+    [SIDEBAR_ITEMS[4].name]: Feedback,
   };
 
   const SomeComponent = componentNames[itemOpen];
@@ -32,6 +34,7 @@ export const Home = () => {
     [SIDEBAR_ITEMS[1].name]: SIDEBAR_ITEMS[1].text,
     [SIDEBAR_ITEMS[2].name]: SIDEBAR_ITEMS[2].text,
     [SIDEBAR_ITEMS[3].name]: SIDEBAR_ITEMS[3].text,
+    [SIDEBAR_ITEMS[4].name]: SIDEBAR_ITEMS[4].text,
   };
 
   return (
