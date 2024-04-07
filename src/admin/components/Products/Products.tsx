@@ -15,7 +15,12 @@ import Tooltip from '@mui/material/Tooltip';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import DeleteIcon from '@mui/icons-material/Delete';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import BlockIcon from '@mui/icons-material/Block';
 
+import { ModalDelete } from '../ModalDelete';
+import { ModalActivate } from '../ModalActivate';
 import { ProductCard } from '../ProductCard';
 import { Pagination } from '../Pagination';
 import { SIDEBAR_WIDTH } from '../../constants';
@@ -25,6 +30,8 @@ import './styles.scss';
 
 export const Products = () => {
   const [searchText, setSearchText] = useState('');
+  const [openModalDelete, setOpenModalDelete] = useState(false);
+  const [openModalActivate, setOpenModalActivate] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<any>();
   const [openCard, setOpenCard] = useState(false);
@@ -40,7 +47,7 @@ export const Products = () => {
 
       const url = `/products${
         searchText ? '/text-search' : ''
-      }?page=${page}&size=${size}&text=${searchText}`;
+      }?page=${page}&size=${size}&text=${searchText}&admin=true`;
 
       const response = await axios.get(url);
       if (response.status !== 200 || typeof response.data === 'string') {
@@ -53,6 +60,33 @@ export const Products = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleChangeDelete = async (value: boolean) => {
+    if (value && selected) {
+      try {
+        await axios.delete(`/products/${selected.id}`);
+        getProducts(0, 10);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    setOpenModalDelete(false);
+    setSelected(null);
+  };
+
+  const handleChangeActivate = async (value: boolean) => {
+    if (value && selected) {
+      try {
+        const active = !selected.active;
+        await axios.put(`/products/${selected.id}`, { ...selected, active });
+        selected.active = active;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    setOpenModalActivate(false);
+    setSelected(null);
   };
 
   const handleSave = () => {
@@ -71,10 +105,28 @@ export const Products = () => {
     setOpenCard(false);
   };
 
+  const handleShowModalDelete = (value: any) => {
+    setOpenModalDelete(true);
+    setSelected(value);
+  };
+
+  const handleShowModalActivate = (value: any) => {
+    setOpenModalActivate(true);
+    setSelected(value);
+  };
+
   const getCategoryTitles = (categories: any[]) => {
     if (!categories?.length) return '-';
 
     return categories.map(({ title }) => title).join(', ');
+  };
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      getProducts(0, 10);
+
+      event.preventDefault();
+    }
   };
 
   return (
@@ -105,12 +157,22 @@ export const Products = () => {
             variant="outlined"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </Box>
         <Button variant="contained" onClick={() => getProducts(0, 10)}>
           Найти
         </Button>
       </div>
+      <ModalDelete
+        isOpen={openModalDelete}
+        onChangeDelete={handleChangeDelete}
+      />
+      <ModalActivate
+        isOpen={openModalActivate}
+        isActive={selected?.active}
+        onChangeDelete={handleChangeActivate}
+      />
       <ProductCard
         isOpen={openCard}
         onClose={handleCloseCard}
@@ -160,6 +222,26 @@ export const Products = () => {
                       {row.inStock ? 'Да' : 'Нет'}
                     </TableCell>
                     <TableCell align="right">
+                      <Tooltip title={row.active ? 'Активен' : 'Не активен'}>
+                        <IconButton
+                          aria-label="active"
+                          onClick={() => handleShowModalActivate(row)}
+                        >
+                          {row.active ? (
+                            <TaskAltIcon color="success" />
+                          ) : (
+                            <BlockIcon />
+                          )}
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Удалить">
+                        <IconButton
+                          aria-label="delete"
+                          onClick={() => handleShowModalDelete(row)}
+                        >
+                          <DeleteIcon sx={{ color: 'var(--red)' }} />
+                        </IconButton>
+                      </Tooltip>
                       <Tooltip title="Редактировать">
                         <IconButton
                           aria-label="edit"

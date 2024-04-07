@@ -22,7 +22,7 @@ export const ModalActivate: FC<any> = ({
         {isActive &&
           'Деактивированный элемент не отображается клиенту на сайте.'}
         {!isActive &&
-          'Активированный элемент будет отображается клиенту на сайте.'}
+          'Активированный элемент будет отображаться клиенту на сайте.'}
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
