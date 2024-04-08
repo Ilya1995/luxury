@@ -89,8 +89,16 @@ export const Products = () => {
     setSelected(null);
   };
 
-  const handleSave = () => {
-    getProducts(0, 10);
+  const handleSave = (value: any) => {
+    // getProducts(0, 10);
+
+    const product = products?.content?.find(({ id }: any) => id === value.id);
+    if (product) {
+      product.title = value.title;
+      product.imageIds = value.imageIds;
+      product.imageId = value.imageId;
+    }
+
     setSelected(null);
     setOpenCard(false);
   };

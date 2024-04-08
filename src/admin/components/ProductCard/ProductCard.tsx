@@ -87,7 +87,7 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
       }
 
       clearForm();
-      onSave();
+      onSave(response.data);
     } catch (error) {
       console.log(error);
       toast.error('Произошла ошибка, попробуйте позже');
