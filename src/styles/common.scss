@@ -121,18 +121,6 @@ a {
   cursor: pointer;
 }
 
-.acquaintance-page,
-.application-page,
-.information-page,
-.technology-page,
-.contacts-page {
-  background-color: rgba(var(--white));
-  padding: 2.5rem;
-
-  @media (max-width: 768px) {
-    padding: 1.5rem;
-  }
-}
 .swiper-nav-button {
   -webkit-transform: translate(0, -50%);
   transform: translate(0, -50%);

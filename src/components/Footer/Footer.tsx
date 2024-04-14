@@ -32,7 +32,9 @@ export const Footer: FC<PropsType> = ({ isMobile }) => {
             </div>
             <div className="footer__contacts-links">
               <div className="pointer">{t('news')}</div>
-              <div className="pointer">{t('contacts')}</div>
+              <NavLink className="footer-contacts-link" to="/contacts">
+                {t('contacts')}
+              </NavLink>
             </div>
           </div>
           {!isMobile && (

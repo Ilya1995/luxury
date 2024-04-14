@@ -12,6 +12,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Home } from './pages/Home';
 import { Catalog } from './pages/Catalog';
 import { CatalogCard } from './pages/CatalogCard';
+import { Contacts } from './pages/Contacts';
 import { Main } from './admin/Main';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: '/catalog/:tab/:productId',
     element: <CatalogCard />,
+  },
+  {
+    path: '/contacts',
+    element: <Contacts />,
   },
   {
     path: '/admin',

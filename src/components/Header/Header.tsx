@@ -62,7 +62,9 @@ export const Header: FC<PropsType> = ({
           <div className="nav-link">{t('brands')}</div>
           <div className="nav-link">{t('projects')}</div>
           <div className="nav-link">{t('news')}</div>
-          <div className="nav-link">{t('contacts')}</div>
+          <NavLink className="nav-link" to="/contacts">
+            {t('contacts')}
+          </NavLink>
           <Search isWhite={isWhite} />
           <LangMenu className="header__lang-menu" isWhite={isWhite} />
         </div>

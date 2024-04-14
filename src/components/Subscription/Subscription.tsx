@@ -77,7 +77,7 @@ export const Subscription: FC<PropsType> = ({ isMobile }) => {
           {t('you-agree')}&nbsp;
           <a
             className="subscription__confidentiality-link"
-            href="https://dzen.ru/"
+            href="/personal-data.pdf"
             rel="noreferrer"
             target="_blank"
           >

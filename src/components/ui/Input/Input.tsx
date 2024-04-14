@@ -58,7 +58,7 @@ export const Input: FC<PropsType> = ({
     if (type === 'phone') {
       onChange(unmaskedValue);
     } else {
-      onChange(event.target.value.trim());
+      onChange(event.target.value);
     }
   };
 
