@@ -20,6 +20,10 @@ export const Contacts: FC = () => {
   const { t } = useTranslation();
 
   const showBreadcrumbs = !isMobile;
+  const heightMap = isMobile ? '280px' : '300px';
+  const widthMap = isMobile
+    ? 'calc(100vw - 2rem)'
+    : 'calc((100vw - 13.75rem) / 2)';
 
   return (
     <div className="contacts-page">
@@ -83,8 +87,8 @@ export const Contacts: FC = () => {
             <div className="contacts-page-map">
               <YMaps>
                 <Map
-                  height="300px"
-                  width="calc((100vw - 13.75rem) / 2)"
+                  height={heightMap}
+                  width={widthMap}
                   defaultState={{
                     center: [45.047856, 38.969169],
                     zoom: 18,
@@ -139,7 +143,40 @@ export const Contacts: FC = () => {
                 </div>
               </div>
             </div>
-            <div className="contacts-page-map">2</div>
+            <div className="contacts-page-map">
+              <YMaps>
+                <Map
+                  height={heightMap}
+                  width={widthMap}
+                  defaultState={{
+                    center: [43.58056, 39.71949],
+                    zoom: 18,
+                    controls: ['zoomControl', 'fullscreenControl'],
+                  }}
+                  modules={['control.ZoomControl', 'control.FullscreenControl']}
+                >
+                  <GeolocationControl
+                    options={{
+                      float: 'right',
+                    }}
+                  />
+                  <TrafficControl
+                    options={{
+                      float: 'right',
+                    }}
+                  />
+                  <Placemark
+                    options={{
+                      iconLayout: 'default#image',
+                      iconImageHref: '/store.webp',
+                      iconImageSize: [50, 58],
+                      iconImageOffset: [-15, -42],
+                    }}
+                    geometry={[43.58055, 39.71965]}
+                  />
+                </Map>
+              </YMaps>
+            </div>
           </div>
         </div>
       </div>
