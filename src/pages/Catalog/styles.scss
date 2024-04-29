@@ -67,5 +67,13 @@
     @media (max-width: 768px) {
       padding: 0 1rem 1.5rem;
     }
+
+    &__empty {
+      height: 41.59px;
+
+      @media (max-width: 768px) {
+        height: 37.98px;
+      }
+    }
   }
 }

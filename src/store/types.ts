@@ -15,6 +15,7 @@ export type GeneralState = {
   faqs: StateItems<Faq>;
   searchText: string;
   categories: any[];
+  filters: any;
 };
 
 export type Brand = {

@@ -15,7 +15,7 @@ import { SearchResultText } from '../../components/SearchResultText';
 import { ProductsNotFound } from '../../components/ProductsNotFound';
 import { TabType, Product } from '../../types';
 import { RootState } from '../../store';
-import { setSearchText } from '../../store/reducer';
+import { setFilters, resetIsCan, setSearchText } from '../../store/reducer';
 import { getCategories } from '../../store/actionCreator';
 
 import { tabMap } from './constants';
@@ -24,14 +24,17 @@ import './styles.scss';
 import { Response } from '../../store/types';
 import axios from 'axios';
 
+let controller: any;
+
 export const Catalog: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
+
   const { tab } = useParams();
 
-  const { searchText, categories } = useSelector(
+  const { searchText, categories, filters } = useSelector(
     (state: RootState) => state.general
   );
 
@@ -60,8 +63,8 @@ export const Catalog: FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(0);
-
   // const [colors, setColors] = useState<string[]>([]);
+
   const getBrandIds = useCallback(() => {
     return categories
       .find((category: any) => category.title === activeTab?.label)
@@ -83,6 +86,8 @@ export const Catalog: FC = () => {
 
   const getProducts = useCallback(
     async (nextPage: number) => {
+      controller?.abort();
+      controller = new AbortController();
       !nextPage && setIsLoading(true);
 
       try {
@@ -115,46 +120,31 @@ export const Catalog: FC = () => {
         }
 
         const url = searchText ? urlWithText : urlWithoutText;
-        const response: Response<any> = await axios.get(url);
+
+        const response: Response<any> = await axios.get(url, {
+          signal: controller.signal,
+        });
         if (response.status !== 200 || typeof response.data === 'string') {
-          throw new Error('bad response');
+          // throw new Error('bad response');
         }
         setTotal(response.data.totalElements);
 
         setProducts((prev) =>
           nextPage ? [...prev, ...response.data.content] : response.data.content
         );
-        // setProducts(response.data.content);
-        // setProducts(mockProducts.slice(0, (nextPage + 1) * 7));
+        !nextPage && setIsLoading(false);
       } catch (error) {
         console.error(error);
         setProducts([]);
-      } finally {
-        !nextPage && setIsLoading(false);
+        if (!nextPage) {
+          setTimeout(() => setIsLoading(false), 5000);
+        }
       }
-
-      // setTimeout(() => {
-      //   !nextPage && setIsLoading(false);
-
-      //   // условия для дебага
-      //   if (searchText === '11' || searchText === '111') {
-      //     setProducts([]);
-      //     return;
-      //   }
-
-      //   if (isOnlyStock) {
-      //     setProducts([]);
-      //     return;
-      //   }
-
-      //   // добавляем по 7 элементов
-      //   setProducts(mockProducts.slice(0, (nextPage + 1) * 7));
-      // }, 2000);
     },
     [
       typeProduct,
       searchText,
-      filterBrands,
+      filterBrands.length,
       isOnlyStock,
       getBrandIds,
       getCategoryId,
@@ -168,31 +158,40 @@ export const Catalog: FC = () => {
     }
   }, [dispatch, categories.length]);
 
-  // useEffect(() => {
-  //   if (!tabs.length) return;
-
-  //   const newTab = tabs.find(({ path }) => path === tab);
-
-  //   setActiveTab(newTab ? newTab : tabs[0]);
-  // }, [tabs]);
+  useEffect(() => {
+    if (filters.isCan) {
+      setIsOnlyStock(filters.isOnlyStock);
+      setBrands(filters.brands);
+      setTypeProduct(filters.typeProduct);
+    }
+  }, [filters]);
 
   useEffect(() => {
-    if (!activeTab) return;
+    return () => {
+      dispatch(resetIsCan());
+    };
+  }, [
+    dispatch,
+    filters.isOnlyStock,
+    filters.brands,
+    filters.typeProduct,
+    pathname,
+  ]);
+
+  useEffect(() => {
+    if (!activeTab?.path) return;
+
     setPage(0);
     getProducts(0);
   }, [
-    activeTab,
+    activeTab?.path,
     typeProduct,
-    filterBrands,
+    filterBrands.length,
     isOnlyStock,
     // colors,
     searchText,
     getProducts,
   ]);
-
-  useWatch(() => {
-    !!page && getProducts(page);
-  }, [page, getProducts]);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -208,21 +207,14 @@ export const Catalog: FC = () => {
   }, [tab, tabs, pathname, navigate]);
 
   useWatch(() => {
-    handleResetFilters();
-
-    if (!tab) {
-      // setActiveTab(tabs[0]);
-      return;
-    }
+    if (!tab) return;
 
     const newTab = tabs.find(({ path }) => path === tab);
 
     if (!newTab) {
       navigate('/');
     }
-
-    // newTab ? setActiveTab(newTab) : navigate('/');
-  }, [tabs, tab, navigate]);
+  }, [tab, navigate]);
 
   const title = useMemo(() => {
     if (!activeTab || activeTab.path === 'all') return t('catalog');
@@ -247,9 +239,11 @@ export const Catalog: FC = () => {
 
   const handleChangeTab = (tab: TabType) => {
     if (tab.path === 'all' || activeTab?.label === tab.label) {
+      handleResetFilters();
       return navigate('/catalog');
     }
 
+    handleResetFilters();
     navigate(`/catalog/${tab.path}`);
   };
 
@@ -258,7 +252,11 @@ export const Catalog: FC = () => {
   };
 
   const handleNextPage = () => {
-    setPage((prev) => prev + 1);
+    setPage((prev) => {
+      const newPage = prev + 1;
+      getProducts(newPage);
+      return newPage;
+    });
   };
 
   const handleChangeAllFilters = (filters: {
@@ -270,6 +268,15 @@ export const Catalog: FC = () => {
     setTypeProduct(filters.typeProduct);
     setBrands(filters.brands);
     setIsOnlyStock(filters.isOnlyStock);
+    dispatch(
+      setFilters({
+        path: pathname,
+        isCan: false,
+        isOnlyStock: filters.isOnlyStock,
+        brands: filters.brands,
+        typeProduct: filters.typeProduct,
+      })
+    );
     // setColors(filters.colors);
   };
 
@@ -282,14 +289,41 @@ export const Catalog: FC = () => {
     }
 
     if (type === 'product' && typeof value === 'string') {
+      dispatch(
+        setFilters({
+          isOnlyStock,
+          brands: filterBrands,
+          path: pathname,
+          isCan: false,
+          typeProduct: value,
+        })
+      );
       return setTypeProduct(value);
     }
 
     if (type === 'brand' && Array.isArray(value)) {
+      dispatch(
+        setFilters({
+          typeProduct,
+          isOnlyStock,
+          path: pathname,
+          isCan: false,
+          brands: value,
+        })
+      );
       return setBrands(value);
     }
 
     if (type === 'isOnlyStock' && typeof value === 'boolean') {
+      dispatch(
+        setFilters({
+          typeProduct,
+          brands: filterBrands,
+          path: pathname,
+          isCan: false,
+          isOnlyStock: value,
+        })
+      );
       return setIsOnlyStock(value);
     }
 
@@ -302,7 +336,15 @@ export const Catalog: FC = () => {
     setTypeProduct('');
     setBrands([]);
     setIsOnlyStock(false);
-    // setColors([]);
+    dispatch(
+      setFilters({
+        path: pathname,
+        isCan: false,
+        isOnlyStock: false,
+        brands: [],
+        typeProduct: '',
+      })
+    );
     dispatch(setSearchText(''));
   };
 
@@ -328,6 +370,7 @@ export const Catalog: FC = () => {
               onClick={handleChangeTab}
             />
           ))}
+          {!tabs.length && <div className="catalog-page-tabs__empty" />}
         </div>
         {showBreadcrumbs && <Breadcrumbs />}
         {isMobile && (

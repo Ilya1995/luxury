@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { ToastContainer } from 'react-toastify';
@@ -8,12 +9,15 @@ import {
 } from 'react-router-dom';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Home } from './pages/Home';
 import { Catalog } from './pages/Catalog';
 import { CatalogCard } from './pages/CatalogCard';
 import { Contacts } from './pages/Contacts';
 import { Main } from './admin/Main';
+import { RootState } from './store';
+import { setFilters } from './store/reducer';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -50,9 +54,44 @@ const router = createBrowserRouter([
   },
 ]);
 
-<RouterProvider router={router} />;
-
 export const App = () => {
+  const [historyStack, setHistoryStack] = useState<any[]>([]);
+  const filters = useSelector((state: RootState) => state.general.filters);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (historyStack.length < 2) return;
+
+    const prevLastState = historyStack.at(-2);
+    const lastState = historyStack.at(-1);
+
+    // первый if проверяет, что предыдущая открытая страница была карточкой товара
+    if (
+      prevLastState &&
+      prevLastState.location?.pathname?.includes('/catalog/') &&
+      prevLastState.location?.pathname?.split('/').length - 1 === 3
+    ) {
+      // второй if проверяет, что текущая страница это каталог
+      if (
+        lastState?.location?.pathname === '/catalog' ||
+        (lastState?.location?.pathname?.includes('/catalog/') &&
+          lastState?.location?.pathname?.split('/').length - 1 === 2)
+      ) {
+        // третий if проверяет, что пользователь вернулся на ту страницу каталога, где задавал фильтры
+        // то есть, отбрасывает вариант, если пользак перешел на другой таб
+        if (filters.path === lastState?.location?.pathname) {
+          dispatch(setFilters({ ...filters, isCan: true }));
+        }
+      }
+    }
+  }, [historyStack.length]);
+
+  useEffect(() => {
+    router.subscribe((state) => {
+      setHistoryStack((prev) => [...prev, state]);
+    });
+  }, []);
+
   dayjs.locale(locale);
 
   return (

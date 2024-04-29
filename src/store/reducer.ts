@@ -24,6 +24,13 @@ const initialState: GeneralState = {
   },
   categories: [],
   searchText: '',
+  filters: {
+    path: '',
+    isCan: false,
+    isOnlyStock: false,
+    brands: [],
+    typeProduct: '',
+  },
 };
 
 export const counterSlice = createSlice({
@@ -63,6 +70,12 @@ export const counterSlice = createSlice({
     setCategories: (state: any, action: PayloadAction<any>) => {
       state.categories = action.payload;
     },
+    setFilters: (state: any, action: PayloadAction<any>) => {
+      state.filters = action.payload;
+    },
+    resetIsCan: (state: any) => {
+      state.filters.isCan = false;
+    },
   },
 });
 
@@ -72,6 +85,8 @@ export const {
   setLoadingData,
   setSearchText,
   setCategories,
+  setFilters,
+  resetIsCan,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;
