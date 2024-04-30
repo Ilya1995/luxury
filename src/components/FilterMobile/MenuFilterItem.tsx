@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useMemo } from 'react';
 import classNames from 'classnames';
 
 import { Icon } from '../ui/Icon';
@@ -34,6 +34,15 @@ export const MenuFilterItem: FC<PropsType> = ({
 }) => {
   const [searchText, setSearchText] = useState('');
 
+  const filteredBrandOptions = useMemo(() => {
+    if (!brandsOptions?.length) return [];
+    if (!searchText) return brandsOptions;
+
+    return brandsOptions.filter((option) =>
+      option.toLowerCase().includes(searchText.toLowerCase())
+    );
+  }, [brandsOptions, searchText]);
+
   return (
     <div
       className={classNames('menu-filter-item', className, {
@@ -60,7 +69,7 @@ export const MenuFilterItem: FC<PropsType> = ({
           <>
             <Input type="search" value={searchText} onChange={setSearchText} />
             <Dropdown
-              options={brandsOptions}
+              options={filteredBrandOptions}
               isMobile
               title="Бренд"
               multiple

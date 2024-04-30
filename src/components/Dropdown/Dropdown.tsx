@@ -1,4 +1,4 @@
-import { FC, useState, useRef } from 'react';
+import { FC, useState, useRef, useMemo } from 'react';
 import classNames from 'classnames';
 
 import { Icon } from '../ui/Icon';
@@ -41,6 +41,14 @@ export const Dropdown: FC<PropsType> = ({
   const { isEndVisible } = useElementScroll(refScroll, isOpen);
 
   const isDifficult = typeof options[0] === 'object';
+
+  const filteredOptions = useMemo(() => {
+    if (isDifficult || !searchText || !withSearch) return options;
+
+    return (options as string[]).filter((option) =>
+      option.toLowerCase().includes(searchText.toLowerCase())
+    );
+  }, [isDifficult, options, searchText, withSearch]);
 
   const handleChangeOpen = (event: any) => {
     if (isMobile) return;
@@ -162,7 +170,7 @@ export const Dropdown: FC<PropsType> = ({
             })}
           {!isDifficult &&
             multiple &&
-            (options as SimpleOptions).map((item) => (
+            (filteredOptions as SimpleOptions).map((item) => (
               <Checkbox
                 key={item}
                 className="dropdown-list-item"
