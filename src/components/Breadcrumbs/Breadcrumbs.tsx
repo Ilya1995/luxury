@@ -23,6 +23,7 @@ const MAP: Record<string, any> = {
   paints: 'Краски',
   furniture: 'Мебель',
   contacts: 'Контакты',
+  brands: 'Бренды',
 };
 
 export const Breadcrumbs: FC<PropsType> = ({ className, product }) => {

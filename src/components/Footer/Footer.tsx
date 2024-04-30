@@ -27,7 +27,9 @@ export const Footer: FC<PropsType> = ({ isMobile }) => {
               <NavLink className="footer-contacts-link" to="/catalog">
                 {t('catalog')}
               </NavLink>
-              <div className="pointer">{t('brands')}</div>
+              <NavLink className="footer-contacts-link" to="/brands">
+                {t('brands')}
+              </NavLink>
               <div className="pointer">{t('projects')}</div>
             </div>
             <div className="footer__contacts-links">

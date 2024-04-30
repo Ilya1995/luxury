@@ -59,7 +59,9 @@ export const Header: FC<PropsType> = ({
           <NavLink className="nav-link" to="/catalog">
             {t('catalog')}
           </NavLink>
-          <div className="nav-link">{t('brands')}</div>
+          <NavLink className="nav-link" to="/brands">
+            {t('brands')}
+          </NavLink>
           <div className="nav-link">{t('projects')}</div>
           <div className="nav-link">{t('news')}</div>
           <NavLink className="nav-link" to="/contacts">
