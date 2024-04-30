@@ -19,6 +19,25 @@ import { Transition } from '../Transition';
 import { baseURL } from '../../..';
 
 import './styles.scss';
+import {
+  Chip,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+} from '@mui/material';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -29,12 +48,53 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
   const [imageIds, setImageIds] = useState<any[]>([]);
   const refInput = useRef<any>();
 
+  const [categories, setCategories] = useState([]);
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  const handleChangeCategories = (event: any) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedCategories(typeof value === 'string' ? value.split(',') : value);
+  };
+
   useEffect(() => {
     if (value && isOpen) {
+      getCategories();
       setTitle(value.title);
       setImageIds(value.imageIds || []);
     }
   }, [value, isOpen]);
+
+  const getCategories = async () => {
+    try {
+      const response = await axios.get(
+        '/category?page=0&size=100&sort=number%2Ccreated%2CASC'
+      );
+      if (response.status !== 200 || typeof response.data === 'string') {
+        throw new Error('bad response');
+      }
+
+      setCategories(response.data.content);
+      const filteredCategories = response.data.content.reduce(
+        (acc: any, item: any) => {
+          if (item.id) {
+            acc.push(item.title);
+          }
+          return acc;
+        },
+        []
+      );
+      setCategoryOptions(filteredCategories);
+
+      if (!value.categories.length) return;
+      const selected = value.categories.map(({ title }: any) => title);
+      setSelectedCategories(selected);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleUploadImage = (event: any) => {
     const file = event?.target?.files?.[0];
@@ -50,7 +110,8 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
   };
 
   const handleSave = async (event: MouseEvent<HTMLButtonElement>) => {
-    const isValid = title.trim() && (image || value?.imageId);
+    const isValid =
+      title.trim() && (image || value?.imageId) && !!selectedCategories.length;
 
     if (!isValid) {
       setAnchorEl(event.currentTarget);
@@ -74,11 +135,25 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
         }
       }
 
+      const categoriesValue = selectedCategories.reduce(
+        (acc: any, item: any) => {
+          const fullCategory = categories.find(({ title }) => title === item);
+
+          if (fullCategory) {
+            acc.push(fullCategory);
+          }
+
+          return acc;
+        },
+        []
+      );
+
       const data = {
         ...value,
         title: title.trim(),
         imageId,
         imageIds: valueImageIds,
+        categories: categoriesValue,
       };
 
       const response = await axios.put(`/products/${value.id}`, data);
@@ -279,6 +354,34 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
             </div>
           ))}
         </div>
+
+        <FormControl sx={{ m: 1, width: 300 }}>
+          <InputLabel id="demo-multiple-chip-label">Категории</InputLabel>
+          <Select
+            labelId="demo-multiple-chip-label"
+            id="demo-multiple-chip"
+            multiple
+            value={selectedCategories}
+            onChange={handleChangeCategories}
+            input={
+              <OutlinedInput id="select-multiple-chip" label="Категории" />
+            }
+            renderValue={(selected) => (
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                {selected.map((value) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </Box>
+            )}
+            MenuProps={MenuProps}
+          >
+            {categoryOptions.map((name) => (
+              <MenuItem key={name} value={name}>
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Box>
     </Dialog>
   );

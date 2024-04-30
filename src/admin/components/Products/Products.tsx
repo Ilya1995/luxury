@@ -97,6 +97,7 @@ export const Products = () => {
       product.title = value.title;
       product.imageIds = value.imageIds;
       product.imageId = value.imageId;
+      product.categories = value.categories;
     }
 
     setSelected(null);
