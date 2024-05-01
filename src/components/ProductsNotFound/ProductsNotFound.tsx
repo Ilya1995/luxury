@@ -30,7 +30,7 @@ export const ProductsNotFound: FC<PropsType> = ({
             {t('not-found-search')}
           </div>
           {/* <div className="products-not-found__header">
-            Вам может понравиться
+            t('you-may-like')
           </div>
           <div className="products-not-found__products">
             {data.map((card) => (

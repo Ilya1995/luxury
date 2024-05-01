@@ -48,5 +48,8 @@ export const ENG = {
     'correct-phone': 'Enter the correct number',
     'contacted-soon': 'You will be contacted soon',
     close: 'Close',
+    'brand-products': 'Brand products',
+    'you-may-like': 'You may like',
+    country: 'Country',
   },
 };

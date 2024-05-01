@@ -2,6 +2,7 @@ import { FC, useState, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 
 import { useMedia, useWatch } from '../../hooks';
 import { Header } from '../../components/Header';
@@ -17,12 +18,10 @@ import { TabType, Product } from '../../types';
 import { RootState } from '../../store';
 import { setFilters, resetIsCan, setSearchText } from '../../store/reducer';
 import { getCategories } from '../../store/actionCreator';
-
+import { Response } from '../../store/types';
 import { tabMap } from './constants';
 
 import './styles.scss';
-import { Response } from '../../store/types';
-import axios from 'axios';
 
 let controller: any;
 

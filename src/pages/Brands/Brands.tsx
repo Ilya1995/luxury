@@ -1,6 +1,7 @@
 import { FC, MouseEvent, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { Header } from '../../components/Header';
@@ -104,12 +105,13 @@ export const Brands: FC = () => {
                 <div className="brands-page__list-letter">{letter.label}</div>
                 <div className="brands-page__list-brands">
                   {letter.brands.map((brand) => (
-                    <div
+                    <NavLink
                       className="brands-page__list-brands-item"
                       key={brand.title}
+                      to={`/brands/${brand.id}`}
                     >
-                      {brand.title}
-                    </div>
+                      {brand.title.toLowerCase()}
+                    </NavLink>
                   ))}
                 </div>
               </div>

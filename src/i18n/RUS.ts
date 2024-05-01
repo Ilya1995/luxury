@@ -48,5 +48,8 @@ export const RUS = {
     'correct-phone': 'Введите корректный номер',
     'contacted-soon': 'С вами скоро свяжутся',
     close: 'Закрыть',
+    'brand-products': 'Товары бренда',
+    'you-may-like': 'Вам может понравиться',
+    country: 'Страна',
   },
 };

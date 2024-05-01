@@ -109,7 +109,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
       {/* {isMobile && (
         <div className="catalog-card-info__like">
           <div className="catalog-card-info__like-header">
-            Вам может понравиться
+            t('you-may-like')
           </div>
           <div className="catalog-card-info__like-products">
             {data.map((card) => (

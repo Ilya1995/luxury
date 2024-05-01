@@ -26,6 +26,7 @@ export type Brand = {
   description?: string;
   active?: boolean;
   imageId: number;
+  country?: string;
 };
 
 export type News = {

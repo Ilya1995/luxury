@@ -3,12 +3,14 @@ import classNames from 'classnames';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { Product } from '../../types';
+import { Brand } from '../../store/types';
 import { Icon } from '../ui/Icon';
 
 import './styles.scss';
 
 type PropsType = {
   product?: Product;
+  brand?: Brand;
   className?: string;
 };
 
@@ -26,9 +28,9 @@ const MAP: Record<string, any> = {
   brands: 'Бренды',
 };
 
-export const Breadcrumbs: FC<PropsType> = ({ className, product }) => {
+export const Breadcrumbs: FC<PropsType> = ({ className, product, brand }) => {
   const { pathname } = useLocation();
-  const { productId } = useParams();
+  const { productId, brandId } = useParams();
   const navigate = useNavigate();
 
   const handleNavigate = (path: string) => {
@@ -51,11 +53,16 @@ export const Breadcrumbs: FC<PropsType> = ({ className, product }) => {
         return;
       }
 
+      if (brand && item === brandId) {
+        result.push({ label: brand.title.toLowerCase(), path });
+        return;
+      }
+
       result.push({ label: MAP[item], path });
     });
 
     return result;
-  }, [pathname, product, productId]);
+  }, [pathname, product, brand, productId, brandId]);
 
   return (
     <div className={classNames('breadcrumbs', className)}>
