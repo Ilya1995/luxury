@@ -208,7 +208,7 @@ export const Products = () => {
                   {COLUMNS.map((column, index) => (
                     <TableCell
                       key={column.id}
-                      align={index === 5 ? 'right' : 'left'}
+                      align={index === 6 ? 'right' : 'left'}
                       style={{ minWidth: column.minWidth }}
                     >
                       {column.label}
@@ -229,6 +229,9 @@ export const Products = () => {
                     <TableCell align="left">{row.brand.title}</TableCell>
                     <TableCell align="center">
                       {row.inStock ? 'Да' : 'Нет'}
+                    </TableCell>
+                    <TableCell align="center">
+                      {row.liked ? 'Да' : 'Нет'}
                     </TableCell>
                     <TableCell align="right">
                       <Tooltip title={row.active ? 'Активен' : 'Не активен'}>

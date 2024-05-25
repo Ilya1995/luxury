@@ -4,12 +4,7 @@ import axios from 'axios';
 import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
 import draftToHtmlPuri from 'draftjs-to-html';
-import {
-  ContentState,
-  EditorState,
-  convertFromHTML,
-  convertToRaw,
-} from 'draft-js';
+import { ContentState, EditorState, convertToRaw } from 'draft-js';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';

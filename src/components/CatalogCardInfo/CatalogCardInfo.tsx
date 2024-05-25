@@ -1,12 +1,14 @@
-import { FC, useState } from 'react';
+import { FC, useState, useCallback, useEffect } from 'react';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
-// import { CatalogCardPreview } from '../CatalogCardPreview';
+import { CatalogCardPreview } from '../CatalogCardPreview';
 import { ModalFeedback } from '../modals/ModalFeedback';
 import { ModalFeedbackSuccess } from '../modals/ModalFeedbackSuccess';
-// import { data } from '../ProductsNotFound/mock';
 import { Product } from '../../types';
+import { Response } from '../../store/types';
 
 import './styles.scss';
 
@@ -22,8 +24,33 @@ export const CatalogCardInfo: FC<PropsType> = ({
   isMobile,
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenSecondModal, setIsOpenSecondModal] = useState(false);
+  const [products, setProducts] = useState<Product[]>();
+
+  const getInterestingProducts = useCallback(async () => {
+    const url = '/products/liked?page=0&size=20';
+
+    try {
+      const response: Response<Product[]> = await axios.get(url);
+      if (response.status !== 200 || typeof response.data === 'string') {
+        throw new Error('bad response');
+      }
+
+      if (response.data.content.length) {
+        setProducts(response.data.content.slice(0, 4));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+
+    getInterestingProducts();
+  }, [getInterestingProducts, isMobile]);
 
   const handleGoToCard = (id: number) => {
     navigate(`/catalog/all/${id}`);
@@ -106,13 +133,13 @@ export const CatalogCardInfo: FC<PropsType> = ({
         )}
       </div>
 
-      {/* {isMobile && (
+      {isMobile && !!products?.length && (
         <div className="catalog-card-info__like">
           <div className="catalog-card-info__like-header">
-            t('you-may-like')
+            {t('you-may-like')}
           </div>
           <div className="catalog-card-info__like-products">
-            {data.map((card) => (
+            {products.map((card) => (
               <CatalogCardPreview
                 key={card.id}
                 {...card}
@@ -121,7 +148,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
             ))}
           </div>
         </div>
-      )} */}
+      )}
     </div>
   );
 };

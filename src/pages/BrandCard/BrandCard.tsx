@@ -2,6 +2,7 @@ import { FC, useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import { Parser } from 'html-to-react';
 import classNames from 'classnames';
 
 import { Header } from '../../components/Header';
@@ -24,6 +25,24 @@ export const BrandCard: FC = () => {
   const [products, setProducts] = useState<Product[]>();
   const [productTitle, setProductTitle] = useState('');
 
+  const getInterestingProducts = useCallback(async () => {
+    const url = '/products/liked?page=0&size=20';
+
+    try {
+      const response: Response<Product[]> = await axios.get(url);
+      if (response.status !== 200 || typeof response.data === 'string') {
+        throw new Error('bad response');
+      }
+
+      if (response.data.content.length) {
+        setProducts(response.data.content.slice(0, 4));
+        setProductTitle(t('you-may-like'));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [t]);
+
   const getBrandProducts = useCallback(async () => {
     const url = `/products/search?brandIds=${brandId}`;
 
@@ -37,13 +56,12 @@ export const BrandCard: FC = () => {
         setProducts(response.data.content.slice(0, 4));
         setProductTitle(t('brand-products'));
       } else {
-        // TODO: getInterestingProducts
-        // внутри getInterestingProducts setProductTitle(t('you-may-like'))
+        getInterestingProducts();
       }
     } catch (error) {
       console.error(error);
     }
-  }, [t, brandId]);
+  }, [t, brandId, getInterestingProducts]);
 
   const getBrand = useCallback(async () => {
     const url = `/brand/${brandId}`;
@@ -75,6 +93,13 @@ export const BrandCard: FC = () => {
     navigate(`/catalog/all/${id}`);
   };
 
+  const goToCatalog = () => {
+    if (brand?.title) {
+      localStorage.setItem('brandTitle', brand.title.toString());
+    }
+    navigate(`/catalog`);
+  };
+
   return (
     <div className="brand-card-page">
       <Header className="brand-card-page__header" isMobile={isMobile} />
@@ -92,13 +117,13 @@ export const BrandCard: FC = () => {
             className={classNames('brand-card-page__content-info', {
               'brand-card-page__content-info_without-descr': !brand.description,
             })}
+            onClick={goToCatalog}
           >
-            {/* TODO: Поменять на logoId */}
-            {!!brand.imageId && (
+            {!!brand.logoId && (
               <div className="brand-card-page__logo-wrapper">
                 <img
                   className="brand-card-page__logo"
-                  src={`${baseURL}/images/${brand.imageId}`}
+                  src={`${baseURL}/images/${brand.logoId}`}
                   alt="logo"
                 />
               </div>
@@ -111,8 +136,8 @@ export const BrandCard: FC = () => {
               {(brand.description || brand.country) && (
                 <div className="brand-card-page__description">
                   {brand.description
-                    ? brand.description
-                    : `${t('country')} ${brand.country}`}
+                    ? Parser().parse(brand.description)
+                    : `${t('country')}: ${brand.country}`}
                 </div>
               )}
             </div>

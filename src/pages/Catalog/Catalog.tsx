@@ -236,6 +236,39 @@ export const Catalog: FC = () => {
     [categories, activeTab]
   );
 
+  // при переходе из брендов устанавливаем фильтр бренда
+  useEffect(() => {
+    if (!categories?.length) return;
+    if (!brandsOptions?.length) return;
+    if (activeTab?.path !== 'all') return;
+    if (!!filterBrands.length) return;
+
+    const brandTitle = localStorage.getItem('brandTitle');
+    const currentBrandTitle = brandsOptions.find(
+      (title) => title === brandTitle
+    );
+    if (currentBrandTitle) {
+      localStorage.removeItem('brandTitle');
+      setBrands([currentBrandTitle]);
+      dispatch(
+        setFilters({
+          path: pathname,
+          isCan: false,
+          isOnlyStock: false,
+          brands: [currentBrandTitle],
+          typeProduct: '',
+        })
+      );
+    }
+  }, [
+    activeTab?.path,
+    brandsOptions,
+    categories?.length,
+    filterBrands.length,
+    dispatch,
+    pathname,
+  ]);
+
   const handleChangeTab = (tab: TabType) => {
     if (tab.path === 'all' || activeTab?.label === tab.label) {
       handleResetFilters();

@@ -1,6 +1,10 @@
 import { FC, useState, useEffect, MouseEvent } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { Editor } from 'react-draft-wysiwyg';
+import htmlToDraft from 'html-to-draftjs';
+import draftToHtmlPuri from 'draftjs-to-html';
+import { ContentState, EditorState, convertToRaw } from 'draft-js';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
@@ -16,17 +20,38 @@ import { useMedia } from '../../../hooks';
 import { loadImage, uploadImage } from '../../utils';
 import { Transition } from '../Transition';
 
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import './styles.scss';
+
 export const BrandCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const isMobile = useMedia('(max-width: 768px)');
   const [title, setTitle] = useState('');
+  const [country, setCountry] = useState('');
   const [image, setImage] = useState();
   const [imgSrc, setImgSrc] = useState();
+  const [logo, setLogo] = useState();
+  const [logoSrc, setLogoSrc] = useState();
+  const [editorState, setEditorState] = useState<any>(
+    EditorState.createEmpty()
+  );
 
   useEffect(() => {
     if (value && isOpen) {
       setTitle(value.title);
+      setCountry(value.country ?? '');
       loadImage(value.imageId).then(setImgSrc);
+      loadImage(value.logoId).then(setLogoSrc);
+
+      const blocks = htmlToDraft(value.description ?? '');
+      setEditorState(
+        EditorState.createWithContent(
+          ContentState.createFromBlockArray(
+            blocks.contentBlocks,
+            blocks.entityMap
+          )
+        )
+      );
     }
   }, [value, isOpen]);
 
@@ -37,8 +62,20 @@ export const BrandCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
     setImage(file);
   };
 
+  const handleUploadLogo = (event: any) => {
+    const file = event?.target?.files?.[0];
+
+    if (!file) return;
+    setLogo(file);
+  };
+
   const handleSave = async (event: MouseEvent<HTMLButtonElement>) => {
-    const isValid = title.trim() && (image || value?.imageId);
+    const description = draftToHtmlPuri(
+      convertToRaw(editorState?.getCurrentContent?.())
+    );
+
+    const isValid =
+      title.trim() && (image || value?.imageId) && description !== '<p></p>\n';
 
     if (!isValid) {
       setAnchorEl(event.currentTarget);
@@ -52,10 +89,19 @@ export const BrandCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
         imageId = await uploadImage(image);
       }
 
+      let logoId = value?.logoId;
+
+      if (logo) {
+        logoId = await uploadImage(logo);
+      }
+
       const data = {
         ...value,
         title: title.trim(),
+        country: country.trim(),
         imageId,
+        logoId,
+        description,
       };
 
       const response = await axios.post('/brand', data);
@@ -80,10 +126,17 @@ export const BrandCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
     clearForm();
   };
 
+  const onEditorStateChange = (editorState: any) => {
+    setEditorState(editorState);
+  };
+
   const clearForm = () => {
     setTitle('');
+    setCountry('');
     setImage(undefined);
     setImgSrc(undefined);
+    setLogo(undefined);
+    setLogoSrc(undefined);
   };
 
   const open = Boolean(anchorEl);
@@ -181,6 +234,89 @@ export const BrandCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
             />
           </div>
         )}
+      </Box>
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': {
+            my: 3,
+            mx: isMobile ? 0 : 2,
+            width: isMobile ? '100vw' : '50vw',
+          },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          label="Страна"
+          variant="outlined"
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+        />
+      </Box>
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': {
+            mb: 3,
+            mx: isMobile ? 0 : 2,
+            width: isMobile ? '100vw' : '50vw',
+          },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <Button variant="contained" component="label">
+          Загрузить логотип бренда
+          <input
+            type="file"
+            hidden
+            accept="image/*"
+            onChange={handleUploadLogo}
+          />
+        </Button>
+
+        {(logo || logoSrc) && (
+          <div>
+            <img
+              alt="not found"
+              width="250px"
+              src={URL.createObjectURL(logo || logoSrc!)}
+            />
+          </div>
+        )}
+      </Box>
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': {
+            my: 3,
+            mx: isMobile ? 0 : 2,
+            width: isMobile ? '100vw' : '50vw',
+          },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <div>Описание</div>
+        <Editor
+          toolbar={{
+            inline: { inDropdown: true },
+            options: [
+              'inline',
+              'blockType',
+              'fontSize',
+              'colorPicker',
+              'textAlign',
+              'history',
+            ],
+          }}
+          editorState={editorState}
+          toolbarClassName="toolbarClassName"
+          wrapperClassName="wrapperClassName"
+          editorClassName="editorClassName"
+          onEditorStateChange={onEditorStateChange}
+        />
       </Box>
     </Dialog>
   );

@@ -12,6 +12,8 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Popover from '@mui/material/Popover';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 
 import { useMedia } from '../../../hooks';
 import { uploadImage } from '../../utils';
@@ -51,6 +53,7 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
   const [categories, setCategories] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [isLike, setIsLike] = useState(false);
 
   const handleChangeCategories = (event: any) => {
     const {
@@ -64,6 +67,7 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
       getCategories();
       setTitle(value.title);
       setImageIds(value.imageIds || []);
+      setIsLike(value.liked ?? false);
     }
   }, [value, isOpen]);
 
@@ -192,6 +196,25 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
 
   const removeImageIds = (id: number) => {
     setImageIds(imageIds.filter((item) => item !== id));
+  };
+
+  const handleChangeIsLike = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const isChecked = event.target.checked;
+    setIsLike(isChecked);
+
+    try {
+      const response = await axios.put(
+        `/products/${value.id}/set-liked?liked=${isChecked}`
+      );
+      if (response.status !== 200) {
+        throw new Error('bad response');
+      }
+    } catch (error) {
+      setIsLike(!isChecked);
+      console.error(error);
+    }
   };
 
   const open = Boolean(anchorEl);
@@ -382,6 +405,29 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
             ))}
           </Select>
         </FormControl>
+      </Box>
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': {
+            mb: 3,
+            mx: isMobile ? 0 : 2,
+            width: isMobile ? '100vw' : '50vw',
+          },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <FormControlLabel
+          control={
+            <Switch
+              checked={isLike}
+              onChange={handleChangeIsLike}
+              inputProps={{ 'aria-label': 'controlled' }}
+            />
+          }
+          label={'Включить в подборку "Вам может понравиться"'}
+        />
       </Box>
     </Dialog>
   );
