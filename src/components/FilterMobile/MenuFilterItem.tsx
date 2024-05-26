@@ -1,5 +1,6 @@
 import { FC, useState, useMemo } from 'react';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { Icon } from '../ui/Icon';
 import { Dropdown } from '../Dropdown';
@@ -32,6 +33,7 @@ export const MenuFilterItem: FC<PropsType> = ({
   onClose,
   className,
 }) => {
+  const { t } = useTranslation();
   const [searchText, setSearchText] = useState('');
 
   const filteredBrandOptions = useMemo(() => {
@@ -60,7 +62,7 @@ export const MenuFilterItem: FC<PropsType> = ({
           <Dropdown
             options={typeProductOptions}
             isMobile
-            title="Тип продукта"
+            title={t('type-of-product')}
             selected={typeProduct}
             onChange={(value) => onChangeFilter('product', value)}
           />
@@ -71,7 +73,7 @@ export const MenuFilterItem: FC<PropsType> = ({
             <Dropdown
               options={filteredBrandOptions}
               isMobile
-              title="Бренд"
+              title={t('brand')}
               multiple
               selected={brands}
               onChange={(value) => onChangeFilter('brand', value)}

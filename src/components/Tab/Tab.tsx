@@ -2,15 +2,17 @@ import { FC } from 'react';
 import classNames from 'classnames';
 
 import { TabType } from '../../types';
+import { Icon } from '../ui/Icon';
+import { tabMap } from '../../pages/Catalog/constants';
 
 import './styles.scss';
-import { Icon } from '../ui/Icon';
 
 type PropsType = {
   item: TabType;
   isActive?: boolean;
   hasClose?: boolean;
   isToLower?: boolean;
+  isCategory?: boolean;
   onClick?: (value: TabType) => void;
   onClose?: (value: TabType) => void;
 };
@@ -20,6 +22,7 @@ export const Tab: FC<PropsType> = ({
   isActive = false,
   hasClose = false,
   isToLower = false,
+  isCategory = false,
   onClick = () => {},
   onClose = () => {},
 }) => (
@@ -30,7 +33,11 @@ export const Tab: FC<PropsType> = ({
     })}
     onClick={() => onClick(item)}
   >
-    {isToLower ? item.label.toLowerCase() : item.label}
+    {isToLower
+      ? item.label.toLowerCase()
+      : isCategory && localStorage.getItem('lang') === 'ENG'
+      ? tabMap[item.label].charAt(0).toUpperCase() + tabMap[item.label].slice(1)
+      : item.label}
     {hasClose && (
       <Icon
         name="close2"

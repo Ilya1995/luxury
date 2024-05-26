@@ -85,7 +85,9 @@ export const CatalogCardInfo: FC<PropsType> = ({
         <div className="catalog-card-info__header-material">
           {product.materials}
         </div>
-        <div className="catalog-card-info__header-price">Цена по запросу</div>
+        <div className="catalog-card-info__header-price">
+          {t('price-on-request')}
+        </div>
       </div>
 
       {!isMobile && (
@@ -93,7 +95,7 @@ export const CatalogCardInfo: FC<PropsType> = ({
           className="catalog-card-info__button button"
           onClick={() => setIsOpenModal(true)}
         >
-          Уточнить наличие
+          {t('check-availability')}
         </button>
       )}
 
@@ -106,26 +108,34 @@ export const CatalogCardInfo: FC<PropsType> = ({
           Характеристики
         </div>
         <div className="catalog-card-info-characteristic">
-          <div className="catalog-card-info-characteristic__key">Бренд:</div>
+          <div className="catalog-card-info-characteristic__key">
+            {t('brand')}:
+          </div>
           <div className="catalog-card-info-characteristic__value">
             {product.brand?.title}
           </div>
         </div>
         <div className="catalog-card-info-characteristic">
-          <div className="catalog-card-info-characteristic__key">Страна:</div>
+          <div className="catalog-card-info-characteristic__key">
+            {t('country')}:
+          </div>
           <div className="catalog-card-info-characteristic__value">
             {product.country || '–'}
           </div>
         </div>
         <div className="catalog-card-info-characteristic">
-          <div className="catalog-card-info-characteristic__key">Материал:</div>
+          <div className="catalog-card-info-characteristic__key">
+            {t('material')}:
+          </div>
           <div className="catalog-card-info-characteristic__value">
             {product.materials || '–'}
           </div>
         </div>
         {product.volume && (
           <div className="catalog-card-info-characteristic">
-            <div className="catalog-card-info-characteristic__key">Объем:</div>
+            <div className="catalog-card-info-characteristic__key">
+              {t('volume')}:
+            </div>
             <div className="catalog-card-info-characteristic__value">
               {product.volume}
             </div>

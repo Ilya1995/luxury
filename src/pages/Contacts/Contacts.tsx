@@ -37,7 +37,9 @@ export const Contacts: FC = () => {
             <div className="contacts-page__blocks-item" key="123123">
               <div className="contacts-page-info">
                 <div className="contacts-page-info__text">
-                  <div className="contacts-page-info__text-title">Адрес</div>
+                  <div className="contacts-page-info__text-title">
+                    {t('address')}
+                  </div>
                   <div className="contacts-page-info__text-content">
                     Luxury Living
                   </div>
@@ -47,7 +49,7 @@ export const Contacts: FC = () => {
                 </div>
                 <div className="contacts-page-info__text">
                   <div className="contacts-page-info__text-title">
-                    Часы работы
+                    {t('opening-hours')}
                   </div>
                   <div className="contacts-page-info__text-content">
                     пн-сб 10:00 – 19:00
@@ -57,7 +59,9 @@ export const Contacts: FC = () => {
                   </div>
                 </div>
                 <div className="contacts-page-info__text">
-                  <div className="contacts-page-info__text-title">Телефоны</div>
+                  <div className="contacts-page-info__text-title">
+                    {t('phones')}
+                  </div>
                   <div className="contacts-page-info__text-content">
                     +7 (861) 222-22-23
                   </div>
@@ -121,7 +125,9 @@ export const Contacts: FC = () => {
             <div className="contacts-page__blocks-item" key="76876876">
               <div className="contacts-page-info contacts-page-info_gap">
                 <div className="contacts-page-info__text">
-                  <div className="contacts-page-info__text-title">Адрес</div>
+                  <div className="contacts-page-info__text-title">
+                    {t('address')}
+                  </div>
                   <div className="contacts-page-info__text-content">
                     Vendôme
                   </div>
@@ -131,14 +137,16 @@ export const Contacts: FC = () => {
                 </div>
                 <div className="contacts-page-info__text">
                   <div className="contacts-page-info__text-title">
-                    Часы работы
+                    {t('opening-hours')}
                   </div>
                   <div className="contacts-page-info__text-content">
                     пн-вс 10:00 – 20:00
                   </div>
                 </div>
                 <div className="contacts-page-info__text">
-                  <div className="contacts-page-info__text-title">Телефоны</div>
+                  <div className="contacts-page-info__text-title">
+                    {t('phones')}
+                  </div>
                   <div className="contacts-page-info__text-content">
                     +7 (961) 313-33-33
                   </div>

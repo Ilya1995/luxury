@@ -24,6 +24,7 @@ export const BrandCard: FC = () => {
   const [brand, setBrand] = useState<Brand>();
   const [products, setProducts] = useState<Product[]>();
   const [productTitle, setProductTitle] = useState('');
+  const [showAllDescription, setShowAllDescription] = useState(isMobile);
 
   const getInterestingProducts = useCallback(async () => {
     const url = '/products/liked?page=0&size=20';
@@ -100,6 +101,11 @@ export const BrandCard: FC = () => {
     navigate(`/catalog`);
   };
 
+  const handleShowAllDescription = (event: any) => {
+    event.stopPropagation();
+    setShowAllDescription(true);
+  };
+
   return (
     <div className="brand-card-page">
       <Header className="brand-card-page__header" isMobile={isMobile} />
@@ -132,13 +138,24 @@ export const BrandCard: FC = () => {
               <div className="brand-card-page__title">
                 {brand.title.toLowerCase()}
               </div>
-              {/* TODO: сделать "Подробнее" для description */}
               {(brand.description || brand.country) && (
-                <div className="brand-card-page__description">
+                <div
+                  className={classNames('brand-card-page__description', {
+                    'brand-card-page__description_all': showAllDescription,
+                  })}
+                >
                   {brand.description
                     ? Parser().parse(brand.description)
                     : `${t('country')}: ${brand.country}`}
                 </div>
+              )}
+              {brand.description && !showAllDescription && (
+                <span
+                  onClick={handleShowAllDescription}
+                  className="brand-card-page__description-more"
+                >
+                  {t('more')}
+                </span>
               )}
             </div>
           </div>

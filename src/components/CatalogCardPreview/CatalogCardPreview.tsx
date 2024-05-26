@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import './styles.scss';
 import { Brand } from '../../store/types';
@@ -25,6 +26,8 @@ export const CatalogCardPreview: FC<PropsType> = ({
   imageId,
   onGoToCard,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div
       className={classNames('catalog-card-preview', className)}
@@ -49,7 +52,9 @@ export const CatalogCardPreview: FC<PropsType> = ({
           <div className="catalog-card-preview__material">
             {materials || 'Фарфор, эмаль'}
           </div>
-          <div className="catalog-card-preview__price">Цена по запросу</div>
+          <div className="catalog-card-preview__price">
+            {t('price-on-request')}
+          </div>
         </div>
       </div>
     </div>

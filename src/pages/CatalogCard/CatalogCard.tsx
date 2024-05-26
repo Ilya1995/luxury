@@ -90,7 +90,12 @@ export const CatalogCard: FC = () => {
 
   const title = useMemo(() => {
     if (!activeTab || activeTab.path === 'all') return t('catalog');
-    return activeTab?.label || t('catalog');
+    return activeTab?.label
+      ? localStorage.getItem('lang') === 'ENG'
+        ? tabMap[activeTab.label].charAt(0).toUpperCase() +
+          tabMap[activeTab.label].slice(1)
+        : activeTab.label
+      : t('catalog');
   }, [t, activeTab]);
 
   const handleChangeTab = (tab: TabType) => {
@@ -140,6 +145,7 @@ export const CatalogCard: FC = () => {
               <Tab
                 key={tab.label}
                 item={tab}
+                isCategory
                 isActive={activeTab?.label === tab.label}
                 onClick={handleChangeTab}
               />
@@ -163,7 +169,7 @@ export const CatalogCard: FC = () => {
                 className="catalog-card-page__wrapper-button button"
                 onClick={() => setIsOpenModal(true)}
               >
-                Уточнить наличие
+                {t('check-availability')}
               </button>
             </div>
           </div>

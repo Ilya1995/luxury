@@ -1,5 +1,6 @@
 import { FC, useState, useRef, useMemo } from 'react';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { Icon } from '../ui/Icon';
 import { Input } from '../ui/Input';
@@ -35,6 +36,7 @@ export const Dropdown: FC<PropsType> = ({
   selected,
   onChange,
 }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(isMobile ? true : false);
   const [searchText, setSearchText] = useState('');
   const refScroll = useRef<any>();
@@ -175,7 +177,7 @@ export const Dropdown: FC<PropsType> = ({
                 key={item}
                 className="dropdown-list-item"
                 label={item}
-                isToLower={title === 'Бренд'}
+                isToLower={title === t('brand')}
                 value={selected.includes(item)}
                 onChange={(value) => handleSelectMultiple(item, value)}
               />

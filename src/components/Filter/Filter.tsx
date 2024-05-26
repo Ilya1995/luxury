@@ -45,7 +45,7 @@ export const Filter: FC<PropsType> = ({
       {!!typeProductOptions?.length && (
         <Dropdown
           options={typeProductOptions}
-          title="Тип продукта"
+          title={t('type-of-product')}
           selected={typeProduct}
           classNameList="filter__product-list"
           onChange={(value) => onChangeFilter('product', value)}
@@ -55,7 +55,7 @@ export const Filter: FC<PropsType> = ({
       {!!brandsOptions?.length && (
         <Dropdown
           options={brandsOptions}
-          title="Бренд"
+          title={t('brand')}
           withSearch
           multiple
           selected={brands}
@@ -72,7 +72,9 @@ export const Filter: FC<PropsType> = ({
         onChange={(value) => onChangeFilter('color', value)}
       /> */}
       <div className="filter__switcher">
-        <div className="filter__switcher-label">Только товары в наличии</div>
+        <div className="filter__switcher-label">
+          {t('only-products-in-stock')}
+        </div>
         <Switcher
           value={isOnlyStock}
           onChange={(value) => onChangeFilter('isOnlyStock', value)}

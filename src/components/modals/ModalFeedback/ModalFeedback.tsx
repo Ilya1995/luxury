@@ -152,7 +152,7 @@ export const ModalFeedback: FC<PropsType> = ({
             color={'rgba(var(--grey-800))'}
           />
           <div className="modal-feedback__line" />
-          <div className="modal-feedback__title">Уточнить наличие</div>
+          <div className="modal-feedback__title">{t('check-availability')}</div>
           <div className="modal-feedback__subtitle">
             {t('modal-feedback-subtitle')}
           </div>

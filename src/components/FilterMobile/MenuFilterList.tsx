@@ -111,7 +111,9 @@ export const MenuFilterList: FC<PropsType> = ({
                 className="menu-filter-list-item"
                 onClick={() => onOpenCurrentFilter('product')}
               >
-                <div className="menu-filter-list-item__label">Тип продукта</div>
+                <div className="menu-filter-list-item__label">
+                  {t('type-of-product')}
+                </div>
                 <div className="menu-filter-list-item__action">
                   {typeProduct && <Counter value={1} />}
                   <Icon
@@ -139,7 +141,7 @@ export const MenuFilterList: FC<PropsType> = ({
                 className="menu-filter-list-item"
                 onClick={() => onOpenCurrentFilter('brand')}
               >
-                <div className="menu-filter-list-item__label">Бренд</div>
+                <div className="menu-filter-list-item__label">{t('brand')}</div>
                 <div className="menu-filter-list-item__action">
                   {!!brands.length && <Counter value={brands.length} />}
                   <Icon
@@ -196,7 +198,7 @@ export const MenuFilterList: FC<PropsType> = ({
 
           <div className="menu-filter-list-item">
             <div className="menu-filter-list-item__label">
-              Только товары в наличии
+              {t('only-products-in-stock')}
             </div>
             <Switcher
               value={isOnlyStock}

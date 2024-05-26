@@ -217,7 +217,12 @@ export const Catalog: FC = () => {
 
   const title = useMemo(() => {
     if (!activeTab || activeTab.path === 'all') return t('catalog');
-    return activeTab?.label || t('catalog');
+    return activeTab?.label
+      ? localStorage.getItem('lang') === 'ENG'
+        ? tabMap[activeTab.label].charAt(0).toUpperCase() +
+          tabMap[activeTab.label].slice(1)
+        : activeTab.label
+      : t('catalog');
   }, [t, activeTab]);
 
   const typeProductOptions = useMemo<string[] | undefined>(
@@ -398,6 +403,7 @@ export const Catalog: FC = () => {
             <Tab
               key={tab.label}
               item={tab}
+              isCategory
               isActive={activeTab?.label === tab.label}
               onClick={handleChangeTab}
             />

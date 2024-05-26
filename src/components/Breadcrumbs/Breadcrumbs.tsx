@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react';
 import classNames from 'classnames';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Product } from '../../types';
 import { Brand } from '../../store/types';
@@ -14,24 +15,25 @@ type PropsType = {
   className?: string;
 };
 
-const MAP: Record<string, any> = {
-  catalog: 'Каталог',
-  present: 'Подарки',
-  serving: 'Сервировка',
-  accessories: 'Аксессуары',
-  textile: 'Текстиль',
-  carpets: 'Ковры',
-  wallpaper: 'Обои',
-  paints: 'Краски',
-  furniture: 'Мебель',
-  contacts: 'Контакты',
-  brands: 'Бренды',
-};
-
 export const Breadcrumbs: FC<PropsType> = ({ className, product, brand }) => {
   const { pathname } = useLocation();
   const { productId, brandId } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const MAP: Record<string, any> = {
+    catalog: t('catalog'),
+    present: t('present'),
+    serving: t('serving'),
+    accessories: t('accessories'),
+    textile: t('textile'),
+    carpets: t('carpets'),
+    wallpaper: t('wallpaper'),
+    paints: t('paints'),
+    furniture: t('furniture'),
+    contacts: t('contacts'),
+    brands: t('brands'),
+  };
 
   const handleNavigate = (path: string) => {
     if (path === pathname) return;
@@ -41,7 +43,7 @@ export const Breadcrumbs: FC<PropsType> = ({ className, product, brand }) => {
 
   const items = useMemo(() => {
     const names = pathname.split('/').slice(1);
-    const result = [{ label: 'Главная', path: '/' }];
+    const result = [{ label: t('home'), path: '/' }];
 
     names.forEach((item, index) => {
       if (item === 'all') return;
