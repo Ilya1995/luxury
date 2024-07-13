@@ -49,9 +49,7 @@ export const CatalogCardPreview: FC<PropsType> = ({
         </div>
 
         <div className="catalog-card-preview__content-info">
-          <div className="catalog-card-preview__material">
-            {materials || 'Фарфор, эмаль'}
-          </div>
+          <div className="catalog-card-preview__material">{materials}</div>
           <div className="catalog-card-preview__price">
             {t('price-on-request')}
           </div>
