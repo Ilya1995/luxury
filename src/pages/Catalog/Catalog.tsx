@@ -91,7 +91,7 @@ export const Catalog: FC = () => {
 
       try {
         const urlWithText = `products/text-search?text=${searchText}&page=${nextPage}&size=20`;
-        let urlWithoutText = `/products/search?page=${nextPage}&size=20&sort=brandNumber,ASC&sort=title,ASC&sort=id`;
+        let urlWithoutText = `/products/search?page=${nextPage}&size=20&sort=brandNumber,ASC&sort=typeNumber,ASC&sort=title,ASC&sort=id`;
 
         if (filterBrands.length) {
           const ids = getBrandIds();
