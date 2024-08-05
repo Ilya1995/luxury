@@ -185,6 +185,69 @@ export const Contacts: FC = () => {
                 </Map>
               </div>
             </div>
+            <div className="contacts-page__blocks-item" key="3232">
+              <div className="contacts-page-info contacts-page-info_gap">
+                <div className="contacts-page-info__text">
+                  <div className="contacts-page-info__text-title">
+                    {t('address')}
+                  </div>
+                  <div className="contacts-page-info__text-content">
+                    Сити Центр
+                  </div>
+                  <div className="contacts-page-info__text-content">
+                    г. Краснодар, ул. Индустриальная, 2, 1 этаж
+                  </div>
+                </div>
+                <div className="contacts-page-info__text">
+                  <div className="contacts-page-info__text-title">
+                    {t('opening-hours')}
+                  </div>
+                  <div className="contacts-page-info__text-content">
+                    пн-вс 10:00 – 22:00
+                  </div>
+                </div>
+                <div className="contacts-page-info__text">
+                  <div className="contacts-page-info__text-title">
+                    {t('phones')}
+                  </div>
+                  <div className="contacts-page-info__text-content">
+                    +7 (918) 244-6-999
+                  </div>
+                </div>
+              </div>
+              <div className="contacts-page-map">
+                <Map
+                  height={heightMap}
+                  width={widthMap}
+                  defaultState={{
+                    center: [45.001269, 38.961973],
+                    zoom: 18,
+                    controls: ['zoomControl', 'fullscreenControl'],
+                  }}
+                  modules={['control.ZoomControl', 'control.FullscreenControl']}
+                >
+                  <GeolocationControl
+                    options={{
+                      float: 'right',
+                    }}
+                  />
+                  <TrafficControl
+                    options={{
+                      float: 'right',
+                    }}
+                  />
+                  <Placemark
+                    options={{
+                      iconLayout: 'default#image',
+                      iconImageHref: '/store.webp',
+                      iconImageSize: [50, 58],
+                      iconImageOffset: [-15, -42],
+                    }}
+                    geometry={[45.001269, 38.961973]}
+                  />
+                </Map>
+              </div>
+            </div>
           </YMaps>
         </div>
       </div>
