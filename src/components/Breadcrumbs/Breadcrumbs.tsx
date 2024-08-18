@@ -33,6 +33,7 @@ export const Breadcrumbs: FC<PropsType> = ({ className, product, brand }) => {
     furniture: t('furniture'),
     contacts: t('contacts'),
     brands: t('brands'),
+    projects: t('projects'),
   };
 
   const handleNavigate = (path: string) => {

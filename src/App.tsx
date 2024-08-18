@@ -17,6 +17,7 @@ import { CatalogCard } from './pages/CatalogCard';
 import { Contacts } from './pages/Contacts';
 import { Brands } from './pages/Brands';
 import { BrandCard } from './pages/BrandCard';
+import { Projects } from './pages/Projects';
 import { Main } from './admin/Main';
 import { RootState } from './store';
 import { setFilters } from './store/reducer';
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
   {
     path: '/brands/:brandId',
     element: <BrandCard />,
+  },
+  {
+    path: '/projects',
+    element: <Projects />,
   },
   {
     path: '/admin',

@@ -67,5 +67,8 @@ export const ENG = {
     phones: 'Phones',
     'opening-hours': 'Opening hours',
     address: 'Address',
+    'apartment-decor': 'Apartment decor 104 m²',
+    'apartment-decor-description':
+      'A project that we did entirely ourselves and are very proud of it',
   },
 };

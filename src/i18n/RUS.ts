@@ -67,5 +67,8 @@ export const RUS = {
     phones: 'Телефоны',
     'opening-hours': 'Часы работы',
     address: 'Адрес',
+    'apartment-decor': 'Декор квартиры 104 м²',
+    'apartment-decor-description':
+      'Проект, который мы сделали полностью сами и очень этим гордимся',
   },
 };
