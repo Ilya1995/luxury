@@ -38,8 +38,8 @@ export const Header: FC<PropsType> = ({
       {!searchActive && (
         <Icon
           name="logo"
-          width={isMobile ? 8.55 : 10.6875}
-          height={isMobile ? 2 : 2.5625}
+          width={isMobile ? 10.6875 : 13.0875}
+          height={isMobile ? 2.09125 : 2.558125}
           color={isWhite ? 'rgba(var(--white))' : 'rgba(var(--grey-800))'}
           pointer
           handleClick={() => navigate('/')}

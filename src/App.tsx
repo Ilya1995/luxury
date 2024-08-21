@@ -77,8 +77,8 @@ export const App = () => {
   useEffect(() => {
     if (historyStack.length < 2) return;
 
-    const prevLastState = historyStack.at(-2);
-    const lastState = historyStack.at(-1);
+    const prevLastState = historyStack[historyStack.length - 2];
+    const lastState = historyStack[historyStack.length - 1];
 
     // первый if проверяет, что предыдущая открытая страница была карточкой товара
     if (

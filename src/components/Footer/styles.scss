@@ -2,11 +2,15 @@
   padding: 3rem 6.875rem;
 
   @media (max-width: 768px) {
-    padding: 4rem 1rem 3rem;
+    padding: 3.5rem 1rem 3rem;
   }
 
   &__logo {
-    height: 2.625rem;
+    height: 2.5925rem;
+
+    @media (max-width: 768px) {
+      height: 2.09125rem;
+    }
   }
 
   &__first {

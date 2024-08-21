@@ -90,8 +90,14 @@ export const Catalog: FC = () => {
       !nextPage && setIsLoading(true);
 
       try {
+        const categoryId = getCategoryId();
+
         const urlWithText = `products/text-search?text=${searchText}&page=${nextPage}&size=20`;
-        let urlWithoutText = `/products/search?page=${nextPage}&size=20&sort=brandNumber,ASC&sort=typeNumber,ASC&sort=title,ASC&sort=id`;
+        let urlWithoutText = `/products/search?page=${nextPage}&size=20`;
+        if (categoryId) {
+          urlWithoutText +=
+            '&sort=brandNumber,ASC&sort=typeNumber,ASC&sort=title,ASC&sort=id';
+        }
 
         if (filterBrands.length) {
           const ids = getBrandIds();
@@ -109,9 +115,8 @@ export const Catalog: FC = () => {
           }
         }
 
-        const id = getCategoryId();
-        if (id) {
-          urlWithoutText += '&categoryIds=' + id;
+        if (categoryId) {
+          urlWithoutText += '&categoryIds=' + categoryId;
         }
 
         if (isOnlyStock) {

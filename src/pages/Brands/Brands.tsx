@@ -17,6 +17,7 @@ import {
   LETTERS_GAP,
 } from './constants';
 import { Letter } from './types';
+import { deepClone } from '../../utils/deepClone';
 
 import './styles.scss';
 
@@ -38,7 +39,7 @@ export const Brands: FC = () => {
   const showBreadcrumbs = !isMobile;
 
   const alphabet = useMemo(() => {
-    const letters = structuredClone(LETTERS);
+    const letters = deepClone(LETTERS);
 
     brands.forEach((brand) => {
       const firstLetter = brand.title[0].toUpperCase();
