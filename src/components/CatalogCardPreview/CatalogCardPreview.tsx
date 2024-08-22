@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import './styles.scss';
+import { isOldSafari } from '../../utils/isOldSafari';
 import { Brand } from '../../store/types';
 import { baseURL } from '../..';
 
@@ -45,7 +46,13 @@ export const CatalogCardPreview: FC<PropsType> = ({
           {brand?.title && (
             <div className="catalog-card-preview__brand">{brand.title}</div>
           )}
-          <div className="catalog-card-preview__name">{title}</div>
+          <div
+            className={classNames('catalog-card-preview__name', {
+              'catalog-card-preview__name_vertical': !isOldSafari(),
+            })}
+          >
+            {title}
+          </div>
         </div>
 
         <div className="catalog-card-preview__content-info">

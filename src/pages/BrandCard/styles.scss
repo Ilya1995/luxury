@@ -170,7 +170,6 @@
 
     display: -webkit-box;
     -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
     overflow: hidden;
 
     p {
@@ -192,6 +191,10 @@
     &_all {
       display: block;
       overflow: visible;
+    }
+
+    &_vertical {
+      -webkit-box-orient: vertical;
     }
   }
 }

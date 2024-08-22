@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import dayjs from 'dayjs';
+import classNames from 'classnames';
 
+import { isOldSafari } from '../../utils/isOldSafari';
 import { ButtonMore } from '../ui/ButtonMore';
 
 import './styles.scss';
@@ -34,7 +36,13 @@ export const Card: FC<PropsType> = ({
           <div className="card__content-date">
             {dayjs(newsDate).format('D MMMM YYYY')}
           </div>
-          <div className="card__content-title">{descriptionRus}</div>
+          <div
+            className={classNames('card__content-title', {
+              'card__content-title_vertical': !isOldSafari(),
+            })}
+          >
+            {descriptionRus}
+          </div>
         </div>
         <ButtonMore />
       </div>

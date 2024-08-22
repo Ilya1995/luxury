@@ -13,6 +13,7 @@ import { Product } from '../../types';
 import { Brand, Response, ResponseOne } from '../../store/types';
 import { CatalogCardPreview } from '../../components/CatalogCardPreview';
 import { baseURL } from '../..';
+import { isOldSafari } from '../../utils/isOldSafari';
 
 import './styles.scss';
 
@@ -142,6 +143,7 @@ export const BrandCard: FC = () => {
                 <div
                   className={classNames('brand-card-page__description', {
                     'brand-card-page__description_all': showAllDescription,
+                    'brand-card-page__description_vertical': !isOldSafari(),
                   })}
                 >
                   {brand.description
