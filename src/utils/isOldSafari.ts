@@ -14,7 +14,6 @@ export function isOldSafari() {
   }
   M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
   if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
-  console.log(222, Number(M[1]));
   if (M[0] === 'Safari' && Number(M[1]) < 16) return true;
   return false;
 }
