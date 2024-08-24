@@ -70,5 +70,22 @@ export const ENG = {
     'apartment-decor': 'Apartment decor 104 m²',
     'apartment-decor-description':
       'A project that we did entirely ourselves and are very proud of it',
+    'order-curtains': 'Order curtains',
+    'contact-you':
+      'We will contact you to clarify the details and tell you the details of our services',
+    'kitchen-living': 'Kitchen-living room',
+    bedroom: 'Bedroom',
+    'boy-nursery': "Boy's nursery",
+    'girl-nursery': "Girls' nursery",
+    'decor-text1':
+      'In the interior of the apartment, the project of which was implemented by Natalia Sapelkina (architect, designer), modern classics are mixed with ethnic notes. Bright color accents and natural materials in the decoration create a special atmosphere.',
+    'decor-text2':
+      "The special feature of the space is the natural stone finish and its combination with other materials and decorative elements, such as in the bathroom.\n\nAll the materials in the interior interact well with each other, revealing the designer's idea. The overall color scheme of the space is quite bold: the clients like rich colors, which is especially noticeable in the older child's bedroom, as well as in the hall and kitchen.",
+    'decor-text3':
+      "The story of the designer and the clients' acquaintance began in the summer, before the keys to the apartment were handed over to the owners - a young active couple with two children.\n\nAmong the wishes for the layout was a separate bedroom for the parents, as well as two children's rooms. This was realized by combining the living room and kitchen, since the developer initially provided for only two bedrooms. The room turned out to be bright and very comfortable.",
+    'decor-text4':
+      'It is realized in restrained cold shades of blue and gray. It has a functional layout and a folding sofa to get more free space.',
+    'decor-text5':
+      'It is realized in gentle dusty pink and peach tones. The universal style suits any age, and the light emphasizes the expressive details of the interior and the depth of the chosen shades. During the day and in the evening, artificial light intertwines with the rays of natural light, which creates a comfortable environment at any time of the day.',
   },
 };

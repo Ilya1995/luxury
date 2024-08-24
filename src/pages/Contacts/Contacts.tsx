@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   YMaps,
@@ -18,6 +18,10 @@ import './styles.scss';
 export const Contacts: FC = () => {
   const isMobile = useMedia('(max-width: 768px)');
   const { t } = useTranslation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   const showBreadcrumbs = !isMobile;
   const heightMap = isMobile ? '280px' : '300px';

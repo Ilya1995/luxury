@@ -1,0 +1,70 @@
+.order-curtains {
+  box-sizing: border-box;
+  background-image: url('../../../public/banner-curtains.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0.75rem;
+  height: 16.375rem;
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    // padding: 0 1rem;
+  }
+
+  &__wrapper {
+    max-width: 33.0625rem;
+  }
+
+  &__phone {
+    width: 331px;
+  }
+
+  &__title {
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 1.5;
+    font-family: var(--merriweather);
+    color: rgba(var(--grey-810));
+    margin-bottom: 0.5rem;
+  }
+
+  &__description {
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: rgba(var(--grey-650));
+    margin-bottom: 1rem;
+  }
+
+  &__field {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__button {
+    @media (max-width: 768px) {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      margin-top: 0 !important;
+      width: auto !important;
+    }
+  }
+
+  &__confidentiality {
+    color: rgba(var(--grey-600));
+    font-size: 0.875rem;
+    line-height: 1.57;
+
+    @media (max-width: 768px) {
+      white-space: pre-line;
+    }
+
+    &-link {
+      color: rgba(var(--orange));
+    }
+  }
+}

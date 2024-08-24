@@ -9,6 +9,7 @@ import { Brands } from '../Brands';
 import { FAQ } from '../FAQ';
 import { Products } from '../Products';
 import { Feedback } from '../Feedback';
+import { Projects } from '../Projects';
 import { SIDEBAR_ITEMS } from '../../constants';
 
 export const Home = () => {
@@ -25,6 +26,7 @@ export const Home = () => {
     [SIDEBAR_ITEMS[2].name]: FAQ,
     [SIDEBAR_ITEMS[3].name]: Products,
     [SIDEBAR_ITEMS[4].name]: Feedback,
+    [SIDEBAR_ITEMS[5].name]: Projects,
   };
 
   const SomeComponent = componentNames[itemOpen];
@@ -35,6 +37,7 @@ export const Home = () => {
     [SIDEBAR_ITEMS[2].name]: SIDEBAR_ITEMS[2].text,
     [SIDEBAR_ITEMS[3].name]: SIDEBAR_ITEMS[3].text,
     [SIDEBAR_ITEMS[4].name]: SIDEBAR_ITEMS[4].text,
+    [SIDEBAR_ITEMS[5].name]: SIDEBAR_ITEMS[5].text,
   };
 
   return (

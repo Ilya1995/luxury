@@ -36,6 +36,10 @@ export const Brands: FC = () => {
     }
   }, [dispatch, brands.length]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
+
   const showBreadcrumbs = !isMobile;
 
   const alphabet = useMemo(() => {

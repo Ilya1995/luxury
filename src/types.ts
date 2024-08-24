@@ -17,3 +17,10 @@ export type Product = {
   volume?: string;
   imageIds: number[] | null;
 };
+
+export type Project = {
+  id: number;
+  title: string;
+  imageIds: number[] | null;
+  number: number;
+};

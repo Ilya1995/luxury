@@ -5,4 +5,5 @@ export const SIDEBAR_ITEMS = [
   { name: 'faq', text: 'FAQ' },
   { name: 'products', text: 'Товары' },
   { name: 'feedback', text: 'Обратная связь' },
+  { name: 'projects', text: 'Проекты' },
 ];

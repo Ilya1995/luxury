@@ -138,7 +138,9 @@ export const Feedback = () => {
               <TableBody>
                 {orders.content.map((row: any) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                    <TableCell align="left">{row.product?.title}</TableCell>
+                    <TableCell align="left">
+                      {row.product?.title || 'Запрос на шторы'}
+                    </TableCell>
                     <TableCell align="left">
                       {row.phone ? '+' + row.phone : '-'}
                     </TableCell>

@@ -9,49 +9,42 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import Tooltip from '@mui/material/Tooltip';
-import TextField from '@mui/material/TextField';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import BlockIcon from '@mui/icons-material/Block';
 
-import { ModalActivate } from '../ModalActivate';
-import { ProductCard } from '../ProductCard';
+import { ModalDelete } from '../ModalDelete';
+import { ProjectCard } from '../ProjectCard';
 import { Pagination } from '../Pagination';
 import { SIDEBAR_WIDTH } from '../../constants';
 import { COLUMNS } from './constants';
 
 import './styles.scss';
 
-export const Products = () => {
-  const [searchText, setSearchText] = useState('');
-  const [openModalActivate, setOpenModalActivate] = useState(false);
+export const Projects = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState<any>();
+  const [projects, setProjects] = useState<any>();
+  const [openModalDelete, setOpenModalDelete] = useState(false);
   const [openCard, setOpenCard] = useState(false);
   const [selected, setSelected] = useState<any>(null);
 
   useEffect(() => {
-    getProducts(0, 10);
+    getProjects(0, 10);
   }, []);
 
-  const getProducts = async (page: number, size: number) => {
+  const getProjects = async (page: number, size: number) => {
     try {
       setIsLoading(true);
-
-      const url = `/products${
-        searchText ? '/text-search' : ''
-      }?page=${page}&size=${size}&text=${searchText}&admin=true`;
-
-      const response = await axios.get(url);
+      const response = await axios.get(`/projects?page=${page}&size=${size}`);
       if (response.status !== 200 || typeof response.data === 'string') {
         throw new Error('bad response');
       }
 
-      setProducts(response.data);
+      setProjects(response.data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -59,31 +52,21 @@ export const Products = () => {
     }
   };
 
-  const handleChangeActivate = async (value: boolean) => {
+  const handleChangeDelete = async (value: boolean) => {
     if (value && selected) {
       try {
-        const active = !selected.active;
-        await axios.put(`/products/${selected.id}`, { ...selected, active });
-        selected.active = active;
+        await axios.delete(`/projects/${selected.id}`);
+        getProjects(0, 10);
       } catch (error) {
         console.error(error);
       }
     }
-    setOpenModalActivate(false);
+    setOpenModalDelete(false);
     setSelected(null);
   };
 
-  const handleSave = (value: any) => {
-    // getProducts(0, 10);
-
-    const product = products?.content?.find(({ id }: any) => id === value.id);
-    if (product) {
-      product.title = value.title;
-      product.imageIds = value.imageIds;
-      product.imageId = value.imageId;
-      product.categories = value.categories;
-    }
-
+  const handleSave = () => {
+    getProjects(0, 10);
     setSelected(null);
     setOpenCard(false);
   };
@@ -98,23 +81,9 @@ export const Products = () => {
     setOpenCard(false);
   };
 
-  const handleShowModalActivate = (value: any) => {
-    setOpenModalActivate(true);
+  const handleShowModalDelete = (value: any) => {
+    setOpenModalDelete(true);
     setSelected(value);
-  };
-
-  const getCategoryTitles = (categories: any[]) => {
-    if (!categories?.length) return '-';
-
-    return categories.map(({ title }) => title).join(', ');
-  };
-
-  const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
-      getProducts(0, 10);
-
-      event.preventDefault();
-    }
   };
 
   return (
@@ -127,37 +96,20 @@ export const Products = () => {
       }}
     >
       <Toolbar />
-      <div className="products-controls">
-        <Box
-          component="form"
-          sx={{
-            '& > :not(style)': {
-              my: 0,
-              mr: 2,
-              width: '25vw',
-            },
-          }}
-          noValidate
-          autoComplete="off"
+      <div className="projects-controls">
+        <Button
+          variant="contained"
+          startIcon={<AddCircleOutlineIcon />}
+          onClick={() => setOpenCard(true)}
         >
-          <TextField
-            label="Поиск"
-            variant="outlined"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            onKeyDown={handleKeyDown}
-          />
-        </Box>
-        <Button variant="contained" onClick={() => getProducts(0, 10)}>
-          Найти
+          Добавить
         </Button>
       </div>
-      <ModalActivate
-        isOpen={openModalActivate}
-        isActive={selected?.active}
-        onChangeDelete={handleChangeActivate}
+      <ModalDelete
+        isOpen={openModalDelete}
+        onChangeDelete={handleChangeDelete}
       />
-      <ProductCard
+      <ProjectCard
         isOpen={openCard}
         onClose={handleCloseCard}
         onSave={handleSave}
@@ -168,7 +120,7 @@ export const Products = () => {
           <CircularProgress />
         </Box>
       )}
-      {!!products?.totalElements && (
+      {!!projects?.totalElements && (
         <Paper
           sx={{
             width: '100%',
@@ -183,7 +135,7 @@ export const Products = () => {
                   {COLUMNS.map((column, index) => (
                     <TableCell
                       key={column.id}
-                      align={index === 6 ? 'right' : 'left'}
+                      align={index === 2 ? 'right' : 'left'}
                       style={{ minWidth: column.minWidth }}
                     >
                       {column.label}
@@ -192,33 +144,17 @@ export const Products = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {products.content.map((row: any) => (
+                {projects.content.map((row: any) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     <TableCell align="left">{row.title}</TableCell>
-                    <TableCell align="left">
-                      {row.collectionTitle?.trim()}
-                    </TableCell>
-                    <TableCell align="left">
-                      {getCategoryTitles(row.categories)}
-                    </TableCell>
-                    <TableCell align="left">{row.brand.title}</TableCell>
-                    <TableCell align="center">
-                      {row.inStock ? 'Да' : 'Нет'}
-                    </TableCell>
-                    <TableCell align="center">
-                      {row.liked ? 'Да' : 'Нет'}
-                    </TableCell>
+                    <TableCell align="left">{row.number}</TableCell>
                     <TableCell align="right">
-                      <Tooltip title={row.active ? 'Активен' : 'Не активен'}>
+                      <Tooltip title="Удалить">
                         <IconButton
-                          aria-label="active"
-                          onClick={() => handleShowModalActivate(row)}
+                          aria-label="delete"
+                          onClick={() => handleShowModalDelete(row)}
                         >
-                          {row.active ? (
-                            <TaskAltIcon color="success" />
-                          ) : (
-                            <BlockIcon />
-                          )}
+                          <DeleteIcon sx={{ color: 'var(--red)' }} />
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Редактировать">
@@ -235,11 +171,9 @@ export const Products = () => {
               </TableBody>
             </Table>
           </TableContainer>
-          <Pagination count={products.totalElements} getData={getProducts} />
+          <Pagination count={projects.totalElements} getData={getProjects} />
         </Paper>
       )}
-
-      {!products?.totalElements && <div>Товары не найдены</div>}
     </Box>
   );
 };

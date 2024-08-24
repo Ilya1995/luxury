@@ -12,6 +12,7 @@ import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
 import QuizIcon from '@mui/icons-material/Quiz';
 import CategoryIcon from '@mui/icons-material/Category';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import FilterVintageIcon from '@mui/icons-material/FilterVintage';
 import Toolbar from '@mui/material/Toolbar';
 import { useNavigate } from 'react-router-dom';
 
@@ -52,6 +53,7 @@ export const Sidebar: FC<any> = ({
                 {index === 2 && <QuizIcon />}
                 {index === 3 && <CategoryIcon />}
                 {index === 4 && <ChatBubbleOutlineIcon />}
+                {index === 5 && <FilterVintageIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
