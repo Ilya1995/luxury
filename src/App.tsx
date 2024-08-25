@@ -19,6 +19,7 @@ import { Brands } from './pages/Brands';
 import { BrandCard } from './pages/BrandCard';
 import { Projects } from './pages/Projects';
 import { ProjectDecor } from './pages/ProjectDecor';
+import { ProjectCard } from './pages/ProjectCard';
 import { Main } from './admin/Main';
 import { RootState } from './store';
 import { setFilters } from './store/reducer';
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
   {
     path: '/projects/decor',
     element: <ProjectDecor />,
+  },
+  {
+    path: '/projects/:projectId',
+    element: <ProjectCard />,
   },
   {
     path: '/admin',

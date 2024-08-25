@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import { Product } from '../../types';
+import { Product, Project } from '../../types';
 import { Brand } from '../../store/types';
 import { Icon } from '../ui/Icon';
 
@@ -12,12 +12,18 @@ import './styles.scss';
 type PropsType = {
   product?: Product;
   brand?: Brand;
+  project?: Project;
   className?: string;
 };
 
-export const Breadcrumbs: FC<PropsType> = ({ className, product, brand }) => {
+export const Breadcrumbs: FC<PropsType> = ({
+  className,
+  product,
+  brand,
+  project,
+}) => {
   const { pathname } = useLocation();
-  const { productId, brandId } = useParams();
+  const { productId, brandId, projectId } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -62,11 +68,16 @@ export const Breadcrumbs: FC<PropsType> = ({ className, product, brand }) => {
         return;
       }
 
+      if (project && item === projectId) {
+        result.push({ label: project.title, path });
+        return;
+      }
+
       result.push({ label: MAP[item], path });
     });
 
     return result;
-  }, [pathname, product, brand, productId, brandId]);
+  }, [pathname, product, brand, project, productId, brandId, projectId]);
 
   return (
     <div className={classNames('breadcrumbs', className)}>

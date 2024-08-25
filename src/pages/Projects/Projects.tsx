@@ -10,6 +10,7 @@ import { Footer } from '../../components/Footer';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Icon } from '../../components/ui/Icon';
 import { OrderCurtains } from '../../components/OrderCurtains';
+import { ModalPhoto } from '../../components/modals/ModalPhoto';
 import { Project } from '../../types';
 import { baseURL } from '../..';
 
@@ -19,6 +20,9 @@ export const Projects: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [projects, setProjects] = useState<Project[]>([]);
+  const [activePhoto, setActivePhoto] = useState<number>();
+  const [activePhotosProject, setActivePhotosProject] = useState<number[]>([]);
+  const [openModal, setOpenModal] = useState(false);
 
   const isMobile = useMedia('(max-width: 768px)');
 
@@ -32,7 +36,7 @@ export const Projects: FC = () => {
 
   const getProjects = async () => {
     try {
-      const url = '/projects';
+      const url = '/projects?page=0&size=100&sort=number%2CASC';
       const response: Response<any> = await axios.get(url);
       if (response.status !== 200 || typeof response.data === 'string') {
         throw new Error('bad response');
@@ -45,11 +49,24 @@ export const Projects: FC = () => {
     }
   };
 
+  const handleClickPhoto = (imageId: number, imageIds: number[]) => {
+    setActivePhotosProject(imageIds);
+    setActivePhoto(imageId);
+    setOpenModal(true);
+  };
+
   const showBreadcrumbs = !isMobile;
 
   return (
     <div className="projects-page">
       <Header className="projects-page__header" isMobile={isMobile} />
+      {!!activePhotosProject.length && !!activePhoto && openModal && (
+        <ModalPhoto
+          active={activePhoto}
+          photos={activePhotosProject}
+          onClose={() => setOpenModal(false)}
+        />
+      )}
 
       <div className="projects-page__content">
         {showBreadcrumbs && <Breadcrumbs />}
@@ -84,7 +101,10 @@ export const Projects: FC = () => {
         <div className="projects-page__content-blocks">
           {projects.map((project) => (
             <div className="projects-page__item" key={project.id}>
-              <div className="projects-page__item-header">
+              <div
+                className="projects-page__item-header"
+                onClick={() => navigate(`/projects/${project.id}`)}
+              >
                 <div className="projects-page__item-title">{project.title}</div>
                 <Icon
                   name="arrow-right"
@@ -100,6 +120,9 @@ export const Projects: FC = () => {
                       className="projects-page__item-img"
                       src={`${baseURL}/images/${imageId}`}
                       alt="imageId"
+                      onClick={() =>
+                        handleClickPhoto(imageId, project.imageIds!)
+                      }
                     />
                   ))}
                 </div>

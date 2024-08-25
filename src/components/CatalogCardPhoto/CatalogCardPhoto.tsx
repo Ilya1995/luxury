@@ -70,7 +70,6 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
         >
           <img
             className="catalog-card-photo__img"
-            // src={activePhoto}
             src={`${baseURL}/images/${activePhoto}`}
             onClick={() => setOpenModal(true)}
             alt="card"
@@ -103,7 +102,6 @@ export const CatalogCardPhoto: FC<PropsType> = ({ className, product }) => {
                     'catalog-card-photo__carousel-img_active':
                       photo === activePhoto,
                   })}
-                  // src={photo}
                   src={`${baseURL}/images/${photo}`}
                   onClick={() => setActivePhoto(photo)}
                   alt="furniture"

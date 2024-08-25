@@ -1,13 +1,11 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useMedia } from '../../hooks';
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
-import { Icon } from '../../components/ui/Icon';
 import { OrderCurtains } from '../../components/OrderCurtains';
-import { baseURL } from '../..';
 
 import './styles.scss';
 
@@ -24,7 +22,7 @@ export const ProjectDecor: FC = () => {
 
   return (
     <div className="project-decor">
-      <Header className="projects-page__header" isMobile={isMobile} />
+      <Header className="project-decor__header" isMobile={isMobile} />
 
       <div className="project-decor__content">
         {showBreadcrumbs && <Breadcrumbs />}

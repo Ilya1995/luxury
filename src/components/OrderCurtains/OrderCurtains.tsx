@@ -69,7 +69,7 @@ export const OrderCurtains: FC<PropsType> = ({ className, isMobile }) => {
           />
 
           <button
-            className={classNames('order-curtains__button button', {
+            className={classNames('button', {
               button_disabled: isLock || showError,
             })}
             onClick={handleSend}

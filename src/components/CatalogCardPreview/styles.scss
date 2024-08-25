@@ -51,6 +51,29 @@
     }
   }
 
+  &__plug {
+    box-sizing: border-box;
+    min-height: 17.1875rem;
+    height: 17.1875rem;
+    border-radius: 0.5rem;
+    background-color: rgba(var(--grey-100));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.75rem;
+
+    @media (max-width: 768px) {
+      min-height: 10.9375rem;
+      height: 10.9375rem;
+      border-radius: 0.25rem;
+      padding: 1rem;
+    }
+
+    &-logo {
+      width: 100%;
+    }
+  }
+
   &__brand {
     font-size: 0.875rem;
     line-height: 1.57;

@@ -41,6 +41,15 @@ export const CatalogCardPreview: FC<PropsType> = ({
           alt="card"
         />
       )}
+      {!imageId && (
+        <div className="catalog-card-preview__plug">
+          <img
+            className="catalog-card-preview__plug-logo"
+            alt="Лого"
+            src="/logo-visit.svg"
+          />
+        </div>
+      )}
       <div className="catalog-card-preview__content">
         <div className="catalog-card-preview__content-info">
           {brand?.title && (
