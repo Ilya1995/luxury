@@ -11,6 +11,7 @@ import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Icon } from '../../components/ui/Icon';
 import { OrderCurtains } from '../../components/OrderCurtains';
 import { ModalPhoto } from '../../components/modals/ModalPhoto';
+import { ModalPhotoMobile } from '../../components/modals/ModalPhotoMobile';
 import { Project } from '../../types';
 import { baseURL } from '../..';
 
@@ -20,7 +21,8 @@ export const Projects: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [projects, setProjects] = useState<Project[]>([]);
-  const [activePhoto, setActivePhoto] = useState<number>();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [activePhoto, setActivePhoto] = useState<number | null>();
   const [activePhotosProject, setActivePhotosProject] = useState<number[]>([]);
   const [openModal, setOpenModal] = useState(false);
 
@@ -49,18 +51,27 @@ export const Projects: FC = () => {
     }
   };
 
-  const handleClickPhoto = (imageId: number, imageIds: number[]) => {
+  const handleClickPhoto = (
+    imageId: number,
+    imageIds: number[],
+    index: number
+  ) => {
+    setActiveIndex(index);
     setActivePhotosProject(imageIds);
     setActivePhoto(imageId);
     setOpenModal(true);
   };
 
   const showBreadcrumbs = !isMobile;
+  const showModalPhotoDesktop =
+    !isMobile && !!activePhotosProject.length && !!activePhoto && openModal;
+  const showModalPhotoMobile =
+    isMobile && !!activePhotosProject.length && !!activePhoto;
 
   return (
     <div className="projects-page">
       <Header className="projects-page__header" isMobile={isMobile} />
-      {!!activePhotosProject.length && !!activePhoto && openModal && (
+      {showModalPhotoDesktop && (
         <ModalPhoto
           active={activePhoto}
           photos={activePhotosProject}
@@ -68,6 +79,13 @@ export const Projects: FC = () => {
         />
       )}
 
+      {showModalPhotoMobile && (
+        <ModalPhotoMobile
+          initialActiveIndex={activeIndex}
+          photos={activePhotosProject}
+          onClose={() => setActivePhoto(null)}
+        />
+      )}
       <div className="projects-page__content">
         {showBreadcrumbs && <Breadcrumbs />}
 
@@ -114,14 +132,14 @@ export const Projects: FC = () => {
               </div>
               {!!project?.imageIds && (
                 <div className="projects-page__item-imgs">
-                  {project.imageIds.slice(0, 3).map((imageId) => (
+                  {project.imageIds.slice(0, 3).map((imageId, index) => (
                     <img
                       key={imageId}
                       className="projects-page__item-img"
                       src={`${baseURL}/images/${imageId}`}
                       alt="imageId"
                       onClick={() =>
-                        handleClickPhoto(imageId, project.imageIds!)
+                        handleClickPhoto(imageId, project.imageIds!, index)
                       }
                     />
                   ))}
