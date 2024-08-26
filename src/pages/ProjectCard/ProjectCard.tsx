@@ -10,6 +10,7 @@ import { Response } from '../../store/types';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { OrderCurtains } from '../../components/OrderCurtains';
 import { ModalPhoto } from '../../components/modals/ModalPhoto';
+import { ModalPhotoMobile } from '../../components/modals/ModalPhotoMobile';
 import { baseURL } from '../..';
 
 import './styles.scss';
@@ -18,7 +19,8 @@ export const ProjectCard: FC = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
   const [project, setProject] = useState<Project>();
-  const [activePhoto, setActivePhoto] = useState<number>();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [activePhoto, setActivePhoto] = useState<number | null>();
   const [openModal, setOpenModal] = useState(false);
 
   const isMobile = useMedia('(max-width: 768px)');
@@ -54,7 +56,8 @@ export const ProjectCard: FC = () => {
     window.scrollTo({ top: 0 });
   }, []);
 
-  const handleClickPhoto = (imageId: number) => {
+  const handleClickPhoto = (imageId: number, index: number) => {
+    setActiveIndex(index);
     setActivePhoto(imageId);
     setOpenModal(true);
   };
@@ -65,11 +68,22 @@ export const ProjectCard: FC = () => {
     <div className="project-card">
       <Header className="project-card__header" isMobile={isMobile} />
 
-      {!!project?.imageIds?.length && !!activePhoto && openModal && (
-        <ModalPhoto
-          active={activePhoto}
+      {!isMobile &&
+        !!project?.imageIds?.length &&
+        !!activePhoto &&
+        openModal && (
+          <ModalPhoto
+            active={activePhoto}
+            photos={project.imageIds}
+            onClose={() => setOpenModal(false)}
+          />
+        )}
+
+      {isMobile && !!project?.imageIds?.length && !!activePhoto && (
+        <ModalPhotoMobile
+          initialActiveIndex={activeIndex}
           photos={project.imageIds}
-          onClose={() => setOpenModal(false)}
+          onClose={() => setActivePhoto(null)}
         />
       )}
 
@@ -80,13 +94,13 @@ export const ProjectCard: FC = () => {
           <div className="project-card__title">{project.title}</div>
 
           <div className="project-card__photos">
-            {project.imageIds?.map((imageId) => (
+            {project.imageIds?.map((imageId, index) => (
               <img
                 key={imageId}
                 className="project-card__photos-item"
                 src={`${baseURL}/images/${imageId}`}
                 alt="imageId"
-                onClick={() => handleClickPhoto(imageId)}
+                onClick={() => handleClickPhoto(imageId, index)}
               />
             ))}
           </div>

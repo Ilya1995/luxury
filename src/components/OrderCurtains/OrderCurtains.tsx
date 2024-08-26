@@ -45,6 +45,7 @@ export const OrderCurtains: FC<PropsType> = ({ className, isMobile }) => {
       }
 
       setPhone('');
+      toast.success('Запрос отправлен');
     } catch (error) {
       console.log(error);
       toast.error('Что-то пошло не так');
