@@ -86,12 +86,9 @@ export const Menu: FC<PropsType> = ({
             <NavLink className="menu__side-link" to="/projects">
               {t('projects')}
             </NavLink>
-            <div
-              className="menu__side-link"
-              onClick={() => onChangeHash(AnchorPageEnum.CONTACTS)}
-            >
+            <NavLink className="menu__side-link" to="/news">
               {t('news')}
-            </div>
+            </NavLink>
             <NavLink className="menu__side-link" to="/contacts">
               {t('contacts')}
             </NavLink>

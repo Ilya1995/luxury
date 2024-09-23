@@ -56,6 +56,7 @@
   background-color: rgba(var(--grey-100));
   border-radius: 0.75rem;
   padding: 1rem;
+  cursor: pointer;
 
   @media (max-width: 768px) {
     padding: 0.75rem;
@@ -143,4 +144,93 @@
     height: 70%;
     width: 100%;
   }
+}
+
+.news-card-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: calc((100vw - 13.75rem - 5.5rem) / 3);
+  height: 100%;
+  background-color: rgba(var(--white));
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    width: 100%;
+    height: calc((100vw - 8px) / 2);
+    border-radius: 0.5rem;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  &__img {
+    position: relative;
+    overflow: hidden;
+    height: calc((100vw - 13.75rem - 5rem) / 3 / 1.42);
+    width: 100%;
+    border-radius: 0.75rem;
+    background-color: rgba(var(--blue-grey-300));
+    margin-bottom: 0.5rem;
+
+    @media (max-width: 768px) {
+      height: calc((100vw - 8px) / 2);
+      width: calc((100vw - 26px) / 2);
+      flex-shrink: 0;
+      border-radius: 0.5rem;
+      margin-bottom: 0;
+    }
+  }
+
+  &__text {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    border-radius: 0.25rem;
+    height: 1.375rem;
+    background-color: rgba(var(--blue-grey-300));
+
+    @media (max-width: 768px) {
+      height: 1.5rem;
+    }
+  }
+
+  &__name {
+    position: relative;
+    overflow: hidden;
+    width: 10rem;
+    border-radius: 0.25rem;
+    height: 1.625rem;
+    background-color: rgba(var(--blue-grey-300));
+
+    @media (max-width: 768px) {
+      width: 6rem;
+      height: 1.5rem;
+
+      &:last-child {
+        display: none;
+      }
+    }
+  }
+}
+
+.news-card-skeleton__img:after,
+.news-card-skeleton__text:after,
+.news-card-skeleton__name:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  animation: shimmer 1.4s infinite;
+  background-image: linear-gradient(
+    90deg,
+    rgba(var(--white), 0) 0%,
+    rgba(var(--white), 0.2) 20%,
+    rgba(var(--white), 0.5) 60%,
+    rgba(var(--white), 0)
+  );
 }
