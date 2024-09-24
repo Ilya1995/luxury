@@ -137,6 +137,7 @@ export const BrandCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
     setImgSrc(undefined);
     setLogo(undefined);
     setLogoSrc(undefined);
+    setEditorState(EditorState.createEmpty());
   };
 
   const open = Boolean(anchorEl);

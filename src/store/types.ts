@@ -36,7 +36,8 @@ export type News = {
   updated?: string;
   date: string;
   newsDate: string;
-  title: string;
+  title?: string;
+  titleRu: string;
   description?: string;
   descriptionRus: string;
   imageId: number;

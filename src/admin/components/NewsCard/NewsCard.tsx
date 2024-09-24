@@ -1,7 +1,11 @@
-import { FC, useState, useEffect, MouseEvent } from 'react';
+import { FC, useState, useEffect, MouseEvent, useRef } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import { Editor } from 'react-draft-wysiwyg';
+import htmlToDraft from 'html-to-draftjs';
+import draftToHtmlPuri from 'draftjs-to-html';
+import { ContentState, EditorState, convertToRaw } from 'draft-js';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
@@ -11,12 +15,17 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
+import CancelIcon from '@mui/icons-material/Cancel';
 import Popover from '@mui/material/Popover';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { useMedia } from '../../../hooks';
 import { loadImage, uploadImage } from '../../utils';
 import { Transition } from '../Transition';
+import { baseURL } from '../../..';
+
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import './styles.scss';
 
 export const NewsCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -26,11 +35,30 @@ export const NewsCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
   const [image, setImage] = useState();
   const [imgSrc, setImgSrc] = useState();
 
+  const [images, setImages] = useState<any[]>([]);
+  const [imageIds, setImageIds] = useState<any[]>([]);
+  const refInput = useRef<any>();
+
+  const [editorState, setEditorState] = useState<any>(
+    EditorState.createEmpty()
+  );
+
   useEffect(() => {
     if (value && isOpen) {
       setDate(dayjs(value.newsDate));
-      setTitle(value.descriptionRus);
+      setTitle(value.titleRu || '');
       loadImage(value.imageId).then(setImgSrc);
+      setImageIds(value.imageIds || []);
+
+      const blocks = htmlToDraft(value.descriptionRus ?? '');
+      setEditorState(
+        EditorState.createWithContent(
+          ContentState.createFromBlockArray(
+            blocks.contentBlocks,
+            blocks.entityMap
+          )
+        )
+      );
     }
   }, [value, isOpen]);
 
@@ -42,7 +70,15 @@ export const NewsCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
   };
 
   const handleSave = async (event: MouseEvent<HTMLButtonElement>) => {
-    const isValid = title.trim() && date && (image || value?.imageId);
+    const description = draftToHtmlPuri(
+      convertToRaw(editorState?.getCurrentContent?.())
+    );
+
+    const isValid =
+      title.trim() &&
+      date &&
+      (image || value?.imageId) &&
+      description !== '<p></p>\n';
 
     if (!isValid) {
       setAnchorEl(event.currentTarget);
@@ -56,11 +92,23 @@ export const NewsCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
         imageId = await uploadImage(image);
       }
 
+      const valueImageIds = [...imageIds].filter((id) => id !== value?.imageId);
+
+      if (images?.length) {
+        for (const value of images) {
+          const newId = await uploadImage(value);
+
+          valueImageIds.push(newId);
+        }
+      }
+
       const data = {
         ...value,
-        descriptionRus: title.trim(),
+        titleRu: title.trim(),
         newsDate: date.toISOString?.(),
         imageId,
+        imageIds: valueImageIds,
+        descriptionRus: description,
       };
 
       const response = await axios.post('/news', data);
@@ -76,6 +124,10 @@ export const NewsCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
     }
   };
 
+  const onEditorStateChange = (editorState: any) => {
+    setEditorState(editorState);
+  };
+
   const handleClosePopover = () => {
     setAnchorEl(null);
   };
@@ -85,11 +137,29 @@ export const NewsCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
     clearForm();
   };
 
+  const removeImages = (index: number) => {
+    setImages(images.filter((item, ind) => ind !== index));
+    refInput.current.value = null;
+  };
+
+  const handleUploadImages = (event: any) => {
+    const files = event?.target?.files;
+
+    setImages((prev) => [...prev, ...files]);
+  };
+
+  const removeImageIds = (id: number) => {
+    setImageIds(imageIds.filter((item) => item !== id));
+  };
+
   const clearForm = () => {
     setTitle('');
     setDate('');
     setImage(undefined);
     setImgSrc(undefined);
+    setImages([]);
+    setImageIds([]);
+    setEditorState(EditorState.createEmpty());
   };
 
   const open = Boolean(anchorEl);
@@ -174,6 +244,38 @@ export const NewsCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
         component="form"
         sx={{
           '& > :not(style)': {
+            my: 3,
+            mx: isMobile ? 0 : 2,
+            width: isMobile ? '100vw' : '50vw',
+          },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <div>Описание</div>
+        <Editor
+          toolbar={{
+            inline: { inDropdown: true },
+            options: [
+              'inline',
+              'blockType',
+              'fontSize',
+              'colorPicker',
+              'textAlign',
+              'history',
+            ],
+          }}
+          editorState={editorState}
+          toolbarClassName="toolbarClassName"
+          wrapperClassName="wrapperClassName"
+          editorClassName="editorClassName"
+          onEditorStateChange={onEditorStateChange}
+        />
+      </Box>
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': {
             mb: 3,
             mx: isMobile ? 0 : 2,
             width: isMobile ? '100vw' : '50vw',
@@ -183,7 +285,7 @@ export const NewsCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
         autoComplete="off"
       >
         <Button variant="contained" component="label">
-          Загрузить картинку
+          Загрузить картинку для превью
           <input
             type="file"
             hidden
@@ -201,6 +303,67 @@ export const NewsCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
             />
           </div>
         )}
+      </Box>
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': {
+            mb: 3,
+            mx: isMobile ? 0 : 2,
+            width: isMobile ? '100vw' : '50vw',
+          },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <Button variant="contained" component="label">
+          Загрузить картинки для карточки
+          <input
+            type="file"
+            multiple
+            hidden
+            ref={refInput}
+            accept="image/*"
+            onChange={handleUploadImages}
+          />
+        </Button>
+
+        <div className="list-imgs">
+          {imageIds
+            ?.filter((id: number) => id !== value?.imageId)
+            ?.map((id: number) => (
+              <div key={id} className="list-img-item">
+                <img
+                  alt="not found"
+                  width="250px"
+                  src={`${baseURL}/images/${id}`}
+                />
+                <IconButton
+                  aria-label="delete"
+                  className="list-img-item__close"
+                  onClick={() => removeImageIds(id)}
+                >
+                  <CancelIcon />
+                </IconButton>
+              </div>
+            ))}
+          {images?.map((item, index) => (
+            <div key={index} className="list-img-item">
+              <img
+                alt="not found"
+                width="250px"
+                src={URL.createObjectURL(item)}
+              />
+              <IconButton
+                aria-label="delete"
+                className="list-img-item__close"
+                onClick={() => removeImages(index)}
+              >
+                <CancelIcon />
+              </IconButton>
+            </div>
+          ))}
+        </div>
       </Box>
     </Dialog>
   );

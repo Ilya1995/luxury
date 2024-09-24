@@ -2,6 +2,7 @@ import { FC, useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useNavigate } from 'react-router-dom';
 
 import { type News, Response } from '../../store/types';
 import { useMedia } from '../../hooks';
@@ -16,6 +17,7 @@ export const PageNews: FC = () => {
   const { t } = useTranslation();
 
   const isMobile = useMedia('(max-width: 768px)');
+  const navigate = useNavigate();
 
   const [news, setNews] = useState<News[]>([]);
   const [page, setPage] = useState(0);
@@ -86,7 +88,11 @@ export const PageNews: FC = () => {
               ))}
             >
               {news.map((card) => (
-                <Card key={card.id} {...card} />
+                <Card
+                  key={card.id}
+                  {...card}
+                  onClickCard={() => navigate(`/news/${card.id}`)}
+                />
               ))}
             </InfiniteScroll>
           )}

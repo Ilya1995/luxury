@@ -21,6 +21,7 @@ import { Projects } from './pages/Projects';
 import { ProjectDecor } from './pages/ProjectDecor';
 import { ProjectCard } from './pages/ProjectCard';
 import { PageNews } from './pages/News';
+import { NewsCard } from './pages/NewsCard';
 import { Main } from './admin/Main';
 import { RootState } from './store';
 import { setFilters } from './store/reducer';
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
   {
     path: '/news',
     element: <PageNews />,
+  },
+  {
+    path: '/news/:newsId',
+    element: <NewsCard />,
   },
   {
     path: '/admin',

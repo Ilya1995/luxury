@@ -11,19 +11,21 @@ import { baseURL } from '../..';
 type PropsType = {
   id: number;
   imageId: number;
-  title: string;
+  titleRu: string;
   descriptionRus: string;
   newsDate: string;
+  onClickCard?: () => void;
 };
 
 export const Card: FC<PropsType> = ({
   imageId,
-  title,
+  titleRu,
   descriptionRus,
   newsDate,
+  onClickCard,
 }) => {
   return (
-    <div className="card">
+    <div className="card" onClick={() => onClickCard?.()}>
       {imageId && (
         <img
           className="card__img"
@@ -41,7 +43,7 @@ export const Card: FC<PropsType> = ({
               'card__content-title_vertical': !isOldSafari(),
             })}
           >
-            {descriptionRus}
+            {titleRu}
           </div>
         </div>
         <ButtonMore />
