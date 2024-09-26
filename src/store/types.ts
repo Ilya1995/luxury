@@ -41,6 +41,7 @@ export type News = {
   description?: string;
   descriptionRus: string;
   imageId: number;
+  imageIds?: number[];
 };
 
 export type Faq = {
