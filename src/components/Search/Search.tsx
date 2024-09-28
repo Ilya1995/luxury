@@ -27,7 +27,7 @@ export const Search: FC<PropsType> = ({
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { productId } = useParams();
+  const { productId, brandId, projectId, newsId } = useParams();
 
   const { searchText } = useSelector((state: RootState) => state.general);
 
@@ -56,11 +56,34 @@ export const Search: FC<PropsType> = ({
   useWatch(() => {
     dispatch(setSearchText(debouncedValue));
     const isCardProduct = Number(productId) > 0;
+    const isCardBrand = Number(brandId) > 0;
+    const isCardProject = Number(projectId) > 0;
+    const isCardNews = Number(newsId) > 0;
 
-    if ((pathname === '/' || isCardProduct) && !!debouncedValue) {
+    if (
+      (pathname === '/' ||
+        pathname === '/contacts' ||
+        pathname === '/brands' ||
+        pathname === '/projects' ||
+        pathname === '/projects/decor' ||
+        pathname === '/news' ||
+        isCardProduct ||
+        isCardBrand ||
+        isCardProject ||
+        isCardNews) &&
+      !!debouncedValue
+    ) {
       navigate('/catalog');
     }
-  }, [debouncedValue, dispatch, navigate, pathname, productId]);
+  }, [
+    debouncedValue,
+    dispatch,
+    navigate,
+    pathname,
+    productId,
+    projectId,
+    newsId,
+  ]);
 
   return (
     <div className={classNames('search', className)}>
