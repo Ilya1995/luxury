@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { Parser } from 'html-to-react';
 import { Animate } from 'react-simple-animate';
+import { useTranslation } from 'react-i18next';
 import { Swiper, SwiperSlide, SwiperClass } from 'swiper/react';
 import { Mousewheel, Navigation } from 'swiper/modules';
 
@@ -13,7 +14,8 @@ import { useMedia } from '../../hooks';
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
-import { type News, ResponseOne } from '../../store/types';
+import { Card } from '../../components/News/Card';
+import { type News, ResponseOne, Response } from '../../store/types';
 import { baseURL } from '../..';
 
 import './styles.scss';
@@ -21,9 +23,12 @@ import './styles.scss';
 export const NewsCard: FC = () => {
   const { newsId } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [activePhoto, setActivePhoto] = useState<number>();
   const [activeIndex, setActiveIndex] = useState(0);
   const [news, setNews] = useState<News>();
+  const [otherNews, setOtherNews] = useState<News[]>();
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   const [showNavButton, setShowNavButton] = useState({
     showPrev: false,
     showNext: false,
@@ -61,6 +66,25 @@ export const NewsCard: FC = () => {
     }
   }, [newsId]);
 
+  const getOtherNews = useCallback(async () => {
+    try {
+      const response: Response<News[]> = await axios.get('/news?size=3');
+      if (response.status !== 200 || typeof response.data === 'string') {
+        throw new Error('bad response');
+      }
+
+      if (newsId) {
+        setOtherNews(
+          response.data.content
+            .filter(({ id }) => id !== Number(newsId))
+            .slice(0, 2)
+        );
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [newsId]);
+
   useEffect(() => {
     const isCardNews = Number(newsId) > 0;
 
@@ -69,10 +93,22 @@ export const NewsCard: FC = () => {
     }
 
     getNewsById();
-  }, [newsId, navigate, getNewsById]);
+    getOtherNews();
+  }, [newsId, navigate, getNewsById, getOtherNews]);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
+  }, []);
+
+  useEffect(() => {
+    const callback = () => {
+      setInnerWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', callback);
+    return () => {
+      window.removeEventListener('resize', callback);
+    };
   }, []);
 
   const showMask = (direction: 'left' | 'right', index: number) => {
@@ -89,7 +125,13 @@ export const NewsCard: FC = () => {
     return false;
   };
 
+  const widthLine = (innerWidth - 32) / (news?.imageIds?.length ?? 1);
   const showBreadcrumbs = !isMobile;
+  const showPhotoDesk = !isMobile;
+  const showPhotoMobile = isMobile;
+  const showAnotherNews = isMobile;
+  const showScroll = (news?.imageIds?.length ?? 0) > 1;
+  const showSlider = !!news?.imageIds?.length && news.imageIds?.length > 1;
 
   return (
     <div className="news-card">
@@ -99,12 +141,64 @@ export const NewsCard: FC = () => {
         <div className="news-card__content">
           {showBreadcrumbs && <Breadcrumbs news={news} />}
 
-          <div className="news-card__title">{news.titleRu}</div>
-          <div className="news-card__subtitle">
-            {dayjs(news.newsDate).format('D MMMM YYYY')}
+          {showPhotoMobile && (
+            <>
+              {showSlider && (
+                <div className="news-card-mobile__slider">
+                  <Swiper
+                    slidesPerView={1}
+                    speed={800}
+                    slidesOffsetBefore={16}
+                    slidesOffsetAfter={-16}
+                    onActiveIndexChange={handleChangeShowNawButtons}
+                    mousewheel
+                    modules={[Mousewheel, Navigation]}
+                  >
+                    {news.imageIds?.map((photo) => (
+                      <SwiperSlide key={photo}>
+                        <img
+                          className={classNames('news-card-mobile__img')}
+                          src={`${baseURL}/images/${photo}`}
+                          onClick={() => setActivePhoto(photo)}
+                          alt="furniture"
+                        />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+              )}
+
+              {!showSlider && news.imageIds?.[0] && (
+                <div className="flex-center">
+                  <img
+                    className={classNames('news-card-mobile__img')}
+                    src={`${baseURL}/images/${news.imageIds[0]}`}
+                    alt="furniture"
+                  />
+                </div>
+              )}
+              {showScroll && (
+                <div className="news-card-mobile__scroll">
+                  <div
+                    className="news-card-mobile__scroll-item"
+                    style={{
+                      width: `${widthLine}px`,
+                      transform: `translateX(${activeIndex * widthLine}px)`,
+                    }}
+                  />
+                </div>
+              )}
+            </>
+          )}
+
+          <div className="news-card__titles">
+            <div className="news-card__title">{news.titleRu}</div>
+            <div className="news-card__subtitle">
+              {dayjs(news.newsDate).format('D MMMM YYYY')}
+            </div>
           </div>
 
-          {activePhoto && (
+          {showPhotoDesk && activePhoto && (
             <div className="news-card__photo">
               {activePhoto && (
                 <div className="news-card__photo-wrapper-img">
@@ -184,6 +278,25 @@ export const NewsCard: FC = () => {
           <div className="news-card__description">
             {Parser().parse(news.descriptionRus)}
           </div>
+
+          {showAnotherNews && (
+            <div className="news-card__another">
+              <div className="news-card__another-title">{t('other-news')}</div>
+
+              {!!otherNews?.length && (
+                <div className="news-card__another-items">
+                  {otherNews.map((item) => (
+                    <Card
+                      className="news-card__another-items-card"
+                      key={item.id}
+                      {...item}
+                      onClickCard={() => navigate(`/news/${item.id}`)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 

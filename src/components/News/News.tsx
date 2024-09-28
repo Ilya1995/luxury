@@ -104,7 +104,10 @@ export const News: FC<PropsType> = ({ isMobile }) => {
         >
           {news.map((item) => (
             <SwiperSlide key={item.id}>
-              <Card {...item} />
+              <Card
+                {...item}
+                onClickCard={() => navigate(`/news/${item.id}`)}
+              />
             </SwiperSlide>
           ))}
           <SwiperSlide>

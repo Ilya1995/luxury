@@ -15,6 +15,7 @@ type PropsType = {
   descriptionRus: string;
   newsDate: string;
   onClickCard?: () => void;
+  className?: string;
 };
 
 export const Card: FC<PropsType> = ({
@@ -23,9 +24,13 @@ export const Card: FC<PropsType> = ({
   descriptionRus,
   newsDate,
   onClickCard,
+  className,
 }) => {
   return (
-    <div className="card" onClick={() => onClickCard?.()}>
+    <div
+      className={classNames('card', className)}
+      onClick={() => onClickCard?.()}
+    >
       {imageId && (
         <img
           className="card__img"

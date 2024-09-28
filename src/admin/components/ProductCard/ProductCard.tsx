@@ -48,6 +48,7 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
   const [image, setImage] = useState();
   const [images, setImages] = useState<any[]>([]);
   const [imageIds, setImageIds] = useState<any[]>([]);
+  const [number, setNumber] = useState(0);
   const refInput = useRef<any>();
 
   const [categories, setCategories] = useState([]);
@@ -68,6 +69,7 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
       setTitle(value.title);
       setImageIds(value.imageIds || []);
       setIsLike(value.liked ?? false);
+      setNumber(value.number ?? 0);
     }
   }, [value, isOpen]);
 
@@ -156,6 +158,7 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
         ...value,
         title: title.trim(),
         imageId,
+        number: number || null,
         imageIds: valueImageIds,
         categories: categoriesValue,
       };
@@ -187,6 +190,7 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
     setImage(undefined);
     setImages([]);
     setImageIds([]);
+    setNumber(0);
   };
 
   const removeImages = (index: number) => {
@@ -405,6 +409,26 @@ export const ProductCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
             ))}
           </Select>
         </FormControl>
+      </Box>
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': {
+            my: 3,
+            mx: isMobile ? 0 : 2,
+            width: isMobile ? '100vw' : '50vw',
+          },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          label="Порядковый номер"
+          type="number"
+          variant="outlined"
+          value={number}
+          onChange={(e) => setNumber(Number(e.target.value))}
+        />
       </Box>
       <Box
         component="form"

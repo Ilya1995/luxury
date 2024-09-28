@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { useSwiperSlide } from 'swiper/react';
 import classNames from 'classnames';
+import { useNavigate } from 'react-router-dom';
 
 import { useMedia } from '../../hooks';
 
@@ -8,12 +9,14 @@ import './styles.scss';
 import { baseURL } from '../..';
 
 type PropsType = {
+  id: number;
   imageId: number;
   title: string;
 };
 
-export const BrandsCarouselItem: FC<PropsType> = ({ imageId, title }) => {
+export const BrandsCarouselItem: FC<PropsType> = ({ id, imageId, title }) => {
   const swiperSlide = useSwiperSlide();
+  const navigate = useNavigate();
   const isMobile = useMedia('(max-width: 550px)');
 
   const isVisible = isMobile
@@ -25,6 +28,7 @@ export const BrandsCarouselItem: FC<PropsType> = ({ imageId, title }) => {
       className={classNames('brands-carousel-item', {
         'brands-carousel-item_visited': isVisible,
       })}
+      onClick={() => navigate(`/brands/${id}`)}
     >
       {imageId && (
         <img

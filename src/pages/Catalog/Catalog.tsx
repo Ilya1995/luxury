@@ -92,8 +92,8 @@ export const Catalog: FC = () => {
       try {
         const categoryId = getCategoryId();
 
-        const urlWithText = `products/text-search?text=${searchText}&page=${nextPage}&size=20`;
-        let urlWithoutText = `/products/search?page=${nextPage}&size=20`;
+        const urlWithText = `products/text-search?text=${searchText}&page=${nextPage}&size=20&sort=number`;
+        let urlWithoutText = `/products/search?page=${nextPage}&size=20&sort=number`;
         if (categoryId) {
           urlWithoutText +=
             '&sort=brandNumber,ASC&sort=typeNumber,ASC&sort=title,ASC&sort=id';

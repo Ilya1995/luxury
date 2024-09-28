@@ -87,5 +87,6 @@ export const ENG = {
       'It is realized in restrained cold shades of blue and gray. It has a functional layout and a folding sofa to get more free space.',
     'decor-text5':
       'It is realized in gentle dusty pink and peach tones. The universal style suits any age, and the light emphasizes the expressive details of the interior and the depth of the chosen shades. During the day and in the evening, artificial light intertwines with the rays of natural light, which creates a comfortable environment at any time of the day.',
+    'other-news': 'Other news',
   },
 };

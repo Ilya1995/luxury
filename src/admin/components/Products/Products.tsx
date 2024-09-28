@@ -82,6 +82,7 @@ export const Products = () => {
       product.imageIds = value.imageIds;
       product.imageId = value.imageId;
       product.categories = value.categories;
+      product.number = value.number;
     }
 
     setSelected(null);
@@ -183,7 +184,7 @@ export const Products = () => {
                   {COLUMNS.map((column, index) => (
                     <TableCell
                       key={column.id}
-                      align={index === 6 ? 'right' : 'left'}
+                      align={index === 7 ? 'right' : 'left'}
                       style={{ minWidth: column.minWidth }}
                     >
                       {column.label}
@@ -195,6 +196,7 @@ export const Products = () => {
                 {products.content.map((row: any) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     <TableCell align="left">{row.title}</TableCell>
+                    <TableCell align="left">{row.number}</TableCell>
                     <TableCell align="left">
                       {row.collectionTitle?.trim()}
                     </TableCell>
