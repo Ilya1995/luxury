@@ -122,7 +122,7 @@
   }
 
   &__photo-img {
-    height: calc(calc(100vw - 13.75rem) / 2);
+    height: calc(calc(100vw - 13.75rem) / 1.77);
     max-width: calc(100vw - 13.75rem);
     border-radius: 0.75rem;
     object-fit: cover;
@@ -209,6 +209,10 @@
 
   .swiper-slide {
     aspect-ratio: 1 / 1;
+
+    @media (max-width: 768px) {
+      height: calc((100vw - 2rem) / 1.525);
+    }
   }
 
   .mask {
@@ -265,5 +269,41 @@
 
   &-mobile__slider {
     height: calc((100vw - 2rem) / 1.525);
+    position: relative;
+  }
+
+  &__video {
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: 768px) {
+      width: calc(100vw - 2rem);
+      height: calc((100vw - 2rem) / 1.525);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+
+      &::after {
+        content: '';
+        background: transparent;
+        width: 180px;
+        height: 120px;
+        min-height: 1px;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+      }
+    }
+  }
+
+  .news-card-mobile__slider-button {
+    position: absolute;
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    top: 50%;
+    z-index: 2;
+    transition: opacity 300ms ease-in-out;
+    right: -5px;
   }
 }

@@ -8,7 +8,7 @@
   &__header {
     padding: 0 6.875rem;
     font-size: 2.5rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 3.25rem;
     color: rgba(var(--orange));
     cursor: pointer;
@@ -128,10 +128,11 @@
       }
 
       @media (max-width: 768px) {
-        height: 4.3rem;
+        height: 4.1rem;
         -webkit-line-clamp: 3;
         font-size: 0.875rem;
         line-height: 1.57;
+        overflow: hidden;
       }
     }
   }

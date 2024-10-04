@@ -42,6 +42,7 @@ export type News = {
   descriptionRus: string;
   imageId: number;
   imageIds?: number[];
+  videoUrls?: string;
 };
 
 export type Faq = {

@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useCallback } from 'react';
+import { FC, useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
@@ -16,6 +16,7 @@ import { Footer } from '../../components/Footer';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Card } from '../../components/News/Card';
 import { type News, ResponseOne, Response } from '../../store/types';
+import { SwiperNavButtonNext } from './SwiperNavButtonNext';
 import { baseURL } from '../..';
 
 import './styles.scss';
@@ -54,11 +55,18 @@ export const NewsCard: FC = () => {
       }
 
       setNews(response.data);
-      if (response.data.imageIds?.length) {
-        setActivePhoto(response.data.imageIds[0]);
+      if (response.data.imageIds?.length || response.data.videoUrls) {
+        const active = response.data.videoUrls
+          ? -100
+          : response.data.imageIds?.[0];
+        active && setActivePhoto(active);
+
+        const len =
+          (response.data.imageIds?.length ?? 0) +
+          (response.data.videoUrls ? 1 : 0);
         setShowNavButton({
           showPrev: false,
-          showNext: (response.data.imageIds.length ?? 0) > 4,
+          showNext: len > 4,
         });
       }
     } catch (error) {
@@ -98,7 +106,7 @@ export const NewsCard: FC = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
-  }, []);
+  }, [newsId]);
 
   useEffect(() => {
     const callback = () => {
@@ -114,7 +122,7 @@ export const NewsCard: FC = () => {
   const showMask = (direction: 'left' | 'right', index: number) => {
     if (direction === 'right') {
       return Boolean(
-        index > activeIndex + 2 && (news?.imageIds?.length ?? 0) - 1 !== index
+        index > activeIndex + 2 && (imageIds.length ?? 0) - 1 !== index
       );
     }
 
@@ -125,13 +133,43 @@ export const NewsCard: FC = () => {
     return false;
   };
 
-  const widthLine = (innerWidth - 32) / (news?.imageIds?.length ?? 1);
+  const video = useMemo(() => {
+    if (!news?.videoUrls) return '';
+    let videoString = news.videoUrls;
+    const size = isMobile ? 32 : 220;
+    const coef = isMobile ? 1.525 : 1.77;
+
+    const index1 = videoString.indexOf('width="');
+    const index2 = videoString.indexOf('"', index1 + 7);
+
+    videoString = videoString.replace(
+      videoString.slice(index1, index2 + 1),
+      `width="${innerWidth - size}"`
+    );
+
+    const index3 = videoString.indexOf('height="');
+    const index4 = videoString.indexOf('"', index3 + 8);
+    videoString = videoString.replace(
+      videoString.slice(index3, index4 + 1),
+      `height="${(innerWidth - size) / coef}"`
+    );
+
+    return videoString;
+  }, [innerWidth, news?.videoUrls, isMobile]);
+
+  const imageIds = useMemo(() => {
+    const ids = news?.imageIds ?? [];
+    if (!video) return ids;
+    return [-100, ...ids];
+  }, [news?.imageIds, video]);
+
+  const widthLine = (innerWidth - 32) / (imageIds.length ?? 1);
   const showBreadcrumbs = !isMobile;
   const showPhotoDesk = !isMobile;
   const showPhotoMobile = isMobile;
   const showAnotherNews = isMobile;
-  const showScroll = (news?.imageIds?.length ?? 0) > 1;
-  const showSlider = !!news?.imageIds?.length && news.imageIds?.length > 1;
+  const showScroll = (imageIds.length ?? 0) > 1;
+  const showSlider = !!imageIds.length && imageIds.length > 1;
 
   return (
     <div className="news-card">
@@ -154,27 +192,45 @@ export const NewsCard: FC = () => {
                     mousewheel
                     modules={[Mousewheel, Navigation]}
                   >
-                    {news.imageIds?.map((photo) => (
+                    {imageIds.map((photo) => (
                       <SwiperSlide key={photo}>
-                        <img
-                          className={classNames('news-card-mobile__img')}
-                          src={`${baseURL}/images/${photo}`}
-                          onClick={() => setActivePhoto(photo)}
-                          alt="furniture"
-                        />
+                        {photo !== -100 && (
+                          <img
+                            className={classNames('news-card-mobile__img')}
+                            src={`${baseURL}/images/${photo}`}
+                            onClick={() => setActivePhoto(photo)}
+                            alt="furniture"
+                          />
+                        )}
+                        {photo === -100 && (
+                          <div
+                            className="news-card__video"
+                            onClick={() => setActivePhoto(photo)}
+                          >
+                            {Parser().parse(video)}
+                          </div>
+                        )}
                       </SwiperSlide>
                     ))}
+                    {activeIndex === 0 && video && <SwiperNavButtonNext />}
                   </Swiper>
                 </div>
               )}
 
-              {!showSlider && news.imageIds?.[0] && (
+              {!showSlider && imageIds[0] && (
                 <div className="flex-center">
-                  <img
-                    className={classNames('news-card-mobile__img')}
-                    src={`${baseURL}/images/${news.imageIds[0]}`}
-                    alt="furniture"
-                  />
+                  {imageIds[0] !== -100 && (
+                    <img
+                      className={classNames('news-card-mobile__img')}
+                      src={`${baseURL}/images/${imageIds[0]}`}
+                      alt="furniture"
+                    />
+                  )}
+                  {imageIds[0] === -100 && (
+                    <div className="news-card__video">
+                      {Parser().parse(video)}
+                    </div>
+                  )}
                 </div>
               )}
               {showScroll && (
@@ -210,15 +266,22 @@ export const NewsCard: FC = () => {
                     duration={0.3}
                     easeType="ease-in"
                   >
-                    <img
-                      className="news-card__photo-img"
-                      src={`${baseURL}/images/${activePhoto}`}
-                      alt="card"
-                    />
+                    {activePhoto !== -100 && (
+                      <img
+                        className="news-card__photo-img"
+                        src={`${baseURL}/images/${activePhoto}`}
+                        alt="card"
+                      />
+                    )}
+                    {activePhoto === -100 && (
+                      <div className="news-card__video">
+                        {Parser().parse(video)}
+                      </div>
+                    )}
                   </Animate>
                 </div>
               )}
-              {!!news.imageIds?.length && news.imageIds?.length > 1 && (
+              {!!imageIds.length && imageIds.length > 1 && (
                 <div className="news-card__photo-carousel">
                   <Swiper
                     slidesPerView={4}
@@ -226,10 +289,10 @@ export const NewsCard: FC = () => {
                     speed={800}
                     onActiveIndexChange={handleChangeShowNawButtons}
                     wrapperClass="news-card__photo-carousel-wrapper"
-                    mousewheel={news.imageIds.length > 4}
+                    mousewheel={imageIds.length > 4}
                     modules={[Mousewheel, Navigation]}
                   >
-                    {news.imageIds.map((item, index) => (
+                    {imageIds.map((item, index) => (
                       <SwiperSlide key={item}>
                         <img
                           className={classNames(
@@ -239,7 +302,11 @@ export const NewsCard: FC = () => {
                                 item === activePhoto,
                             }
                           )}
-                          src={`${baseURL}/images/${item}`}
+                          src={
+                            item === -100
+                              ? '/play.jpg'
+                              : `${baseURL}/images/${item}`
+                          }
                           onClick={() => setActivePhoto(item)}
                           alt="furniture"
                         />

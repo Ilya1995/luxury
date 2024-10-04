@@ -34,6 +34,7 @@ export const NewsCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
   const [date, setDate] = useState<any>('');
   const [image, setImage] = useState();
   const [imgSrc, setImgSrc] = useState();
+  const [videoSrc, setVideoSrc] = useState('');
 
   const [images, setImages] = useState<any[]>([]);
   const [imageIds, setImageIds] = useState<any[]>([]);
@@ -49,6 +50,7 @@ export const NewsCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
       setTitle(value.titleRu || '');
       loadImage(value.imageId).then(setImgSrc);
       setImageIds(value.imageIds || []);
+      setVideoSrc(value.videoUrls ?? '');
 
       const blocks = htmlToDraft(value.descriptionRus ?? '');
       setEditorState(
@@ -109,6 +111,7 @@ export const NewsCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
         imageId,
         imageIds: valueImageIds,
         descriptionRus: description,
+        videoUrls: videoSrc.trim(),
       };
 
       const response = await axios.post('/news', data);
@@ -159,6 +162,7 @@ export const NewsCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
     setImgSrc(undefined);
     setImages([]);
     setImageIds([]);
+    setVideoSrc('');
     setEditorState(EditorState.createEmpty());
   };
 
@@ -270,6 +274,25 @@ export const NewsCard: FC<any> = ({ value, isOpen, onClose, onSave }) => {
           wrapperClassName="wrapperClassName"
           editorClassName="editorClassName"
           onEditorStateChange={onEditorStateChange}
+        />
+      </Box>
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': {
+            my: 3,
+            mx: isMobile ? 0 : 2,
+            width: isMobile ? '100vw' : '50vw',
+          },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          label="Ссылка на видео"
+          variant="outlined"
+          value={videoSrc}
+          onChange={(e) => setVideoSrc(e.target.value)}
         />
       </Box>
       <Box
