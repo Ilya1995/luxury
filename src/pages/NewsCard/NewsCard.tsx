@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { Swiper, SwiperSlide, SwiperClass } from 'swiper/react';
 import { Mousewheel, Navigation } from 'swiper/modules';
 
-import { SwiperNav } from './SwiperNav';
 import { useMedia } from '../../hooks';
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
@@ -17,6 +16,7 @@ import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Card } from '../../components/News/Card';
 import { type News, ResponseOne, Response } from '../../store/types';
 import { SwiperNavButtonNext } from './SwiperNavButtonNext';
+import { Icon } from '../../components/ui/Icon';
 import { baseURL } from '../..';
 
 import './styles.scss';
@@ -30,20 +30,32 @@ export const NewsCard: FC = () => {
   const [news, setNews] = useState<News>();
   const [otherNews, setOtherNews] = useState<News[]>();
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
-  const [showNavButton, setShowNavButton] = useState({
-    showPrev: false,
-    showNext: false,
-  });
 
   const isMobile = useMedia('(max-width: 768px)');
 
-  const handleChangeShowNawButtons = ({
-    isBeginning,
-    isEnd,
-    activeIndex,
-  }: SwiperClass) => {
+  const handleChangeShowNawButtons = ({ activeIndex }: SwiperClass) => {
     setActiveIndex(activeIndex);
-    setShowNavButton({ showPrev: !isBeginning, showNext: !isEnd });
+  };
+
+  const handleClickImage = (item: number, index: number) => {
+    setActivePhoto(item);
+    setActiveIndex(index);
+  };
+
+  const handleClickNavButton = (nav: 'prev' | 'next') => {
+    const idx = imageIds.findIndex((imageId) => imageId === activePhoto);
+    const nextPhoto = imageIds[idx + 1];
+    const prevPhoto = imageIds[idx - 1];
+
+    if (nav === 'next' && nextPhoto) {
+      setActiveIndex(idx + 1);
+      setActivePhoto(nextPhoto);
+    }
+
+    if (nav === 'prev' && prevPhoto) {
+      setActiveIndex(idx - 1);
+      setActivePhoto(prevPhoto);
+    }
   };
 
   const getNewsById = useCallback(async () => {
@@ -60,14 +72,6 @@ export const NewsCard: FC = () => {
           ? -100
           : response.data.imageIds?.[0];
         active && setActivePhoto(active);
-
-        const len =
-          (response.data.imageIds?.length ?? 0) +
-          (response.data.videoUrls ? 1 : 0);
-        setShowNavButton({
-          showPrev: false,
-          showNext: len > 4,
-        });
       }
     } catch (error) {
       console.error(error);
@@ -119,20 +123,6 @@ export const NewsCard: FC = () => {
     };
   }, []);
 
-  const showMask = (direction: 'left' | 'right', index: number) => {
-    if (direction === 'right') {
-      return Boolean(
-        index > activeIndex + 2 && (imageIds.length ?? 0) - 1 !== index
-      );
-    }
-
-    if (direction === 'left') {
-      return Boolean(activeIndex === index && activeIndex);
-    }
-
-    return false;
-  };
-
   const video = useMemo(() => {
     if (!news?.videoUrls) return '';
     let videoString = news.videoUrls;
@@ -162,6 +152,16 @@ export const NewsCard: FC = () => {
     if (!video) return ids;
     return [-100, ...ids];
   }, [news?.imageIds, video]);
+
+  const isShowNextPrevButton = useMemo(() => {
+    const idx = imageIds.findIndex((imageId) => imageId === activePhoto);
+    return !!imageIds[idx - 1];
+  }, [imageIds, activePhoto]);
+
+  const isShowNextNavButton = useMemo(() => {
+    const idx = imageIds.findIndex((imageId) => imageId === activePhoto);
+    return !!imageIds[idx + 1];
+  }, [imageIds, activePhoto]);
 
   const widthLine = (innerWidth - 32) / (imageIds.length ?? 1);
   const showBreadcrumbs = !isMobile;
@@ -279,64 +279,46 @@ export const NewsCard: FC = () => {
                       </div>
                     )}
                   </Animate>
+                  {isShowNextPrevButton && (
+                    <Icon
+                      name="arrow-right4"
+                      color="rgba(var(--grey-600))"
+                      className="news-card__photo-wrapper-arrow-left"
+                      size={2.5}
+                      handleClick={() => handleClickNavButton('prev')}
+                    />
+                  )}
+                  {isShowNextNavButton && (
+                    <Icon
+                      name="arrow-right4"
+                      color="rgba(var(--grey-600))"
+                      className="news-card__photo-wrapper-arrow-right"
+                      size={2.5}
+                      handleClick={() => handleClickNavButton('next')}
+                    />
+                  )}
                 </div>
               )}
               {!!imageIds.length && imageIds.length > 1 && (
                 <div className="news-card__photo-carousel">
-                  <Swiper
-                    slidesPerView={4}
-                    spaceBetween={16}
-                    speed={800}
-                    onActiveIndexChange={handleChangeShowNawButtons}
-                    wrapperClass="news-card__photo-carousel-wrapper"
-                    mousewheel={imageIds.length > 4}
-                    modules={[Mousewheel, Navigation]}
-                  >
+                  <div className="news-card__photo-carousel-scroll">
                     {imageIds.map((item, index) => (
-                      <SwiperSlide key={item}>
-                        <img
-                          className={classNames(
-                            'news-card__photo-carousel-img',
-                            {
-                              'news-card__photo-carousel-img_active':
-                                item === activePhoto,
-                            }
-                          )}
-                          src={
-                            item === -100
-                              ? '/play.jpg'
-                              : `${baseURL}/images/${item}`
-                          }
-                          onClick={() => setActivePhoto(item)}
-                          alt="furniture"
-                        />
-                        {showMask('right', index) && (
-                          <div
-                            className="mask mask_right"
-                            onClick={() => setActivePhoto(item)}
-                          />
-                        )}
-                        {showMask('left', index) && (
-                          <div
-                            className="mask mask_left"
-                            onClick={() => setActivePhoto(item)}
-                          />
-                        )}
-                      </SwiperSlide>
+                      <img
+                        key={item}
+                        className={classNames('news-card__photo-carousel-img', {
+                          'news-card__photo-carousel-img_active':
+                            item === activePhoto,
+                        })}
+                        src={
+                          item === -100
+                            ? '/play.jpg'
+                            : `${baseURL}/images/${item}`
+                        }
+                        onClick={() => handleClickImage(item, index)}
+                        alt="furniture"
+                      />
                     ))}
-                    {showNavButton.showPrev && (
-                      <>
-                        <SwiperNav nav="prev" />
-                        <div className="news-card__photo-carousel-arrow-bg -prev" />
-                      </>
-                    )}
-                    {showNavButton.showNext && (
-                      <>
-                        <SwiperNav nav="next" />
-                        <div className="news-card__photo-carousel-arrow-bg -next" />
-                      </>
-                    )}
-                  </Swiper>
+                  </div>
                 </div>
               )}
             </div>

@@ -121,6 +121,25 @@
     justify-content: center;
   }
 
+  &__photo-wrapper-arrow-left {
+    position: absolute;
+    transform: rotate(180deg);
+    left: 0;
+    -webkit-transform: translate(0, -50%) rotate(180deg);
+    transform: translate(0, -50%) rotate(180deg);
+    top: 50%;
+    cursor: pointer !important;
+  }
+
+  &__photo-wrapper-arrow-right {
+    position: absolute;
+    right: 0;
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    top: 50%;
+    cursor: pointer !important;
+  }
+
   &__photo-img {
     height: calc(calc(100vw - 13.75rem) / 1.77);
     max-width: calc(100vw - 13.75rem);
@@ -132,22 +151,31 @@
   &__photo-carousel {
     margin-top: 1.5rem;
     position: relative;
-    max-width: calc(calc(100vw - 13.75rem) / 2);
-  }
+    overflow: hidden;
+    max-width: calc(calc(100vw - 13.75rem));
 
-  &__photo-carousel-wrapper {
-    padding: 0.25rem 0;
+    &-scroll {
+      display: flex;
+      gap: 1rem;
+      overflow: auto;
+
+      &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+    }
   }
 
   &__photo-carousel-img {
-    width: 100%;
-    height: 100%;
+    width: 130px;
+    height: 130px;
     border-radius: 0.5rem;
     object-fit: cover;
     display: block;
     cursor: pointer;
     outline-offset: -3px;
     box-sizing: border-box;
+    flex-shrink: 0;
 
     &_active {
       outline: 3px solid rgba(var(--grey-400));
@@ -212,36 +240,6 @@
 
     @media (max-width: 768px) {
       height: calc((100vw - 2rem) / 1.525);
-    }
-  }
-
-  .mask {
-    position: absolute;
-    cursor: pointer;
-    inset: 0;
-    z-index: 10;
-    background-color: rgba(var(--white));
-    mask-size: 100%;
-
-    mask-position: 100%;
-    animation: show 1.5s ease;
-
-    &_right {
-      mask-image: linear-gradient(
-        to left,
-        rgba(255, 255, 255, 0.4),
-        rgba(255, 255, 255, 0.24),
-        rgba(255, 255, 255, 0)
-      );
-    }
-
-    &_left {
-      mask-image: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0.4),
-        rgba(255, 255, 255, 0.24),
-        rgba(255, 255, 255, 0)
-      );
     }
   }
 
